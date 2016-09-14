@@ -1,14 +1,14 @@
-(void) start_plog()
+void start_plog()
 {
 
 }
 
-(void) stop_plog()
+void stop_plog()
 {
 
 }
 
-(void) reset_plog()
+void reset_plog()
 {
 
 }
