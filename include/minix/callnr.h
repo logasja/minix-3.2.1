@@ -65,7 +65,6 @@
 #define SETGROUPS_O	  66
 #define GETMCONTEXT       67
 #define SETMCONTEXT       68
-#define PLOG			69
 
 /* Posix signal handling. */
 #define SIGACTION	  71
