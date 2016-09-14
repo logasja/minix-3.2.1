@@ -1,4 +1,4 @@
-#define NCALLS		 119	/* number of system calls allowed */
+#define NCALLS		 114	/* number of system calls allowed */
 
 /* In case it isn't obvious enough: this list is sorted numerically. */
 #define EXIT		   1
@@ -65,6 +65,7 @@
 #define SETGROUPS_O	  66
 #define GETMCONTEXT       67
 #define SETMCONTEXT       68
+#define PLOG			69
 
 /* Posix signal handling. */
 #define SIGACTION	  71
@@ -108,12 +109,6 @@
 #define GCOV_FLUSH	112	/* flush gcov data from server to gcov files */
 
 #define PM_GETSID	113	/* PM getsid() */
-
-#define STARTPLOG		114		/*process logger start*/
-#define STOPPLOG		115		/*process logger end*/
-#define GETPLOGBYINDEX	116		/*get process by index*/
-#define GETPLOGBYPID	117		/*get process by pid*/
-#define GETPLOGSIZE		118		/*get process logger size*/
 
 #define TASK_REPLY	121	/* to VFS: reply code from drivers, not
 				 * really a standalone call.

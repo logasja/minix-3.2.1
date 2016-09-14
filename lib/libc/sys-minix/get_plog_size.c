@@ -4,5 +4,5 @@
 int get_plog_size()
 {
 	message m;
-	return _syscall(PM_PROC_NR, GETPLOGSIZE, &m);
+	return _syscall(PM_PROC_NR, PLOG, &m);
 }

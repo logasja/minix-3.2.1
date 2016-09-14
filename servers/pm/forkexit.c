@@ -56,7 +56,7 @@ int do_fork()
   * way through is such a nuisance.
   */
   rmp = mp;
-  if ((procs_in_use == NR_PROCS) || 
+  if ((procs_in_use == NR_PROCS) ||
   		(procs_in_use >= NR_PROCS-LAST_FEW && rmp->mp_effuid != 0))
   {
   	printf("PM: warning, process table is full!\n");
@@ -128,6 +128,8 @@ int do_fork()
 	sig_proc(rmc, SIGSTOP, TRUE /*trace*/, FALSE /* ksig */);
 #endif /* USE_TRACE */
 
+  proc_add(new_pid);
+
   /* Do not reply until VFS is ready to process the fork
   * request
   */
@@ -157,7 +159,7 @@ int do_srv_fork()
   * way through is such a nuisance.
   */
   rmp = mp;
-  if ((procs_in_use == NR_PROCS) || 
+  if ((procs_in_use == NR_PROCS) ||
   		(procs_in_use >= NR_PROCS-LAST_FEW && rmp->mp_effuid != 0))
   {
   	printf("PM: warning, process table is full!\n");
@@ -245,6 +247,10 @@ int do_exit()
   else {
       exit_proc(mp, m_in.status, FALSE /*dump_core*/);
   }
+
+  /**/
+  proc_rm(mp->mp_endpoint);
+
   return(SUSPEND);		/* can't communicate from beyond the grave */
 }
 
@@ -294,8 +300,8 @@ int dump_core;			/* flag indicating whether to dump core */
   p_mp->mp_child_utime += user_time + rmp->mp_child_utime; /* add user time */
   p_mp->mp_child_stime += sys_time + rmp->mp_child_stime; /* add system time */
 
-  /* Tell the kernel the process is no longer runnable to prevent it from 
-   * being scheduled in between the following steps. Then tell VFS that it 
+  /* Tell the kernel the process is no longer runnable to prevent it from
+   * being scheduled in between the following steps. Then tell VFS that it
    * the process has exited and finally, clean up the process at the kernel.
    * This order is important so that VFS can tell drivers to cancel requests
    * such as copying to/ from the exiting process, before it is gone.
@@ -346,7 +352,7 @@ int dump_core;			/* flag indicating whether to dump core */
   rmp->mp_flags |= EXITING;
 
   /* Keep the process around until VFS is finished with it. */
-  
+
   rmp->mp_exitstatus = (char) exit_status;
 
   /* For normal exits, try to notify the parent as soon as possible.
@@ -399,7 +405,7 @@ int dump_core;			/* flag indicating whether to dump core */
 	*/
 	printf("PM: The scheduler did not want to give up "
 		"scheduling %s, ret=%d.\n", rmp->mp_name, r);
-  } 
+  }
 
   /* sched_stop is either called when the process is exiting or it is
    * being moved between schedulers. If it is being moved between
@@ -443,9 +449,9 @@ int dump_core;			/* flag indicating whether to dump core */
  *===========================================================================*/
 int do_waitpid()
 {
-/* A process wants to wait for a child to terminate. If a child is already 
- * waiting, go clean it up and let this WAIT call terminate.  Otherwise, 
- * really wait. 
+/* A process wants to wait for a child to terminate. If a child is already
+ * waiting, go clean it up and let this WAIT call terminate.  Otherwise,
+ * really wait.
  * A process calling WAIT never gets a reply in the usual way at the end
  * of the main loop (unless WNOHANG is set or no qualifying child exists).
  * If a child has already exited, the routine tell_parent() sends the reply

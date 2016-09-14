@@ -1,29 +1,14 @@
-void start_plog()
+int do_plog()
 {
 
 }
 
-void stop_plog()
+void proc_add(pid_t id)
 {
-
+	do_time();
 }
 
-void reset_plog()
-{
-
-}
-
-int get_plog_size()
-{
-
-}
-
-int get_plog_byPID(int pid, long* c_time, long* t_time)
-{
-
-}
-
-int get_plog_byindex(int index, long* c_time, long* t_time)
+void proc_rm(pid_t id)
 {
 
 }
