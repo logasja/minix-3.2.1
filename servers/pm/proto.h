@@ -106,5 +106,5 @@ void tell_vfs(struct mproc *rmp, message *m_ptr);
 
 /* plog.c */
 int do_plog();
-void proc_add(pid_t id);
-void proc_rm(pid_t id);
+void plog_add(pid_t id);
+void plog_rm(pid_t id);

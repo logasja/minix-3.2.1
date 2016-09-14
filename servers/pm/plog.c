@@ -1,14 +1,14 @@
 int do_plog()
 {
-
+	return -1;
 }
 
-void proc_add(pid_t id)
+void plog_add(int id)
 {
-	do_time();
+
 }
 
-void proc_rm(pid_t id)
+void plog_rm(int id)
 {
 
 }
