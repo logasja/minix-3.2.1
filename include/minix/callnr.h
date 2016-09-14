@@ -1,28 +1,28 @@
 #define NCALLS		 114	/* number of system calls allowed */
 
 /* In case it isn't obvious enough: this list is sorted numerically. */
-#define EXIT		   1 
-#define FORK		   2 
-#define READ		   3 
-#define WRITE		   4 
-#define OPEN		   5 
-#define CLOSE		   6 
+#define EXIT		   1
+#define FORK		   2
+#define READ		   3
+#define WRITE		   4
+#define OPEN		   5
+#define CLOSE		   6
 #define WAIT		   7
-#define CREAT		   8 
-#define LINK		   9 
-#define UNLINK		  10 
+#define CREAT		   8
+#define LINK		   9
+#define UNLINK		  10
 #define WAITPID		  11
-#define CHDIR		  12 
+#define CHDIR		  12
 #define TIME		  13
-#define MKNOD		  14 
-#define CHMOD		  15 
-#define CHOWN		  16 
+#define MKNOD		  14
+#define CHMOD		  15
+#define CHOWN		  16
 #define BRK		  17
 #define PREV_STAT	  18
 #define LSEEK		  19
 #define MINIX_GETPID	  20
-#define MOUNT		  21 
-#define UMOUNT		  22 
+#define MOUNT		  21
+#define UMOUNT		  22
 #define SETUID		  23
 #define GETUID		  24
 #define STIME		  25
@@ -30,18 +30,18 @@
 #define ALARM		  27
 #define PREV_FSTAT	  28
 #define PAUSE		  29
-#define UTIME		  30 
+#define UTIME		  30
 #define GETEPINFO	  31
 #define SETGROUPS	  32
-#define ACCESS		  33 
+#define ACCESS		  33
 #define GETGROUPS	  34
-#define SYNC		  36 
+#define SYNC		  36
 #define KILL		  37
 #define RENAME		  38
 #define MKDIR		  39
 #define RMDIR		  40
-#define DUP		  41 
-#define PIPE		  42 
+#define DUP		  41
+#define PIPE		  42
 #define TIMES		  43
 #define SYMLINK		  45
 #define SETGID		  46
@@ -56,8 +56,8 @@
 #define FCNTL		  55
 #define FS_READY	  57
 #define EXEC		  59
-#define UMASK		  60 
-#define CHROOT		  61 
+#define UMASK		  60
+#define CHROOT		  61
 #define SETSID		  62
 #define GETPGRP		  63
 #define ITIMER		  64
@@ -65,6 +65,7 @@
 #define SETGROUPS_O	  66
 #define GETMCONTEXT       67
 #define SETMCONTEXT       68
+#define STARTPLOG		69
 
 /* Posix signal handling. */
 #define SIGACTION	  71
@@ -109,7 +110,7 @@
 
 #define PM_GETSID	113	/* PM getsid() */
 
-#define TASK_REPLY	121	/* to VFS: reply code from drivers, not 
+#define TASK_REPLY	121	/* to VFS: reply code from drivers, not
 				 * really a standalone call.
 				 */
 #define MAPDRIVER      122     /* to VFS, map a device */

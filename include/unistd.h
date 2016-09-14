@@ -109,6 +109,12 @@ int	 execv(const char *, char * const *);
 int	 execve(const char *, char * const *, char * const *);
 int	 execvp(const char *, char * const *);
 pid_t	 fork(void);
+void  start_plog(void);
+void  stop_plog(void);
+void  reset_plog(void);
+int   get_plog_size(void);
+int   get_plog_byPID(int pid, long& c_time, long& t_time);
+int   get_plog_byindex(int index, long& c_time, long& t_time);
 long	 fpathconf(int, int);
 #if __SSP_FORTIFY_LEVEL == 0
 char	*getcwd(char *, size_t);
@@ -194,7 +200,7 @@ int	 ftruncate(int, off_t);
  */
 #if (_POSIX_C_SOURCE - 0) >= 199309L || (_XOPEN_SOURCE - 0) >= 500 || \
     defined(_NETBSD_SOURCE)
-#ifndef __minix 
+#ifndef __minix
 int	 fdatasync(int);
 #endif /* !__minix */
 int	 fsync(int);

@@ -1,0 +1,4 @@
+void reset_plog()
+{
+
+}
