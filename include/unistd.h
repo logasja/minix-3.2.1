@@ -113,8 +113,8 @@ void  start_plog(void);
 void  stop_plog(void);
 void  reset_plog(void);
 int   get_plog_size(void);
-int   get_plog_byPID(int pid, long&, long&);
-int   get_plog_byindex(int index, long&, long&);
+int   get_plog_byPID(int, long&, long&);
+int   get_plog_byindex(int, long&, long&);
 long	 fpathconf(int, int);
 #if __SSP_FORTIFY_LEVEL == 0
 char	*getcwd(char *, size_t);
