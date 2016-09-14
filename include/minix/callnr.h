@@ -1,4 +1,4 @@
-#define NCALLS		 114	/* number of system calls allowed */
+#define NCALLS		 119	/* number of system calls allowed */
 
 /* In case it isn't obvious enough: this list is sorted numerically. */
 #define EXIT		   1
