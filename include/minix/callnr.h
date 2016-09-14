@@ -111,6 +111,6 @@
 #define PM_GETSID	113	/* PM getsid() */
 
 #define TASK_REPLY	121	/* to VFS: reply code from drivers, not
-				 * really a standalone call.
-				 */
+* really a standalone call.
+*/
 #define MAPDRIVER      122     /* to VFS, map a device */
