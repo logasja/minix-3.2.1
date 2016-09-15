@@ -3,12 +3,11 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define BUFFER_SIZE 1024
-#define START 0
-#define STOP 1
-#define CLEARBUF 2
+#define PLOG_BUFFER_SIZE 1024
+#define PLOG_START 0
+#define PLOG_STOP 1
+#define PLOG_CLEARBUF 2
 
-/* A reduced process structure to hold fork/exit time and id */
 typedef struct
 {
 	int p_id;
@@ -16,10 +15,9 @@ typedef struct
 	time_t end_t;
 } proc;
 
-/* Circular buffer */
 typedef struct
 {
-	proc* arr[BUFFER_SIZE];
+	proc* arr[PLOG_BUFFER_SIZE];
 	int cur_index;
 	size_t size;
 } circularBuffer;
@@ -32,11 +30,11 @@ bool started;
 int do_plog()
 {
 	switch (m_in.m1_i1) {
-	case START :
+	case PLOG_START:
 		return plog_start();
-	case STOP:
+	case PLOG_STOP:
 		return plog_stop();
-	case CLEARBUF:
+	case PLOG_CLEARBUF:
 		return plog_clear();
 	}
 	/* Get info about process */
@@ -71,7 +69,7 @@ int log_start(int id)
 	temp->start_t = do_time();
 	buffer->arr[buffer->cur_index++] = temp;
 	++buffer->size;
-	if (buffer->cur_index == BUFFER_SIZE)
+	if (buffer->cur_index == PLOG_BUFFER_SIZE)
 		buffer->cur_index = 0;
 	return (EXIT_SUCCESS);
 }
