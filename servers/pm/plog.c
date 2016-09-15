@@ -1,6 +1,5 @@
 #include "pm.h"
 #include <stdlib.h>
-#include <stdlib.h>
 #include <stdbool.h>
 
 #define PLOG_BUFFER_SIZE 1024
