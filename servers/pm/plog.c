@@ -8,7 +8,7 @@
 #define STOP 1
 #define CLEARBUF 2
 
-/* A reduced process structure to hold fork/exit and id */
+/* A reduced process structure to hold fork/exit time and id */
 typedef struct
 {
 	int p_id;
