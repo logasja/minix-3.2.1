@@ -2,11 +2,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define PLOG_BUFFER_SIZE 1024
-#define PLOG_START 0
-#define PLOG_STOP 1
-#define PLOG_CLEARBUF 2
-
 typedef struct
 {
 	int p_id;

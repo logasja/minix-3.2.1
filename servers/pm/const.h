@@ -19,3 +19,8 @@
 
 #define SEND_PRIORITY      1	/* send current priority queue to scheduler */
 #define SEND_TIME_SLICE    2    /* send current time slice to scheduler */
+
+#define PLOG_BUFFER_SIZE 1024
+#define PLOG_START 0
+#define PLOG_STOP 1
+#define PLOG_CLEARBUF 2
