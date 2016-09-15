@@ -19,7 +19,7 @@ typedef struct
 /* Circular buffer */
 typedef struct
 {
-	struct proc* arr[BUFFER_SIZE];
+	proc* arr[BUFFER_SIZE];
 	int cur_index;
 	size_t size;
 } circularBuffer;
