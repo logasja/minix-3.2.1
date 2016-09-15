@@ -105,7 +105,9 @@ int pm_isokendpt(int ep, int *proc);
 void tell_vfs(struct mproc *rmp, message *m_ptr);
 
 /* plog.c */
-int do_plog();
+int do_plog(void);
 int log_start(int id);
 int log_end(int id);
 int plog_clear(void);
+int plog_start(void);
+int plog_stop(void);

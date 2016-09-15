@@ -109,7 +109,7 @@ int	 execv(const char *, char * const *);
 int	 execve(const char *, char * const *, char * const *);
 int	 execvp(const char *, char * const *);
 pid_t	 fork(void);
-void  start_plog(void);
+int  start_plog(void);
 void  stop_plog(void);
 void  reset_plog(void);
 int   get_plog_size(void);

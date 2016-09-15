@@ -1,35 +1,74 @@
 #include "pm.h"
 #include <stdlib.h>
+#include <stdlib.h>
+#include <stdbool.h>
 
 #define BUFFER_SIZE 1024
+#define START 0
+#define STOP 1
+#define CLEARBUF 2
 
 /* A reduced process structure to hold fork/exit and id */
-struct proc
+typedef struct
 {
 	int p_id;
 	time_t start_t;
 	time_t end_t;
-};
+} proc;
 
 /* Circular buffer */
-struct circularBuffer
+typedef struct
 {
 	struct proc* arr[BUFFER_SIZE];
 	int cur_index;
 	size_t size;
-};
+} circularBuffer;
 
-struct circularBuffer* buffer;
+circularBuffer* buffer;
 
+bool started;
+
+/* Error with -1 */
 int do_plog()
 {
-	return -1;
+	switch (m_in.m1_i1) {
+	case START :
+		return plog_start();
+	case STOP:
+		return plog_stop();
+	case CLEARBUF:
+		return plog_clear();
+	}
+	/* Get info about process */
+	return (EXIT_FAILURE);
+}
+
+int plog_start()
+{
+	if (started)
+		return (EXIT_FAILURE);
+
+	started = true;
+}
+
+int plog_stop()
+{
+	if (!started)
+		return (EXIT_FAILURE);
+
+	started = false;
 }
 
 int log_start(int id)
 {
-	do_time();
-	return -1;
+	proc* temp = (proc*)calloc(1, sizeof(proc) );
+	temp->p_id = id;
+	temp->start_t = do_time();
+	buffer->arr[buffer->cur_index++] = temp;
+	++buffer->size;
+	if (buffer->cur_index == BUFFER_SIZE)
+		buffer->cur_index = 0;
+	return (EXIT_SUCCESS);
 }
 
 int log_end(int id)
@@ -54,7 +93,7 @@ int plog_clear()
 		free(buffer);
 	}
 	/* Allocate memory for the buffer */
-	buffer = (struct circularBuffer*) calloc(1, sizeof(struct circularBuffer));
+	buffer = (circularBuffer*) calloc(1, sizeof(circularBuffer));
 	return buffer == NULL;
 }
 
