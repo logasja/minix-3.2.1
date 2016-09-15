@@ -56,7 +56,7 @@ int plog_stop()
 
 int log_start(int id)
 {
-	if (started)
+	if (!started)
 		return EXIT_FAILURE;
 
 	proc* temp = (proc*)calloc(1, sizeof(proc) );
@@ -71,6 +71,8 @@ int log_start(int id)
 
 int log_end(int id)
 {
+	if (!started)
+		return EXIT_FAILURE;
 	do_time();
 	return EXIT_FAILURE;
 }

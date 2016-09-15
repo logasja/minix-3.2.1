@@ -128,7 +128,7 @@ int do_fork()
 	sig_proc(rmc, SIGSTOP, TRUE /*trace*/, FALSE /* ksig */);
 #endif /* USE_TRACE */
 
-  //log_start(new_pid);
+  log_start(new_pid);
 
   /* Do not reply until VFS is ready to process the fork
   * request
@@ -248,7 +248,7 @@ int do_exit()
       exit_proc(mp, m_in.status, FALSE /*dump_core*/);
   }
 
-  //log_end(mp->mp_endpoint);
+  log_end(mp->mp_endpoint);
 
   return(SUSPEND);		/* can't communicate from beyond the grave */
 }
