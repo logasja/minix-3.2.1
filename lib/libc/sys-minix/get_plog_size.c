@@ -4,5 +4,10 @@
 int get_plog_size()
 {
 	message m;
-	return _syscall(PM_PROC_NR, PLOG, &m);
+
+	m.m1_i1 = 5;
+
+	_syscall(PM_PROC_NR, PLOG, &m);
+
+	return m.m1_i2;
 }
