@@ -1,4 +1,5 @@
 #include "pm.h"
+#include <stdlib.h>
 
 #define BUFFER_SIZE 1024
 
@@ -51,7 +52,7 @@ int plog_clear()
 		free(buffer);
 	}
 	/* Allocate memory for the buffer */
-	buffer = (struct circularBuffer*) calloc(sizeof(struct circularBuffer));
+	buffer = (struct circularBuffer*) calloc(1, sizeof(struct circularBuffer));
 	return buffer == NULL;
 }
 
