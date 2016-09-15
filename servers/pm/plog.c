@@ -29,11 +29,13 @@ int do_plog()
 int log_start(int id)
 {
 	do_time();
+	return -1;
 }
 
 int log_end(int id)
 {
 	do_time();
+	return -1;
 }
 
 /* Returns 0 on successful initialization and 1 on error */
