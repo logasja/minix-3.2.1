@@ -49,6 +49,7 @@ int plog_start()
 		return (EXIT_FAILURE);
 
 	started = true;
+	return EXIT_SUCCESS;
 }
 
 int plog_stop()
@@ -57,10 +58,14 @@ int plog_stop()
 		return (EXIT_FAILURE);
 
 	started = false;
+	return EXIT_SUCCESS;
 }
 
 int log_start(int id)
 {
+	if (started)
+		return EXIT_FAILURE;
+
 	proc* temp = (proc*)calloc(1, sizeof(proc) );
 	temp->p_id = id;
 	temp->start_t = do_time();
@@ -74,7 +79,7 @@ int log_start(int id)
 int log_end(int id)
 {
 	do_time();
-	return -1;
+	return EXIT_FAILURE;
 }
 
 /* Returns 0 on successful initialization and 1 on error */
