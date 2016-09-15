@@ -24,11 +24,12 @@ typedef struct
 
 circularBuffer* buffer;
 
-bool started;
+bool started = false;
 
 /* Error with -1 */
 int do_plog()
 {
+	return (EXIT_SUCCESS);
 	switch (m_in.m1_i1) {
 	case PLOG_START:
 		return plog_start();
