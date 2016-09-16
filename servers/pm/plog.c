@@ -30,11 +30,11 @@ int do_plog()
 	case PLOG_RESETBUF:
 		return plog_clear();
 	case PLOG_GETBYIDX:
-		return plog_IDXget(&m_in);
+		return plog_IDXget();
 	case PLOG_GETBYPID:
-		return plog_PIDget(&m_in);
+		return plog_PIDget();
 	case PLOG_GETSIZE:
-		return plog_get_size(&m_in);
+		return plog_get_size();
 	}
 	return (EXIT_FAILURE);
 }
