@@ -20,19 +20,22 @@ circularBuffer* buffer;
 
 bool started = false;
 
-/* Error with -1 */
 int do_plog()
 {
-	return (EXIT_SUCCESS);
 	switch (m_in.m1_i1) {
 	case PLOG_START:
 		return plog_start();
 	case PLOG_STOP:
 		return plog_stop();
-	case PLOG_CLEARBUF:
+	case PLOG_RESETBUF:
 		return plog_clear();
+	case PLOG_GETBYIDX:
+		return plog_IDXget(&m_in);
+	case PLOG_GETBYPID:
+		return plog_PIDget(&m_in);
+	case PLOG_GETSIZE:
+		return plog_get_size(&m_in);
 	}
-	/* Get info about process */
 	return (EXIT_FAILURE);
 }
 
@@ -41,6 +44,7 @@ int plog_start()
 	if (started)
 		return (EXIT_FAILURE);
 
+	plog_clear();
 	started = true;
 	return EXIT_SUCCESS;
 }
@@ -77,17 +81,16 @@ int log_end(int id)
 	return EXIT_FAILURE;
 }
 
-/* Returns 0 on successful initialization and 1 on error */
 int plog_clear()
 {
 	/* If the buffer is not null it has previously been initialized*/
-	if (buffer != NULL)
+	if (buffer)
 	{
 		/* For each value in the array we want to free the memory */
 		for (int i = 0; i < buffer->size - 1; i++)
 		{
 			/* Sanity check for null pointers (may be unneccesary) */
-			if (buffer->arr[i] != NULL){free(buffer->arr[i]);}
+			if (buffer->arr[i]){free(buffer->arr[i]);}
 		}
 		/* Finally free the pointer used for the buffer */
 		free(buffer);
@@ -98,3 +101,42 @@ int plog_clear()
 }
 
 /* Getter for process by PID */
+int plog_get_size()
+{
+	if (!buffer)
+		return EXIT_FAILURE;
+
+	m_in.m2_i1 = buffer->size;
+	
+	return EXIT_SUCCESS;
+}
+
+int plog_PIDget()
+{
+	if (!buffer)
+		return EXIT_FAILURE;
+
+	for (int i = 0; i < buffer->size - 1; i++)
+	{
+		if (m_in.m1_i2 == buffer->arr[i]->p_id)
+		{
+			m_in.m2_l1 = buffer->arr[i]->start_t;
+			m_in.m2_l2 = buffer->arr[i]->end_t;
+			return EXIT_SUCCESS;
+		}
+	}
+
+	return EXIT_FAILURE;
+}
+
+int plog_IDXget()
+{
+	if (!buffer || buffer->size < m_in.m1_i3)
+		return EXIT_FAILURE;
+
+	m_in.m2_l1 = buffer->arr[m_in.m1_i3]->start_t;
+	m_in.m2_l2 = buffer->arr[m_in.m1_i3]->end_t;
+	m_in.m1_i2 = buffer->arr[m_in.m1_i3]->p_id;
+
+	return EXIT_SUCCESS;
+}

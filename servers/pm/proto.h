@@ -111,3 +111,6 @@ int log_end(int id);
 int plog_clear(void);
 int plog_start(void);
 int plog_stop(void);
+int plog_get_size(void);
+int plog_PIDget(void);
+int plog_IDXget(void);

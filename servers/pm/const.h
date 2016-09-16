@@ -23,4 +23,7 @@
 #define PLOG_BUFFER_SIZE 1024
 #define PLOG_START 0
 #define PLOG_STOP 1
-#define PLOG_CLEARBUF 2
+#define PLOG_RESETBUF 2
+#define PLOG_GETBYIDX 3
+#define PLOG_GETBYPID 4
+#define PLOG_GETSIZE 5
