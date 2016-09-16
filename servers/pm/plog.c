@@ -20,6 +20,7 @@ circularBuffer* buffer;
 
 bool started = false;
 
+/* Entry point into functionality */
 int do_plog()
 {
 	switch (m_in.m1_i1) {
@@ -39,6 +40,7 @@ int do_plog()
 	return (EXIT_FAILURE);
 }
 
+/* Starts process logger process */
 int plog_start()
 {
 	if (started)
@@ -49,6 +51,7 @@ int plog_start()
 	return EXIT_SUCCESS;
 }
 
+/* Stops process logger process */
 int plog_stop()
 {
 	if (!started)
@@ -58,32 +61,38 @@ int plog_stop()
 	return EXIT_SUCCESS;
 }
 
+/* Adds a new process to the buffer */
 int log_start(int id)
 {
 	if (!started)
 		return EXIT_FAILURE;
 
-	proc* temp = (proc*)calloc(1, sizeof(proc) );
-	temp->p_id = id;
-	temp->start_t = do_time();
-	buffer->arr[buffer->cur_index++] = temp;
-	++buffer->size;
+	proc* tmp = (proc*)calloc(1, sizeof(proc) );
+	tmp->p_id = id;
+	tmp->start_t = do_time();
+	buffer->arr[buffer->cur_index++] = tmp;
+	++(buffer->size);
 	if (buffer->cur_index == PLOG_BUFFER_SIZE)
 		buffer->cur_index = 0;
 	return (EXIT_SUCCESS);
 }
 
+/* Adds termination time */
 int log_end(int id)
 {
-	if (!started)
-		return EXIT_FAILURE;
-	do_time();
+	proc* tmp = find_by_PID(id);
+	if (tmp && started)
+	{
+		tmp->end_t = do_time();
+		return EXIT_SUCCESS;
+	}
+
 	return EXIT_FAILURE;
 }
 
+/* Clears entire buffer */
 int plog_clear()
 {
-	/* If the buffer is not null it has previously been initialized*/
 	if (buffer)
 	{
 		/* For each value in the array we want to free the memory */
@@ -100,7 +109,7 @@ int plog_clear()
 	return buffer == NULL;
 }
 
-/* Getter for process by PID */
+/* Get current size of buffer */
 int plog_get_size()
 {
 	if (!buffer)
@@ -111,24 +120,20 @@ int plog_get_size()
 	return EXIT_SUCCESS;
 }
 
+/* Get process by PID */
 int plog_PIDget()
 {
-	if (!buffer)
-		return EXIT_FAILURE;
-
-	for (int i = 0; i < buffer->size - 1; i++)
+	proc* found = find_by_PID(m_in.m1_i2);
+	if (found)
 	{
-		if (m_in.m1_i2 == buffer->arr[i]->p_id)
-		{
-			m_in.m2_l1 = buffer->arr[i]->start_t;
-			m_in.m2_l2 = buffer->arr[i]->end_t;
-			return EXIT_SUCCESS;
-		}
+		m_in.m2_l1 = found->start_t;
+		m_in.m2_l2 = found->end_t;
+		return EXIT_SUCCESS;
 	}
-
 	return EXIT_FAILURE;
 }
 
+/* Get process by index */
 int plog_IDXget()
 {
 	if (!buffer || buffer->size < m_in.m1_i3)
@@ -139,4 +144,16 @@ int plog_IDXget()
 	m_in.m1_i2 = buffer->arr[m_in.m1_i3]->p_id;
 
 	return EXIT_SUCCESS;
+}
+
+proc* find_by_PID(int id)
+{
+	if (!buffer)
+		return NULL;
+	for (int i = 0; i < buffer->size - 1; i++)
+	{
+		if (id == buffer->arr[i]->p_id)
+			return buffer->arr[i];
+	}
+	return NULL;
 }
