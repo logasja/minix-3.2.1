@@ -4,7 +4,7 @@ struct mproc;
 struct stat;
 struct mem_map;
 struct memory;
-struct plog;
+extern struct plog;
 
 #include <timers.h>
 

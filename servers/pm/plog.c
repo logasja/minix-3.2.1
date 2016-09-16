@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-typedef struct
+typedef struct plog
 {
 	int p_id;
 	time_t start_t;
