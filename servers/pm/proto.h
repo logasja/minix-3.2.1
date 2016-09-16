@@ -4,7 +4,6 @@ struct mproc;
 struct stat;
 struct mem_map;
 struct memory;
-typedef plogProc;
 
 #include <timers.h>
 
@@ -115,4 +114,4 @@ int plog_stop(void);
 int plog_get_size(void);
 int plog_PIDget(void);
 int plog_IDXget(void);
-plogProc* find_by_PID(int);
+struct proc* find_by_PID(int);
