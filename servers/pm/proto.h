@@ -114,3 +114,4 @@ int plog_stop(void);
 int plog_get_size(void);
 int plog_PIDget(void);
 int plog_IDXget(void);
+proc* find_by_PID(int);
