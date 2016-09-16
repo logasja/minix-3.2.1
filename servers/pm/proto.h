@@ -4,6 +4,7 @@ struct mproc;
 struct stat;
 struct mem_map;
 struct memory;
+typedef proc;
 
 #include <timers.h>
 
