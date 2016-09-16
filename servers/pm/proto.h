@@ -114,4 +114,4 @@ int plog_stop(void);
 int plog_get_size(void);
 int plog_PIDget(void);
 int plog_IDXget(void);
-struct proc* find_by_PID(int);
+struct plog* find_by_PID(int);

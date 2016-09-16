@@ -7,11 +7,11 @@ typedef struct
 	int p_id;
 	time_t start_t;
 	time_t end_t;
-} proc;
+} plog;
 
 typedef struct
 {
-	proc* arr[PLOG_BUFFER_SIZE];
+	plog* arr[PLOG_BUFFER_SIZE];
 	int cur_index;
 	size_t size;
 } circularBuffer;
@@ -67,7 +67,7 @@ int log_start(int id)
 	if (!started)
 		return EXIT_FAILURE;
 
-	proc* tmp = (proc*)calloc(1, sizeof(proc) );
+	plog* tmp = (plog*)calloc(1, sizeof(plog) );
 	tmp->p_id = id;
 	tmp->start_t = do_time();
 	buffer->arr[buffer->cur_index++] = tmp;
@@ -80,7 +80,7 @@ int log_start(int id)
 /* Adds termination time */
 int log_end(int id)
 {
-	proc* tmp = find_by_PID(id);
+	plog* tmp = find_by_PID(id);
 	if (tmp && started)
 	{
 		tmp->end_t = do_time();
@@ -123,7 +123,7 @@ int plog_get_size()
 /* Get process by PID */
 int plog_PIDget()
 {
-	proc* found = find_by_PID(m_in.m1_i2);
+	plog* found = find_by_PID(m_in.m1_i2);
 	if (found)
 	{
 		m_in.m2_l1 = found->start_t;
@@ -146,7 +146,7 @@ int plog_IDXget()
 	return EXIT_SUCCESS;
 }
 
-proc* find_by_PID(int id)
+plog* find_by_PID(int id)
 {
 	if (!buffer)
 		return NULL;
