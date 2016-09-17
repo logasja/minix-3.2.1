@@ -107,8 +107,8 @@ int plog_clear()
 	//	//free(buffer);
 	//}
 	/* Allocate memory for the buffer */
-	buffer = (circularBuffer*) calloc(1, sizeof(circularBuffer));
-	return buffer == NULL;
+	//buffer = (circularBuffer*) calloc(1, sizeof(circularBuffer));
+	return EXIT_SUCCESS;
 }
 
 /* Get current size of buffer */
