@@ -65,11 +65,6 @@ int main(int argc, char *argv[])
 			else
 				fprintf(stderr, "Index: %d\n\tStart: %ld\n\tEnd: %ld\n", param, start, end);
 			break;
-		case 'c':
-			/*clear the current buffer*/
-			status = reset_plog();
-			fprintf(stderr, "Resetting logger buffer.\n");
-			break;
 		}
 	}
 	if (status < 0)

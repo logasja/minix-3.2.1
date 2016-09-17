@@ -17,7 +17,7 @@ typedef struct circularBuffer
 	size_t size;
 } circularBuffer;
 
-circularBuffer* buffer;
+circularBuffer buffer;
 
 bool started = false;
 
@@ -72,10 +72,10 @@ int log_start(int id)
 	tmp->p_id = id;
 	tmp->start_t = do_time();
 	tmp->end_t = -1;
-	buffer->arr[buffer->cur_index++] = tmp;
-	++(buffer->size);
-	if (buffer->cur_index == PLOG_BUFFER_SIZE)
-		buffer->cur_index = 0;
+	buffer.arr[buffer.cur_index++] = tmp;
+	buffer.size += 1;
+	if (buffer.cur_index == PLOG_BUFFER_SIZE)
+		buffer.cur_index = 0;
 	return (EXIT_SUCCESS);
 }
 
@@ -95,29 +95,20 @@ int log_end(int id)
 /* Clears entire buffer */
 int plog_clear()
 {
-	//if (buffer != NULL)
-	//{
-	//	/* For each value in the array we want to free the memory */
-	//	for (int i = 0; i < buffer->size - 1; i++)
-	//	{
-	//		/* Sanity check for null pointers (may be unneccesary) */
-	//		if (buffer->arr[i]){free(buffer->arr[i]);}
-	//	}
-	//	/* Finally free the pointer used for the buffer */
-	//	//free(buffer);
-	//}
-	/* Allocate memory for the buffer */
-	//buffer = (circularBuffer*) calloc(1, sizeof(circularBuffer));
+	/* For each value in the array we want to free the memory */
+	for (int i = 0; i < buffer.size - 1; i++)
+	{
+		/* Sanity check for null pointers (may be unneccesary) */
+		if (buffer.arr[i]){free(buffer.arr[i]);}
+	}
+	buffer.size = 0;
 	return EXIT_SUCCESS;
 }
 
 /* Get current size of buffer */
 int plog_get_size()
 {
-	if (!buffer)
-		return EXIT_FAILURE;
-
-	m_in.m2_i1 = buffer->size;
+	m_in.m2_i1 = buffer.size;
 	
 	return EXIT_SUCCESS;
 }
@@ -143,24 +134,22 @@ int plog_PIDget()
 /* Get process by index */
 int plog_IDXget()
 {
-	if (!buffer || buffer->size < m_in.m1_i3)
+	if (buffer.size < m_in.m1_i3)
 		return EXIT_FAILURE;
 
-	m_in.m2_l1 = buffer->arr[m_in.m1_i3]->start_t;
-	m_in.m2_l2 = buffer->arr[m_in.m1_i3]->end_t;
-	m_in.m1_i2 = buffer->arr[m_in.m1_i3]->p_id;
+	m_in.m2_l1 = buffer.arr[m_in.m1_i3]->start_t;
+	m_in.m2_l2 = buffer.arr[m_in.m1_i3]->end_t;
+	m_in.m1_i2 = buffer.arr[m_in.m1_i3]->p_id;
 
 	return EXIT_SUCCESS;
 }
 
 plog* find_by_PID(int id)
 {
-	if (!buffer)
-		return NULL;
-	for (int i = 0; i < buffer->size - 1; i++)
+	for (int i = 0; i < buffer.size - 1; i++)
 	{
-		if (id == buffer->arr[i]->p_id)
-			return buffer->arr[i];
+		if (id == buffer.arr[i]->p_id)
+			return buffer.arr[i];
 	}
 	return NULL;
 }
