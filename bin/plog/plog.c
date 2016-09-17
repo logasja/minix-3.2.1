@@ -35,7 +35,10 @@ int main(int argc, char *argv[])
 
 	if (status > -1)
 		if (status)
+		{
 			fprintf(stderr, "Error starting or stopping service.\n");
+			exit(status);
+		}
 
 	int ch;
 	if ((ch = getopt(argc, argv, "ip")) != -1)
