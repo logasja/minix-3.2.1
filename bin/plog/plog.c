@@ -24,6 +24,7 @@ int main(int argc, char *argv[])
 		if ((ch = getopt(argc, argv, "ipcs")) != -1)
 		{
 			int param = atoi(*argv);
+			fprintf(stderr,*argv);
 			long start, end;
 			switch (ch) {
 			case 'p':
