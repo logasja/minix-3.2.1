@@ -17,55 +17,58 @@ int main(int, char*[]);
 
 int main(int argc, char *argv[])
 {
-	int status = EXIT_FAILURE;
+	int status = -1;
+
 	if (argv[1])
 	{
-		int ch;
-		if ((ch = getopt(argc, argv, "ipcs")) != -1)
+		if (argv[1] == "start")
 		{
-			int param = atoi(*argv);
-			fprintf(stderr,argv[1]);
-			long start, end;
-			switch (ch) {
-			case 'p':
-				/*if present, gets process by id*/
-				status = get_plog_byPID(param, &start, &end);
-				if (status)
-					fprintf(stderr, "Could not find the specified process log.\n");
-				else
-					fprintf(stderr, "PID: %d\n\tStart: %ld\n\tEnd: %ld\n", param, start, end);
-				break;
-			case 'i':
-				/*if present, get process by index*/
-				status = get_plog_byindex(param, &start, &end);
-				if (status)
-					fprintf(stderr, "Specified index is not valid.\n");
-				else
-					fprintf(stderr, "Index: %d\n\tStart: %ld\n\tEnd: %ld\n", param, start, end);
-				break;
-			case 's':
-				/* Starts or stops the plog service */
-				if (param == 1)
-				{
-					status = start_plog();
-					fprintf(stderr, "Starting process logger.\n");
-				}
-				else if (param == 0)
-				{
-					status = stop_plog();
-					fprintf(stderr, "Stopping process logger.\n");
-				}
-				else
-					fprintf(stderr, HELP_DIALOGUE);
-			case 'c':
-				/*clear the current buffer*/
-				status = reset_plog();
-				fprintf(stderr, "Resetting logger buffer.\n");
-				break;
-			default:
-				fprintf(stderr, HELP_DIALOGUE);
-			}
+			fprintf(stderr, "Starting process logger.\n");
+			status = start_plog();
 		}
+		else if (argv[1] == "stop")
+		{
+			fprintf(stderr, "Stopping process logger.\n");
+			status = stop_plog();
+		}
+	}
+
+	if (status > -1)
+		if (status)
+			fprintf(stderr, "Error starting or stopping service.\n");
+
+	int ch;
+	if ((ch = getopt(argc, argv, "ip")) != -1)
+	{
+		int param = atoi(argv[2]);
+		fprintf(stderr,argv[2]);
+		long start, end = 0;
+		switch (ch) {
+		case 'p':
+			status = get_plog_byPID(param, &start, &end);
+			if (status)
+				fprintf(stderr, "Could not find the specified process log.\n");
+			else
+				fprintf(stderr, "PID: %d\n\tStart: %ld\n\tEnd: %ld\n", param, start, end);
+			break;
+		case 'i':
+			status = get_plog_byindex(param, &start, &end);
+			if (status)
+				fprintf(stderr, "Specified index is not valid.\n");
+			else
+				fprintf(stderr, "Index: %d\n\tStart: %ld\n\tEnd: %ld\n", param, start, end);
+			break;
+		case 'c':
+			/*clear the current buffer*/
+			status = reset_plog();
+			fprintf(stderr, "Resetting logger buffer.\n");
+			break;
+		}
+	}
+	if (status < 0)
+	{
+		fprintf(stderr, HELP_DIALOGUE);
+		status = EXIT_FAILURE;
 	}
 	exit(status);
 }
