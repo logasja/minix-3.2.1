@@ -95,17 +95,17 @@ int log_end(int id)
 /* Clears entire buffer */
 int plog_clear()
 {
-	if (buffer != NULL)
-	{
-		/* For each value in the array we want to free the memory */
-		for (int i = 0; i < buffer->size - 1; i++)
-		{
-			/* Sanity check for null pointers (may be unneccesary) */
-			if (buffer->arr[i]){free(buffer->arr[i]);}
-		}
-		/* Finally free the pointer used for the buffer */
-		//free(buffer);
-	}
+	//if (buffer != NULL)
+	//{
+	//	/* For each value in the array we want to free the memory */
+	//	for (int i = 0; i < buffer->size - 1; i++)
+	//	{
+	//		/* Sanity check for null pointers (may be unneccesary) */
+	//		if (buffer->arr[i]){free(buffer->arr[i]);}
+	//	}
+	//	/* Finally free the pointer used for the buffer */
+	//	//free(buffer);
+	//}
 	/* Allocate memory for the buffer */
 	buffer = (circularBuffer*) calloc(1, sizeof(circularBuffer));
 	return buffer == NULL;
