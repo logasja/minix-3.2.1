@@ -24,6 +24,7 @@ bool started = false;
 /* Entry point into functionality */
 int do_plog()
 {
+	fprintf(stderr, "In do_plog");
 	switch (m_in.m1_i1) {
 	case PLOG_START:
 		return plog_start();
