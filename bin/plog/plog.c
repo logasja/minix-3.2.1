@@ -31,6 +31,11 @@ int main(int argc, char *argv[])
 			fprintf(stderr, "Stopping process logger.\n");
 			status = stop_plog();
 		}
+		else if (!strcmp(argv[1], "clear"))
+		{
+			fprintf(stderr, "Clearing buffer.\n");
+			status = reset_plog();
+		}
 	}
 
 	if (status > -1)
