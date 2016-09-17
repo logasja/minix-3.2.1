@@ -21,12 +21,12 @@ int main(int argc, char *argv[])
 
 	if (argv[1])
 	{
-		if (argv[1] == "start")
+		if (!strcmp(argv[1],"start"))
 		{
 			fprintf(stderr, "Starting process logger.\n");
 			status = start_plog();
 		}
-		else if (argv[1] == "stop")
+		else if (!strcmp(argv[1],"stop"))
 		{
 			fprintf(stderr, "Stopping process logger.\n");
 			status = stop_plog();
@@ -41,7 +41,6 @@ int main(int argc, char *argv[])
 	if ((ch = getopt(argc, argv, "ip")) != -1)
 	{
 		int param = atoi(argv[2]);
-		fprintf(stderr,argv[2]);
 		long start, end = 0;
 		switch (ch) {
 		case 'p':
