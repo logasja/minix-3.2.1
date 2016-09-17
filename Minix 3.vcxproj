@@ -125,6 +125,7 @@
     <ClCompile Include="bin\pax\tables.c" />
     <ClCompile Include="bin\pax\tar.c" />
     <ClCompile Include="bin\pax\tty_subs.c" />
+    <ClCompile Include="bin\plog\plog.c" />
     <ClCompile Include="bin\pwd\pwd.c" />
     <ClCompile Include="bin\rmdir\rmdir.c" />
     <ClCompile Include="bin\rm\rm.c" />

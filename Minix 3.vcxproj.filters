@@ -13734,6 +13734,9 @@
     <ClCompile Include="lib\libc\sys-minix\get_plog_byindex.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="bin\plog\plog.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="commands\ash\builtins.def">
