@@ -68,8 +68,7 @@ int log_start(int id)
 	if (!started)
 		return EXIT_FAILURE;
 
-	fprintf(stderr, "About to allocate mem");
-	plog* tmp = (plog*)malloc(sizeof(plog) );
+	plog* tmp = (plog*)calloc(1, sizeof(plog) );
 	tmp->p_id = id;
 	tmp->start_t = do_time();
 	tmp->end_t = -1;
