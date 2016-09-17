@@ -18,7 +18,7 @@ int main(int, char*[]);
 int main(int argc, char *argv[])
 {
 	int status = EXIT_FAILURE;
-	if (++*argv)
+	if (*argv[1])
 	{
 		int ch;
 		if ((ch = getopt(argc, argv, "ipcs")) != -1)
