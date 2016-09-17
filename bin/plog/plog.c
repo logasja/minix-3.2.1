@@ -48,17 +48,25 @@ int main(int argc, char *argv[])
 			case 'p':
 				/*if present, gets process by id*/
 				status = get_plog_byPID(param, &start, &end);
-				fprintf(stderr, "PID: %d\n\tStart: %ld\n\tEnd: %ld\n", param, start, end);
+				if (status)
+					fprintf(stderr, "Could not find the specified log.\n");
+				else
+					fprintf(stderr, "PID: %d\n\tStart: %ld\n\tEnd: %ld\n", param, start, end);
 				break;
 			case 'i':
 				/*if present, get process by index*/
 				status = get_plog_byindex(param, &start, &end);
-				fprintf(stderr, "Index: %d\n\tStart: %ld\n\tEnd: %ld\n", param, start, end);
+				if (status)
+					fprintf(stderr, "Specified index is not valid.\n");
+				else
+					fprintf(stderr, "Index: %d\n\tStart: %ld\n\tEnd: %ld\n", param, start, end);
 				break;
 			case 'c':
 				/*clear the current buffer*/
 				status = reset_plog();
 				break;
+			default:
+				fprintf(stderr, "usage: plog [start | stop | help] [-ipc] [index...process]\n");
 			}
 		}
 	}
