@@ -126,14 +126,18 @@ int plog_get_size()
 int plog_PIDget()
 {
 	plog* found = find_by_PID(m_in.m1_i2);
-	fprintf(stderr, found->p_id);
-	if (found)
+	if (found != NULL)
 	{
 		m_in.m2_l1 = found->start_t;
 		m_in.m2_l2 = found->end_t;
 		return EXIT_SUCCESS;
 	}
-	return EXIT_FAILURE;
+	else
+	{
+		m_in.m2_l1 = -1;
+		m_in.m2_l2 = -1;
+		return EXIT_FAILURE;
+	}
 }
 
 /* Get process by index */
