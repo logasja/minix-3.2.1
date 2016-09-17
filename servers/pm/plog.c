@@ -10,7 +10,7 @@ typedef struct plog
 	time_t end_t;
 } plog;
 
-typedef struct
+typedef struct circularBuffer
 {
 	plog* arr[PLOG_BUFFER_SIZE];
 	int cur_index;
