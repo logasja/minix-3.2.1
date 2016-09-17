@@ -11,36 +11,17 @@
 #include <string.h>
 #include <unistd.h>
 
-int fflag;
+#define HELP_DIALOGUE "usage: plog [-hsipc] [index...process]\n"
 
 int main(int, char*[]);
 
 int main(int argc, char *argv[])
 {
-	int status = -1;
+	int status = EXIT_FAILURE;
 	if (*argv)
 	{
-		if (!strcmp(*argv, "start"))
-		{
-			status = start_plog();
-			fprintf(stderr, "Starting process logger.\n");
-		}
-		else if (!strcmp(*argv, "stop"))
-		{
-			status = stop_plog();
-			fprintf(stderr, "Stopping process logger.\n");
-		}
-		else if (!strcmp(*argv, "help"))
-		{
-			fprintf(stderr, "usage: plog [start | stop | help] [-ipc] [index...process]\n");
-			status = EXIT_FAILURE;
-		}
-		if (status >= 0)
-			exit(status);
-
 		int ch;
-
-		if ((ch = getopt(argc, argv, "ipc")) != -1)
+		if ((ch = getopt(argc, argv, "ipcs")) != -1)
 		{
 			int param = atoi(*argv);
 			long start, end;
@@ -49,7 +30,7 @@ int main(int argc, char *argv[])
 				/*if present, gets process by id*/
 				status = get_plog_byPID(param, &start, &end);
 				if (status)
-					fprintf(stderr, "Could not find the specified log.\n");
+					fprintf(stderr, "Could not find the specified process log.\n");
 				else
 					fprintf(stderr, "PID: %d\n\tStart: %ld\n\tEnd: %ld\n", param, start, end);
 				break;
@@ -61,13 +42,29 @@ int main(int argc, char *argv[])
 				else
 					fprintf(stderr, "Index: %d\n\tStart: %ld\n\tEnd: %ld\n", param, start, end);
 				break;
+			case 's':
+				/* Starts or stops the plog service */
+				if (param == 1)
+				{
+					status = start_plog();
+					fprintf(stderr, "Starting process logger.\n");
+				}
+				else if (param == 0)
+				{
+					status = stop_plog();
+					fprintf(stderr, "Stopping process logger.\n");
+				}
+				else
+					fprintf(stderr, HELP_DIALOGUE);
 			case 'c':
 				/*clear the current buffer*/
 				status = reset_plog();
+				fprintf(stderr, "Resetting logger buffer.\n");
 				break;
 			default:
-				fprintf(stderr, "usage: plog [start | stop | help] [-ipc] [index...process]\n");
+				fprintf(stderr, HELP_DIALOGUE);
 			}
 		}
 	}
+	exit(status);
 }
