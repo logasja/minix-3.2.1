@@ -95,8 +95,6 @@ int log_end(int id)
 /* Clears entire buffer */
 int plog_clear()
 {
-	fprintf(stderr, "%d\n", buffer == NULL);
-	stdin;
 	if (buffer != NULL)
 	{
 		/* For each value in the array we want to free the memory */
@@ -106,7 +104,7 @@ int plog_clear()
 			if (buffer->arr[i]){free(buffer->arr[i]);}
 		}
 		/* Finally free the pointer used for the buffer */
-		free(buffer);
+		//free(buffer);
 	}
 	/* Allocate memory for the buffer */
 	buffer = (circularBuffer*) calloc(1, sizeof(circularBuffer));
