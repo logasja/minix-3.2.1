@@ -1,5 +1,6 @@
 #include "pm.h"
 #include <stdlib.h>
+#include <stdio.h>
 #include <stdbool.h>
 
 typedef struct plog
@@ -125,7 +126,7 @@ int plog_get_size()
 int plog_PIDget()
 {
 	plog* found = find_by_PID(m_in.m1_i2);
-	fprintf(stderr, "Finding %d", found->p_id);
+	fprintf(stderr, found->p_id);
 	if (found)
 	{
 		m_in.m2_l1 = found->start_t;
