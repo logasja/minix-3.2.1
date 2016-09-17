@@ -44,9 +44,9 @@ int do_plog()
 /* Starts process logger process */
 int plog_start()
 {
+	fprintf(stderr, "Starting");
 	if (started)
 		return (EXIT_FAILURE);
-
 	plog_clear();
 	started = true;
 	return EXIT_SUCCESS;
@@ -55,6 +55,7 @@ int plog_start()
 /* Stops process logger process */
 int plog_stop()
 {
+	fprintf(stderr, "Stopping");
 	if (!started)
 		return (EXIT_FAILURE);
 
@@ -65,6 +66,7 @@ int plog_stop()
 /* Adds a new process to the buffer */
 int log_start(int id)
 {
+	fprintf(stderr, "Logging Start");
 	if (!started)
 		return EXIT_FAILURE;
 
@@ -82,6 +84,7 @@ int log_start(int id)
 /* Adds termination time */
 int log_end(int id)
 {
+	fprintf(stderr, "Logging End");
 	plog* tmp = find_by_PID(id);
 	if (tmp && started)
 	{
@@ -95,6 +98,7 @@ int log_end(int id)
 /* Clears entire buffer */
 int plog_clear()
 {
+	fprintf(stderr, "Clearing");
 	/* For each value in the array we want to free the memory */
 	for (int i = 0; i < buffer.size - 1; i++)
 	{
