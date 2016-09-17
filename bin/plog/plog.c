@@ -48,10 +48,12 @@ int main(int argc, char *argv[])
 			case 'p':
 				/*if present, gets process by id*/
 				status = get_plog_byPID(param, &start, &end);
+				fprint(stderr, "PID: %d\n\tStart: %ld\n\tEnd: %ld\n", param, start, end);
 				break;
 			case 'i':
 				/*if present, get process by index*/
 				status = get_plog_byindex(param, &start, &end);
+				fprint(stderr, "Index: %d\n\tStart: %ld\n\tEnd: %ld\n", param, start, end);
 				break;
 			case 'c':
 				/*clear the current buffer*/
