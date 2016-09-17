@@ -95,6 +95,7 @@ int log_end(int id)
 /* Clears entire buffer */
 int plog_clear()
 {
+	fprintf(stderr, "%d\n", buffer == NULL);
 	if (buffer != NULL)
 	{
 		/* For each value in the array we want to free the memory */

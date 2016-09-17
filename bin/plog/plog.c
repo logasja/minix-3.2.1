@@ -24,7 +24,7 @@ int main(int argc, char *argv[])
 		if (!strcmp(argv[1],"start"))
 		{
 			fprintf(stderr, "Starting process logger.\n");
-			//status = start_plog();
+			status = start_plog();
 		}
 		else if (!strcmp(argv[1],"stop"))
 		{
