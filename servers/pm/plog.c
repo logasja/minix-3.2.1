@@ -87,7 +87,7 @@ int log_start(int id)
 		//buffer.size += 1;
 		//buffer.arr[buffer.cur_index] = tmp;
 	}
-	++buffer.arr[buffer.cur_index];
+	++buffer.cur_index;
 	if (buffer.cur_index == PLOG_BUFFER_SIZE)
 		buffer.cur_index = 0;
 	return (EXIT_SUCCESS);
