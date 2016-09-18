@@ -78,22 +78,17 @@ int log_start(int id)
 		//printf("Logging Start\n");
 
 		plog* tmp = buffer.arr[buffer.cur_index];
-		if (tmp)
-		{
-			tmp->p_id = id;
-			tmp->start_t = do_time();
-			tmp->end_t = -1;
-		}
-		else
+		fprintf(stderr, "Got pointer %p at %d.\n", tmp, buffer.cur_index);
+		if (!tmp)
 		{
 			tmp = (plog*)malloc(sizeof(plog));
-			tmp->p_id = id;
-			tmp->start_t = do_time();
-			tmp->end_t = -1;
-			buffer.size += 1;
-			buffer.arr[buffer.cur_index] = tmp;
+			buffer.size++;
 		}
-		++buffer.cur_index;
+		tmp->p_id = id;
+		tmp->start_t = do_time();
+		tmp->end_t = -1;
+		buffer.arr[buffer.cur_index++] = tmp;
+
 		if (buffer.cur_index == PLOG_BUFFER_SIZE)
 			buffer.cur_index = 0;
 		return (EXIT_SUCCESS);
