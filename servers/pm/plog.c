@@ -86,12 +86,12 @@ int log_start(int id)
 int log_end(int id)
 {
 //	fprintf(stderr, "Logging End");
-	//plog* tmp = find_by_PID(id);
-	//if (tmp && started)
-	//{
-	//	tmp->end_t = do_time();
-	//	return EXIT_SUCCESS;
-	//}
+	plog* tmp = find_by_PID(id);
+	if (tmp && started)
+	{
+		tmp->end_t = do_time();
+		return EXIT_SUCCESS;
+	}
 
 	return EXIT_FAILURE;
 }
