@@ -57,10 +57,10 @@ int plog_start()
 int plog_stop()
 {
 //	fprintf(stderr, "Stopping");
-	//if (!started)
-	//	return (EXIT_FAILURE);
+	if (!started)
+		return (EXIT_FAILURE);
 
-	//started = false;
+	started = false;
 	return EXIT_SUCCESS;
 }
 
@@ -99,14 +99,14 @@ int log_end(int id)
 /* Clears entire buffer */
 int plog_clear()
 {
-////	fprintf(stderr, "Clearing");
-//	/* For each value in the array we want to free the memory */
-//	for (int i = 0; i < buffer.size - 1; i++)
-//	{
-//		/* Sanity check for null pointers (may be unneccesary) */
-//		if (buffer.arr[i]){free(buffer.arr[i]);}
-//	}
-//	buffer.size = 0;
+//	fprintf(stderr, "Clearing");
+	/* For each value in the array we want to free the memory */
+	for (int i = 0; i < buffer.size - 1; i++)
+	{
+		/* Sanity check for null pointers (may be unneccesary) */
+		if (buffer.arr[i]){free(buffer.arr[i]);}
+	}
+	buffer.size = 0;
 	return EXIT_SUCCESS;
 }
 
