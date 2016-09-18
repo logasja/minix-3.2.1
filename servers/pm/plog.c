@@ -136,7 +136,7 @@ int plog_get_size()
 {
 	m_in.m2_i1 = buffer.size;
 	
-	fprintf("Buffer size is %lu, returned size is %lu", buffer.size, m_in.m2_i1);
+	fprintf("Buffer size is %u, returned size is %u", buffer.size, m_in.m2_i1);
 	
 	return EXIT_SUCCESS;
 }
