@@ -17,14 +17,15 @@ typedef struct circularBuffer
 	plog* arr[PLOG_BUFFER_SIZE];
 } circularBuffer;
 
-circularBuffer buffer = { 0,0 };
+circularBuffer buffer;
 
+bool dirtyBuf = true;
 bool started = false;
 
 /* Entry point into functionality */
 int do_plog()
 {
-	fprintf(stderr, "In do_plog");
+	printf("In do_plog");
 	switch (m_in.m1_i1) {
 	case PLOG_START:
 		return plog_start();
@@ -45,7 +46,9 @@ int do_plog()
 /* Starts process logger process */
 int plog_start()
 {
-	fprintf(stderr, "Starting");
+	printf("Starting");
+	if (dirtyBuf)
+		init_buffer();
 	if (started)
 		return (EXIT_FAILURE);
 	plog_clear();
@@ -56,7 +59,7 @@ int plog_start()
 /* Stops process logger process */
 int plog_stop()
 {
-	fprintf(stderr, "Stopping");
+	printf("Stopping");
 	if (!started)
 		return (EXIT_FAILURE);
 
@@ -67,7 +70,7 @@ int plog_stop()
 /* Adds a new process to the buffer */
 int log_start(int id)
 {
-	fprintf(stderr, "Logging Start");
+	printf("Logging Start");
 	if (!started)
 		return EXIT_FAILURE;
 
@@ -96,7 +99,7 @@ int log_start(int id)
 /* Adds termination time */
 int log_end(int id)
 {
-	fprintf(stderr, "Logging End");
+	printf("Logging End");
 	if (started)
 	{
 		plog* tmp = find_by_PID(id);
@@ -113,7 +116,7 @@ int log_end(int id)
 /* Clears entire buffer */
 int plog_clear()
 {
-	fprintf(stderr, "Clearing");
+	printf("Clearing");
 	if (started)
 	{
 		/* For each value in the array we want to free the memory */
@@ -176,4 +179,13 @@ plog* find_by_PID(int id)
 				return buffer.arr[i];
 	}
 	return NULL;
+}
+
+void init_buffer()
+{
+	for (int i = 0; i < PLOG_BUFFER_SIZE; i++)
+	{
+		buffer.arr[i] = NULL;
+	}
+	dirtyBuf = true;
 }
