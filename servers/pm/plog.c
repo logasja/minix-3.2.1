@@ -71,12 +71,23 @@ int log_start(int id)
 	if (!started)
 		return EXIT_FAILURE;
 
-	plog* tmp = (plog*)calloc(1,sizeof(plog));
-	tmp->p_id = id;
-	tmp->start_t = do_time();
-	tmp->end_t = -1;
-	buffer.arr[buffer.cur_index++] = tmp;
-	buffer.size += 1;
+	plog* tmp = buffer.arr[buffer.cur_index];
+	if (tmp)
+	{
+		tmp->p_id = id;
+		tmp->start_t = do_time();
+		tmp->end_t = -1;
+	}
+	else
+	{
+		tmp = (plog*)calloc(1, sizeof(plog));
+		tmp->p_id = id;
+		tmp->start_t = do_time();
+		tmp->end_t = -1;
+		buffer.size += 1;
+		buffer.arr[buffer.cur_index] = tmp;
+	}
+	++buffer.arr[buffer.cur_index];
 	if (buffer.cur_index == PLOG_BUFFER_SIZE)
 		buffer.cur_index = 0;
 	return (EXIT_SUCCESS);
