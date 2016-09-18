@@ -39,16 +39,22 @@ int main(int argc, char *argv[])
 	}
 
 	if (status > -1)
+	{
 		if (status)
 		{
 			fprintf(stderr, "Error starting or stopping service.\n");
 			exit(status);
 		}
+	}
 
 	int ch;
 	if ((ch = getopt(argc, argv, "sip")) != -1)
 	{
-		int param = atoi(argv[2]);
+		int param;
+		if (argv[2])
+		{
+			param = atoi(argv[2]);
+		}
 		long start, end = 0;
 		int size;
 		switch (ch) {
