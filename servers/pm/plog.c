@@ -46,22 +46,25 @@ int do_plog()
 /* Starts process logger process */
 int plog_start()
 {
-	printf("Starting");
-	if (dirtyBuf)
-		init_buffer();
-	if (started)
-		return (EXIT_FAILURE);
-	plog_clear();
-	started = true;
-	return EXIT_SUCCESS;
+	if (!started)
+	{
+		printf("Starting");
+		if (dirtyBuf)
+			init_buffer();
+		plog_clear();
+		started = true;
+		return EXIT_SUCCESS;
+	}
+	return EXIT_FAILURE;
 }
 
 /* Stops process logger process */
 int plog_stop()
 {
-	printf("Stopping");
 	if (!started)
 		return (EXIT_FAILURE);
+
+	printf("Stopping");
 
 	started = false;
 	return EXIT_SUCCESS;
@@ -70,38 +73,40 @@ int plog_stop()
 /* Adds a new process to the buffer */
 int log_start(int id)
 {
-	printf("Logging Start");
-	if (!started)
-		return EXIT_FAILURE;
+	if (started)
+	{
+		printf("Logging Start");
 
-	plog* tmp = buffer.arr[buffer.cur_index];
-	if (tmp)
-	{
-		tmp->p_id = id;
-		tmp->start_t = do_time();
-		tmp->end_t = -1;
+		plog* tmp = buffer.arr[buffer.cur_index];
+		if (tmp)
+		{
+			tmp->p_id = id;
+			tmp->start_t = do_time();
+			tmp->end_t = -1;
+		}
+		else
+		{
+			tmp = (plog*)malloc(sizeof(plog));
+			tmp->p_id = id;
+			tmp->start_t = do_time();
+			tmp->end_t = -1;
+			buffer.size += 1;
+			buffer.arr[buffer.cur_index] = tmp;
+		}
+		++buffer.cur_index;
+		if (buffer.cur_index == PLOG_BUFFER_SIZE)
+			buffer.cur_index = 0;
+		return (EXIT_SUCCESS);
 	}
-	else
-	{
-		tmp = (plog*)malloc(sizeof(plog));
-		tmp->p_id = id;
-		tmp->start_t = do_time();
-		tmp->end_t = -1;
-		buffer.size += 1;
-		buffer.arr[buffer.cur_index] = tmp;
-	}
-	++buffer.cur_index;
-	if (buffer.cur_index == PLOG_BUFFER_SIZE)
-		buffer.cur_index = 0;
-	return (EXIT_SUCCESS);
+	return EXIT_FAILURE;
 }
 
 /* Adds termination time */
 int log_end(int id)
 {
-	printf("Logging End");
 	if (started)
 	{
+		printf("Logging End");
 		plog* tmp = find_by_PID(id);
 		if (tmp)
 		{
@@ -123,7 +128,7 @@ int plog_clear()
 		for (int i = 0; i < buffer.size - 1; i++)
 		{
 			/* Sanity check for null pointers (may be unneccesary) */
-			if (!buffer.arr[i]) { free(buffer.arr[i]); }
+			if (buffer.arr[i]) { free(buffer.arr[i]); }
 		}
 	}
 	buffer.size = 0;
@@ -183,6 +188,7 @@ plog* find_by_PID(int id)
 
 void init_buffer()
 {
+	printf("Starting Buffer Init");
 	for (int i = 0; i < PLOG_BUFFER_SIZE; i++)
 	{
 		buffer.arr[i] = NULL;
