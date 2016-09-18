@@ -69,6 +69,7 @@ int main(int argc, char *argv[])
 		case 's':
 			size = get_plog_size();
 			fprintf(stderr, "Buffer has a size of %d items.\n", size);
+			status = EXIT_SUCCESS;
 			break;
 		}
 	}

@@ -139,6 +139,7 @@ int plog_clear()
 /* Get current size of buffer */
 int plog_get_size()
 {
+	printf("Getting log size.");
 	m_in.m2_i1 = buffer.size;
 	
 	return EXIT_SUCCESS;
