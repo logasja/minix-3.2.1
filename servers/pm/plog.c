@@ -74,18 +74,18 @@ int log_start(int id)
 	plog* tmp = buffer.arr[buffer.cur_index];
 	if (tmp)
 	{
-		//tmp->p_id = id;
-		//tmp->start_t = do_time();
-		//tmp->end_t = -1;
+		tmp->p_id = id;
+		tmp->start_t = do_time();
+		tmp->end_t = -1;
 	}
 	else
 	{
-		//tmp = (plog*)calloc(1, sizeof(plog));
-		//tmp->p_id = id;
-		//tmp->start_t = do_time();
-		//tmp->end_t = -1;
-		//buffer.size += 1;
-		//buffer.arr[buffer.cur_index] = tmp;
+		tmp = (plog*)calloc(1, sizeof(plog));
+		tmp->p_id = id;
+		tmp->start_t = do_time();
+		tmp->end_t = -1;
+		buffer.size += 1;
+		buffer.arr[buffer.cur_index] = tmp;
 	}
 	++buffer.cur_index;
 	if (buffer.cur_index == PLOG_BUFFER_SIZE)
@@ -171,8 +171,9 @@ plog* find_by_PID(int id)
 {
 	for (int i = 0; i < buffer.size - 1; i++)
 	{
-		if (id == buffer.arr[i]->p_id)
-			return buffer.arr[i];
+		if(buffer.arr[i])
+			if (id == buffer.arr[i]->p_id)
+				return buffer.arr[i];
 	}
 	return NULL;
 }
