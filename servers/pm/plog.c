@@ -74,9 +74,9 @@ int log_start(int id)
 	plog* tmp = buffer.arr[buffer.cur_index];
 	if (tmp)
 	{
-		tmp->p_id = id;
-		tmp->start_t = do_time();
-		tmp->end_t = -1;
+		//tmp->p_id = id;
+		//tmp->start_t = do_time();
+		//tmp->end_t = -1;
 	}
 	else
 	{
@@ -124,6 +124,7 @@ int plog_clear()
 		}
 	}
 	buffer.size = 0;
+	buffer.cur_index = 0;
 	return EXIT_SUCCESS;
 }
 
