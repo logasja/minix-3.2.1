@@ -120,7 +120,7 @@ int plog_clear()
 		for (int i = 0; i < buffer.size - 1; i++)
 		{
 			/* Sanity check for null pointers (may be unneccesary) */
-			if (buffer.arr[i]) { free(buffer.arr[i]); }
+			if (*buffer.arr[i]) { free(buffer.arr[i]); }
 		}
 	}
 	buffer.size = 0;
