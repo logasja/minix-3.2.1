@@ -25,7 +25,7 @@ bool started = false;
 /* Entry point into functionality */
 int do_plog()
 {
-	printf("In do_plog");
+	printf("In do_plog\n");
 	switch (m_in.m1_i1) {
 	case PLOG_START:
 		return plog_start();
@@ -48,7 +48,7 @@ int plog_start()
 {
 	if (!started)
 	{
-		printf("Starting");
+		printf("Starting\n");
 		if (dirtyBuf)
 			init_buffer();
 		plog_clear();
@@ -64,7 +64,7 @@ int plog_stop()
 	if (!started)
 		return (EXIT_FAILURE);
 
-	printf("Stopping");
+	printf("Stopping\n");
 
 	started = false;
 	return EXIT_SUCCESS;
@@ -75,7 +75,7 @@ int log_start(int id)
 {
 	if (started)
 	{
-		printf("Logging Start");
+		printf("Logging Start\n");
 
 		plog* tmp = buffer.arr[buffer.cur_index];
 		if (tmp)
@@ -106,8 +106,9 @@ int log_end(int id)
 {
 	if (started)
 	{
-		printf("Logging End");
+		printf("Logging End\n");
 		plog* tmp = find_by_PID(id);
+		fprintf(stderr, "%d", &tmp);
 		if (tmp)
 		{
 			tmp->end_t = do_time();
@@ -121,7 +122,7 @@ int log_end(int id)
 /* Clears entire buffer */
 int plog_clear()
 {
-	printf("Clearing");
+	printf("Clearing\n");
 	if (started)
 	{
 		/* For each value in the array we want to free the memory */
@@ -188,7 +189,7 @@ plog* find_by_PID(int id)
 
 void init_buffer()
 {
-	printf("Starting Buffer Init");
+	printf("Starting Buffer Init\n");
 	for (int i = 0; i < PLOG_BUFFER_SIZE; i++)
 	{
 		buffer.arr[i] = NULL;
