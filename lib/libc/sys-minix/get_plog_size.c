@@ -9,5 +9,5 @@ int get_plog_size()
 
 	_syscall(PM_PROC_NR, PLOG, &m);
 
-	return m.m1_i2;
+	return m.m2_i1;
 }
