@@ -166,14 +166,15 @@ int plog_PIDget()
 /* Get process by index */
 int plog_IDXget()
 {
-	if (buffer.size < m_in.m1_i3)
-		return EXIT_FAILURE;
+	if (buffer.size > m_in.m1_i3 && m_in.m1_i3 >= 0)
+	{
+		m_in.m2_l1 = buffer.arr[m_in.m1_i3]->start_t;
+		m_in.m2_l2 = buffer.arr[m_in.m1_i3]->end_t;
+		m_in.m1_i2 = buffer.arr[m_in.m1_i3]->p_id;
 
-	m_in.m2_l1 = buffer.arr[m_in.m1_i3]->start_t;
-	m_in.m2_l2 = buffer.arr[m_in.m1_i3]->end_t;
-	m_in.m1_i2 = buffer.arr[m_in.m1_i3]->p_id;
-
-	return EXIT_SUCCESS;
+		return EXIT_SUCCESS;
+	}
+	return EXIT_FAILURE;
 }
 
 plog* find_by_PID(int id)
@@ -194,5 +195,5 @@ void init_buffer()
 	{
 		buffer.arr[i] = NULL;
 	}
-	dirtyBuf = true;
+	dirtyBuf = false;
 }
