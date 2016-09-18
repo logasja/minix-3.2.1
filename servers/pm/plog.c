@@ -13,7 +13,7 @@ typedef struct plog
 typedef struct circularBuffer
 {
 	int cur_index;
-	size_t size;
+	int size;
 	plog* arr[PLOG_BUFFER_SIZE];
 } circularBuffer;
 
@@ -76,20 +76,19 @@ int log_start(int id)
 	if (started)
 	{
 		//printf("Logging Start\n");
-
 		plog* tmp = buffer.arr[buffer.cur_index];
 		fprintf(stderr, "Got pointer %p at %d.\n", tmp, buffer.cur_index);
 		if (!tmp)
 		{
 			tmp = (plog*)malloc(sizeof(plog));
-			buffer.size = buffer.size + 1;
+			++buffer.size;
 		}
 		tmp->p_id = id;
 		tmp->start_t = do_time();
-		tmp->end_t = -1;
+		tmp->end_t = 0;
 		buffer.arr[buffer.cur_index++] = tmp;
 
-		if (buffer.cur_index == PLOG_BUFFER_SIZE)
+		if (buffer.cur_index >= PLOG_BUFFER_SIZE)
 			buffer.cur_index = 0;
 		return (EXIT_SUCCESS);
 	}
