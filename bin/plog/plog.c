@@ -73,7 +73,6 @@ int main(int argc, char *argv[])
 				fprintf(stderr, "Index: %d\n\tStart: %ld\n\tEnd: %ld\n", param, start, end);
 			break;
 		case 's':
-			printf("Getting plog size.");
 			size = get_plog_size();
 			fprintf(stderr, "Buffer has a size of %d items.\n", size);
 			status = EXIT_SUCCESS;
