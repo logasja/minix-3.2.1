@@ -86,11 +86,14 @@ int log_start(int id)
 int log_end(int id)
 {
 //	fprintf(stderr, "Logging End");
-	plog* tmp = find_by_PID(id);
-	if (tmp && started)
+	if (started)
 	{
-		tmp->end_t = do_time();
-		return EXIT_SUCCESS;
+		plog* tmp = find_by_PID(id);
+		if (tmp)
+		{
+			tmp->end_t = do_time();
+			return EXIT_SUCCESS;
+		}
 	}
 
 	return EXIT_FAILURE;
@@ -122,7 +125,7 @@ int plog_get_size()
 int plog_PIDget()
 {
 	plog* found = find_by_PID(m_in.m1_i2);
-	if (found != NULL)
+	if (found)
 	{
 		m_in.m2_l1 = found->start_t;
 		m_in.m2_l2 = found->end_t;
