@@ -103,11 +103,14 @@ int log_end(int id)
 int plog_clear()
 {
 //	fprintf(stderr, "Clearing");
-	/* For each value in the array we want to free the memory */
-	for (int i = 0; i < buffer.size - 1; i++)
+	if (started)
 	{
-		/* Sanity check for null pointers (may be unneccesary) */
-		if (buffer.arr[i]){free(buffer.arr[i]);}
+		/* For each value in the array we want to free the memory */
+		for (int i = 0; i < buffer.size - 1; i++)
+		{
+			/* Sanity check for null pointers (may be unneccesary) */
+			if (buffer.arr[i]) { free(buffer.arr[i]); }
+		}
 	}
 	buffer.size = 0;
 	return EXIT_SUCCESS;
