@@ -46,10 +46,10 @@ int do_plog()
 int plog_start()
 {
 //	fprintf(stderr, "Starting");
-	//if (started)
-	//	return (EXIT_FAILURE);
-	//plog_clear();
-	//started = true;
+	if (started)
+		return (EXIT_FAILURE);
+	plog_clear();
+	started = true;
 	return EXIT_SUCCESS;
 }
 
