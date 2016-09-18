@@ -82,7 +82,7 @@ int log_start(int id)
 		if (!tmp)
 		{
 			tmp = (plog*)malloc(sizeof(plog));
-			buffer.size++;
+			buffer.size = buffer.size + 1;
 		}
 		tmp->p_id = id;
 		tmp->start_t = do_time();
