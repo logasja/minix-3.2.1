@@ -12,12 +12,12 @@ typedef struct plog
 
 typedef struct circularBuffer
 {
-	plog* arr[PLOG_BUFFER_SIZE];
 	int cur_index;
 	size_t size;
+	plog* arr[PLOG_BUFFER_SIZE];
 } circularBuffer;
 
-circularBuffer buffer;
+circularBuffer buffer = { 0,0 };
 
 bool started = false;
 
