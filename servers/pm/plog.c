@@ -24,7 +24,7 @@ bool started = false;
 /* Entry point into functionality */
 int do_plog()
 {
-	fprintf(stderr, "In do_plog");
+//	fprintf(stderr, "In do_plog");
 	switch (m_in.m1_i1) {
 	case PLOG_START:
 		return plog_start();
@@ -45,7 +45,7 @@ int do_plog()
 /* Starts process logger process */
 int plog_start()
 {
-	fprintf(stderr, "Starting");
+//	fprintf(stderr, "Starting");
 	if (started)
 		return (EXIT_FAILURE);
 	plog_clear();
@@ -56,7 +56,7 @@ int plog_start()
 /* Stops process logger process */
 int plog_stop()
 {
-	fprintf(stderr, "Stopping");
+//	fprintf(stderr, "Stopping");
 	if (!started)
 		return (EXIT_FAILURE);
 
@@ -67,7 +67,7 @@ int plog_stop()
 /* Adds a new process to the buffer */
 int log_start(int id)
 {
-	fprintf(stderr, "Logging Start");
+//	fprintf(stderr, "Logging Start");
 	if (!started)
 		return EXIT_FAILURE;
 
@@ -85,7 +85,7 @@ int log_start(int id)
 /* Adds termination time */
 int log_end(int id)
 {
-	fprintf(stderr, "Logging End");
+//	fprintf(stderr, "Logging End");
 	plog* tmp = find_by_PID(id);
 	if (tmp && started)
 	{
@@ -99,7 +99,7 @@ int log_end(int id)
 /* Clears entire buffer */
 int plog_clear()
 {
-	fprintf(stderr, "Clearing");
+//	fprintf(stderr, "Clearing");
 	/* For each value in the array we want to free the memory */
 	for (int i = 0; i < buffer.size - 1; i++)
 	{
