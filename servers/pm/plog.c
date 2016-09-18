@@ -108,7 +108,6 @@ int log_end(int id)
 	{
 		printf("Logging End\n");
 		plog* tmp = find_by_PID(id);
-		fprintf(stderr, "%d", &tmp);
 		if (tmp)
 		{
 			tmp->end_t = do_time();
@@ -126,7 +125,7 @@ int plog_clear()
 	if (started)
 	{
 		/* For each value in the array we want to free the memory */
-		for (int i = 0; i < buffer.size - 1; i++)
+		for (int i = 0; i < buffer.size; i++)
 		{
 			/* Sanity check for null pointers (may be unneccesary) */
 			if (buffer.arr[i]) { free(buffer.arr[i]); }
@@ -181,11 +180,15 @@ int plog_IDXget()
 
 plog* find_by_PID(int id)
 {
-	for (int i = 0; i < buffer.size - 1; i++)
+	for (int i = 0; i < buffer.size; i++)
 	{
-		if(buffer.arr[i])
+		if (buffer.arr[i])
+		{
 			if (id == buffer.arr[i]->p_id)
+			{
 				return buffer.arr[i];
+			}
+		}
 	}
 	return NULL;
 }
