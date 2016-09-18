@@ -151,12 +151,14 @@ int plog_PIDget()
 	plog* found = find_by_PID(m_in.m1_i2);
 	if (found)
 	{
+		printf("in PIDget if found");
 		m_in.m2_l1 = found->start_t;
 		m_in.m2_l2 = found->end_t;
 		return EXIT_SUCCESS;
 	}
 	else
 	{
+		printf("in PIDget else");
 		m_in.m2_l1 = -1;
 		m_in.m2_l2 = -1;
 		return EXIT_FAILURE;
