@@ -127,7 +127,7 @@ int plog_clear()
 /* Get current size of buffer */
 int plog_get_size()
 {
-	fprintf(stderr, "Log buffer size is %u.\n", buffer.size);
+	mp->m_reply.m2_i1 = buffer.size;
 	return EXIT_SUCCESS;
 }
 
@@ -137,8 +137,8 @@ int plog_PIDget()
 	plog* found = find_by_PID(m_in.m1_i2);
 	if (found)
 	{
-		fprintf(stderr, PLOG_PRINTFORMAT,
-				m_in.m1_i2, found->start_t, found->end_t);
+		mp->m_reply.m2_l1 = found->start_t;
+		mp->m_reply.m2_l2 = found->end_t;
 		return EXIT_SUCCESS;
 	}
 	return EXIT_FAILURE;
@@ -150,8 +150,8 @@ int plog_IDXget()
 	if (buffer.size > m_in.m1_i3 && m_in.m1_i3 >= 0)
 	{
 		const plog* tmp = buffer.arr[m_in.m1_i3];
-		fprintf(stderr, PLOG_PRINTFORMAT,
-				tmp->p_id, tmp->start_t, tmp->end_t);
+		mp->m_reply.m2_l1 = tmp->start_t;
+		mp->m_reply.m2_l2 = tmp->end_t;
 		return EXIT_SUCCESS;
 	}
 	return EXIT_FAILURE;

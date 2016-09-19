@@ -12,6 +12,7 @@
 #include <unistd.h>
 
 #define HELP_DIALOGUE "usage: plog [start|stop] [-sip] [index...process]\n"
+#define PLOG_PRINTFORMAT "%d\n\tStart: %ld\n\tEnd: %ld\n\n"
 
 int main(int, char*[]);
 
@@ -60,14 +61,20 @@ int main(int argc, char *argv[])
 			status = get_plog_byPID(param, &start, &end);
 			if (status)
 				fprintf(stderr, "Could not find the specified process log.\n");
+			else
+				fprintf(stderr, PLOG_PRINTFORMAT,
+					param, start, end);
 			break;
 		case 'i':
 			status = get_plog_byindex(param, &start, &end);
 			if (status)
 				fprintf(stderr, "Specified index is not valid.\n");
+			else
+				fprintf(stderr, PLOG_PRINTFORMAT,
+					param, start, end);
 			break;
 		case 's':
-			get_plog_size();
+			fprintf(stderr, "Log buffer size is %u.\n", get_plog_size());
 			break;
 		}
 	}
