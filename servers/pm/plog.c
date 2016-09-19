@@ -1,4 +1,5 @@
 #include "pm.h"
+#include "mproc.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -39,6 +40,8 @@ int do_plog()
 		return plog_PIDget();
 	case PLOG_GETSIZE:
 		return plog_get_size();
+	default:
+		return EXIT_FAILURE;
 	}
 }
 
@@ -95,11 +98,11 @@ int log_end(int id)
 {
 	if (started)
 	{
-		plog* tmp = find_by_PID(id);
-		if (tmp)
+		plog* found = find_by_PID(id);
+		if (found)
 		{
 			do_time();
-			tmp->end_t = mp->mp_reply.m2_l1;
+			found->end_t = mp->mp_reply.m2_l1;
 			return EXIT_SUCCESS;
 		}
 	}

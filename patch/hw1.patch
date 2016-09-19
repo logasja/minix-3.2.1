@@ -1,0 +1,1159 @@
+diff -BNur '--exclude=.git' '--exclude=*.sln' '--exclude=*.vcxproj*' '--exclude=*.VC*' --strip-trailing-cr /mnt/c/Users/Jacob/Downloads/minix-3.2.1/bin/Makefile /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/bin/Makefile
+--- /mnt/c/Users/Jacob/Downloads/minix-3.2.1/bin/Makefile	2016-09-19 16:13:59.964158100 -0400
++++ /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/bin/Makefile	2016-09-17 11:12:18.310832700 -0400
+@@ -2,6 +2,6 @@
+ #	@(#)Makefile	8.1 (Berkeley) 5/31/93
+ 
+ SUBDIR=	cat date echo ed expr kill ln ls \
+-	mkdir pax pwd rm rmdir sync test
++	mkdir pax pwd rm rmdir sync test plog
+ 
+ .include <bsd.subdir.mk>
+diff -BNur '--exclude=.git' '--exclude=*.sln' '--exclude=*.vcxproj*' '--exclude=*.VC*' --strip-trailing-cr /mnt/c/Users/Jacob/Downloads/minix-3.2.1/bin/plog/Makefile /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/bin/plog/Makefile
+--- /mnt/c/Users/Jacob/Downloads/minix-3.2.1/bin/plog/Makefile	1969-12-31 19:00:00.000000000 -0500
++++ /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/bin/plog/Makefile	2016-09-17 11:12:32.652362600 -0400
+@@ -0,0 +1,6 @@
++#	$NetBSD: Makefile,v 1.12 2003/05/18 07:57:31 lukem Exp $
++#	@(#)Makefile	8.1 (Berkeley) 5/31/93
++
++PROG=	plog
++
++.include <bsd.prog.mk>
+diff -BNur '--exclude=.git' '--exclude=*.sln' '--exclude=*.vcxproj*' '--exclude=*.VC*' --strip-trailing-cr /mnt/c/Users/Jacob/Downloads/minix-3.2.1/bin/plog/plog.1 /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/bin/plog/plog.1
+--- /mnt/c/Users/Jacob/Downloads/minix-3.2.1/bin/plog/plog.1	1969-12-31 19:00:00.000000000 -0500
++++ /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/bin/plog/plog.1	2016-09-16 17:13:41.802152100 -0400
+@@ -0,0 +1,209 @@
++.\"	$NetBSD: cat.1,v 1.32 2006/09/23 11:24:44 wiz Exp $
++.\"
++.\" Copyright (c) 1989, 1990, 1993
++.\"	The Regents of the University of California.  All rights reserved.
++.\"
++.\" This code is derived from software contributed to Berkeley by
++.\" the Institute of Electrical and Electronics Engineers, Inc.
++.\"
++.\" Redistribution and use in source and binary forms, with or without
++.\" modification, are permitted provided that the following conditions
++.\" are met:
++.\" 1. Redistributions of source code must retain the above copyright
++.\"    notice, this list of conditions and the following disclaimer.
++.\" 2. Redistributions in binary form must reproduce the above copyright
++.\"    notice, this list of conditions and the following disclaimer in the
++.\"    documentation and/or other materials provided with the distribution.
++.\" 3. Neither the name of the University nor the names of its contributors
++.\"    may be used to endorse or promote products derived from this software
++.\"    without specific prior written permission.
++.\"
++.\" THIS SOFTWARE IS PROVIDED BY THE REGENTS AND CONTRIBUTORS ``AS IS'' AND
++.\" ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
++.\" IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
++.\" ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE LIABLE
++.\" FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
++.\" DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
++.\" OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
++.\" HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
++.\" LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
++.\" OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
++.\" SUCH DAMAGE.
++.\"
++.\"     @(#)cat.1	8.3 (Berkeley) 5/2/95
++.\"
++.Dd September 16, 2016
++.Dt PLOG 1
++.Os
++.Sh NAME
++.Nm plog
++.Nd Process logging
++.Sh SYNOPSIS
++.Nm
++.Op Fl fpis
++.Op Fl
++.Op Ar
++.Sh DESCRIPTION
++The
++.Nm
++utility stores the start and end time of the last 1024 processes after service is started.
++The
++.Ar file
++operands are processed in command line order.
++A single dash represents the standard input,
++and may appear multiple times in the
++.Ar file
++list.
++.Pp
++The word
++.Dq concatenate
++is just a verbose synonym for
++.Dq catenate .
++.Pp
++The options are as follows:
++.Bl -tag -width Ds
++.It Fl b
++Implies the
++.Fl n
++option but doesn't number blank lines.
++.It Fl e
++Implies the
++.Fl v
++option, and displays a dollar sign
++.Pq Ql \&$
++at the end of each line
++as well.
++.It Fl f
++Only attempt to display regular files.
++.It Fl l
++Set an exclusive advisory lock on the standard output file descriptor.
++This lock is set using
++.Xr fcntl 2
++with the
++.Dv F_SETLKW
++command.
++If the output file is already locked,
++.Nm
++will block until the lock is acquired.
++.It Fl n
++Number the output lines, starting at 1.
++.It Fl s
++Squeeze multiple adjacent empty lines, causing the output to be
++single spaced.
++.It Fl t
++Implies the
++.Fl v
++option, and displays tab characters as
++.Ql ^I
++as well.
++.It Fl u
++The
++.Fl u
++option guarantees that the output is unbuffered.
++.It Fl v
++Displays non-printing characters so they are visible.
++Control characters print as
++.Ql ^X
++for control-X; the delete
++character (octal 0177) prints as
++.Ql ^? .
++Non-ascii characters (with the high bit set) are printed as
++.Ql M-
++(for meta) followed by the character for the low 7 bits.
++.El
++.Sh EXIT STATUS
++The
++.Nm
++utility exits 0 on success, and \*[Gt]0 if an error occurs.
++.Sh EXAMPLES
++The command:
++.Bd -literal -offset indent
++.Ic cat file1
++.Ed
++.Pp
++will print the contents of
++.Ar file1
++to the standard output.
++.Pp
++The command:
++.Bd -literal -offset indent
++.Ic cat file1 file2 \*[Gt] file3
++.Ed
++.Pp
++will sequentially print the contents of
++.Ar file1
++and
++.Ar file2
++to the file
++.Ar file3 ,
++truncating
++.Ar file3
++if it already exists.
++See the manual page for your shell (i.e.,
++.Xr sh 1 )
++for more information on redirection.
++.Pp
++The command:
++.Bd -literal -offset indent
++.Ic cat file1 - file2 - file3
++.Ed
++.Pp
++will print the contents of
++.Ar file1 ,
++print data it receives from the standard input until it receives an
++.Dv EOF
++.Pq Sq ^D
++character, print the contents of
++.Ar file2 ,
++read and output contents of the standard input again, then finally output
++the contents of
++.Ar file3 .
++Note that if the standard input referred to a file, the second dash
++on the command-line would have no effect, since the entire contents of the file
++would have already been read and printed by
++.Nm
++when it encountered the first
++.Ql \&-
++operand.
++.Sh SEE ALSO
++.Xr head 1 ,
++.Xr hexdump 1 ,
++.Xr lpr 1 ,
++.Xr more 1 ,
++.Xr pr 1 ,
++.Xr tail 1 ,
++.Xr view 1 ,
++.Xr vis 1 ,
++.Xr fcntl 2
++.Rs
++.%A Rob Pike
++.%T "UNIX Style, or cat -v Considered Harmful"
++.%J "USENIX Summer Conference Proceedings"
++.%D 1983
++.Re
++.Sh STANDARDS
++The
++.Nm
++utility is expected to conform to the
++.St -p1003.2-92
++specification.
++.Pp
++The flags
++.Op Fl belnstv
++are extensions to the specification.
++.Sh HISTORY
++A
++.Nm
++utility appeared in
++.At v1 .
++Dennis Ritchie designed and wrote the first man page.
++It appears to have been
++.Xr cat 1 .
++.Sh BUGS
++Because of the shell language mechanism used to perform output
++redirection, the command
++.Dq Li cat file1 file2 \*[Gt] file1
++will cause the original data in file1 to be destroyed!
++This is performed by the shell before
++.Nm
++is run.
+diff -BNur '--exclude=.git' '--exclude=*.sln' '--exclude=*.vcxproj*' '--exclude=*.VC*' --strip-trailing-cr /mnt/c/Users/Jacob/Downloads/minix-3.2.1/bin/plog/plog.c /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/bin/plog/plog.c
+--- /mnt/c/Users/Jacob/Downloads/minix-3.2.1/bin/plog/plog.c	1969-12-31 19:00:00.000000000 -0500
++++ /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/bin/plog/plog.c	2016-09-19 01:09:20.794326100 -0400
+@@ -0,0 +1,80 @@
++#include <sys/param.h>
++#include <sys/stat.h>
++
++#include <ctype.h>
++#include <err.h>
++#include <errno.h>
++#include <fcntl.h>
++#include <locale.h>
++#include <stdio.h>
++#include <stdlib.h>
++#include <string.h>
++#include <unistd.h>
++
++#define HELP_DIALOGUE "usage: plog [start|stop] [-sip] [index...process]\n"
++
++int main(int, char*[]);
++
++int main(int argc, char *argv[])
++{
++	int status = -1;
++
++	if (argv[1])
++	{
++		if (!strcmp(argv[1],"start"))
++		{
++			printf("Starting Process Logger.\n");
++			status = start_plog();
++		}
++		else if (!strcmp(argv[1],"stop"))
++		{
++			printf("Stopping Process Logger.\n");
++			status = stop_plog();
++		}
++		else if (!strcmp(argv[1], "clear"))
++		{
++			printf("Resetting Process Logger.\n");
++			status = reset_plog();
++		}
++	}
++
++	if (status > -1)
++	{
++		if (status)
++			fprintf(stderr, "Error starting or stopping service.\n");
++		exit(status);
++	}
++
++	int ch;
++	if ((ch = getopt(argc, argv, "sip")) != -1)
++	{
++		int param;
++		if (argv[2])
++		{
++			param = atoi(argv[2]);
++		}
++		long start, end = 0;
++		int size;
++		switch (ch) {
++		case 'p':
++			status = get_plog_byPID(param, &start, &end);
++			if (status)
++				fprintf(stderr, "Could not find the specified process log.\n");
++			break;
++		case 'i':
++			status = get_plog_byindex(param, &start, &end);
++			if (status)
++				fprintf(stderr, "Specified index is not valid.\n");
++			break;
++		case 's':
++			get_plog_size();
++			break;
++		}
++	}
++	if (status < 0)
++	{
++		fprintf(stderr, HELP_DIALOGUE);
++		status = EXIT_FAILURE;
++	}
++	exit(status);
++}
+\ No newline at end of file
+diff -BNur '--exclude=.git' '--exclude=*.sln' '--exclude=*.vcxproj*' '--exclude=*.VC*' --strip-trailing-cr /mnt/c/Users/Jacob/Downloads/minix-3.2.1/.gitignore /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/.gitignore
+--- /mnt/c/Users/Jacob/Downloads/minix-3.2.1/.gitignore	1969-12-31 19:00:00.000000000 -0500
++++ /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/.gitignore	2016-09-14 14:10:53.286474000 -0400
+@@ -0,0 +1,7 @@
++﻿################################################################################
++# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
++################################################################################
++
++*.db
++/.vs/Minix 3/v14
++*.opendb
+diff -BNur '--exclude=.git' '--exclude=*.sln' '--exclude=*.vcxproj*' '--exclude=*.VC*' --strip-trailing-cr /mnt/c/Users/Jacob/Downloads/minix-3.2.1/include/minix/callnr.h /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/include/minix/callnr.h
+--- /mnt/c/Users/Jacob/Downloads/minix-3.2.1/include/minix/callnr.h	2016-09-19 16:15:46.945171700 -0400
++++ /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/include/minix/callnr.h	2016-09-14 22:11:19.499894300 -0400
+@@ -1,28 +1,28 @@
+ #define NCALLS		 114	/* number of system calls allowed */
+ 
+ /* In case it isn't obvious enough: this list is sorted numerically. */
+-#define EXIT		   1 
+-#define FORK		   2 
+-#define READ		   3 
+-#define WRITE		   4 
+-#define OPEN		   5 
+-#define CLOSE		   6 
++#define EXIT		   1
++#define FORK		   2
++#define READ		   3
++#define WRITE		   4
++#define OPEN		   5
++#define CLOSE		   6
+ #define WAIT		   7
+-#define CREAT		   8 
+-#define LINK		   9 
+-#define UNLINK		  10 
++#define CREAT		   8
++#define LINK		   9
++#define UNLINK		  10
+ #define WAITPID		  11
+-#define CHDIR		  12 
++#define CHDIR		  12
+ #define TIME		  13
+-#define MKNOD		  14 
+-#define CHMOD		  15 
+-#define CHOWN		  16 
++#define MKNOD		  14
++#define CHMOD		  15
++#define CHOWN		  16
+ #define BRK		  17
+ #define PREV_STAT	  18
+ #define LSEEK		  19
+ #define MINIX_GETPID	  20
+-#define MOUNT		  21 
+-#define UMOUNT		  22 
++#define MOUNT		  21
++#define UMOUNT		  22
+ #define SETUID		  23
+ #define GETUID		  24
+ #define STIME		  25
+@@ -30,18 +30,18 @@
+ #define ALARM		  27
+ #define PREV_FSTAT	  28
+ #define PAUSE		  29
+-#define UTIME		  30 
++#define UTIME		  30
+ #define GETEPINFO	  31
+ #define SETGROUPS	  32
+-#define ACCESS		  33 
++#define ACCESS		  33
+ #define GETGROUPS	  34
+-#define SYNC		  36 
++#define SYNC		  36
+ #define KILL		  37
+ #define RENAME		  38
+ #define MKDIR		  39
+ #define RMDIR		  40
+-#define DUP		  41 
+-#define PIPE		  42 
++#define DUP		  41
++#define PIPE		  42
+ #define TIMES		  43
+ #define SYMLINK		  45
+ #define SETGID		  46
+@@ -56,15 +56,16 @@
+ #define FCNTL		  55
+ #define FS_READY	  57
+ #define EXEC		  59
+-#define UMASK		  60 
+-#define CHROOT		  61 
++#define UMASK		  60
++#define CHROOT		  61
+ #define SETSID		  62
+ #define GETPGRP		  63
+ #define ITIMER		  64
+ #define GETGROUPS_O	  65
+ #define SETGROUPS_O	  66
+-#define GETMCONTEXT       67
+-#define SETMCONTEXT       68
++#define GETMCONTEXT     67
++#define SETMCONTEXT     68
++#define PLOG			69
+ 
+ /* Posix signal handling. */
+ #define SIGACTION	  71
+@@ -109,7 +110,7 @@
+ 
+ #define PM_GETSID	113	/* PM getsid() */
+ 
+-#define TASK_REPLY	121	/* to VFS: reply code from drivers, not 
+-				 * really a standalone call.
+-				 */
++#define TASK_REPLY	121	/* to VFS: reply code from drivers, not
++* really a standalone call.
++*/
+ #define MAPDRIVER      122     /* to VFS, map a device */
+diff -BNur '--exclude=.git' '--exclude=*.sln' '--exclude=*.vcxproj*' '--exclude=*.VC*' --strip-trailing-cr /mnt/c/Users/Jacob/Downloads/minix-3.2.1/include/unistd.h /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/include/unistd.h
+--- /mnt/c/Users/Jacob/Downloads/minix-3.2.1/include/unistd.h	2016-09-19 16:15:44.957888600 -0400
++++ /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/include/unistd.h	2016-09-15 19:34:39.706034900 -0400
+@@ -109,6 +109,12 @@
+ int	 execve(const char *, char * const *, char * const *);
+ int	 execvp(const char *, char * const *);
+ pid_t	 fork(void);
++int  start_plog(void);
++int  stop_plog(void);
++int  reset_plog(void);
++int   get_plog_size(void);
++int   get_plog_byPID(int, long*, long*);
++int   get_plog_byindex(int, long*, long*);
+ long	 fpathconf(int, int);
+ #if __SSP_FORTIFY_LEVEL == 0
+ char	*getcwd(char *, size_t);
+@@ -194,7 +200,7 @@
+  */
+ #if (_POSIX_C_SOURCE - 0) >= 199309L || (_XOPEN_SOURCE - 0) >= 500 || \
+     defined(_NETBSD_SOURCE)
+-#ifndef __minix 
++#ifndef __minix
+ int	 fdatasync(int);
+ #endif /* !__minix */
+ int	 fsync(int);
+diff -BNur '--exclude=.git' '--exclude=*.sln' '--exclude=*.vcxproj*' '--exclude=*.VC*' --strip-trailing-cr /mnt/c/Users/Jacob/Downloads/minix-3.2.1/lib/libc/sys-minix/get_plog_byindex.c /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/lib/libc/sys-minix/get_plog_byindex.c
+--- /mnt/c/Users/Jacob/Downloads/minix-3.2.1/lib/libc/sys-minix/get_plog_byindex.c	1969-12-31 19:00:00.000000000 -0500
++++ /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/lib/libc/sys-minix/get_plog_byindex.c	2016-09-17 19:09:24.164961300 -0400
+@@ -0,0 +1,18 @@
++#include <lib.h>
++#include <unistd.h>
++
++int get_plog_byindex(int index, long* c_time, long* t_time)
++{
++	message m;
++
++	int status;
++
++	m.m1_i1 = 3;
++	m.m1_i3 = index;
++
++	status = _syscall(PM_PROC_NR, PLOG, &m);
++
++	*c_time = m.m2_l1;
++	*t_time = m.m2_l2;
++	return status;
++}
+\ No newline at end of file
+diff -BNur '--exclude=.git' '--exclude=*.sln' '--exclude=*.vcxproj*' '--exclude=*.VC*' --strip-trailing-cr /mnt/c/Users/Jacob/Downloads/minix-3.2.1/lib/libc/sys-minix/get_plog_byPID.c /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/lib/libc/sys-minix/get_plog_byPID.c
+--- /mnt/c/Users/Jacob/Downloads/minix-3.2.1/lib/libc/sys-minix/get_plog_byPID.c	1969-12-31 19:00:00.000000000 -0500
++++ /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/lib/libc/sys-minix/get_plog_byPID.c	2016-09-17 19:09:39.909586800 -0400
+@@ -0,0 +1,18 @@
++#include <lib.h>
++#include <unistd.h>
++
++int get_plog_byPID(int pid, long* c_time, long* t_time)
++{
++	message m;
++
++	int status;
++
++	m.m1_i1 = 4;
++	m.m1_i2 = pid;
++
++	status = _syscall(PM_PROC_NR, PLOG, &m);
++
++	*c_time = m.m2_l1;
++	*t_time = m.m2_l2;
++	return status;
++}
+\ No newline at end of file
+diff -BNur '--exclude=.git' '--exclude=*.sln' '--exclude=*.vcxproj*' '--exclude=*.VC*' --strip-trailing-cr /mnt/c/Users/Jacob/Downloads/minix-3.2.1/lib/libc/sys-minix/get_plog_size.c /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/lib/libc/sys-minix/get_plog_size.c
+--- /mnt/c/Users/Jacob/Downloads/minix-3.2.1/lib/libc/sys-minix/get_plog_size.c	1969-12-31 19:00:00.000000000 -0500
++++ /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/lib/libc/sys-minix/get_plog_size.c	2016-09-19 01:09:36.038713500 -0400
+@@ -0,0 +1,11 @@
++#include <lib.h>
++#include <unistd.h>
++
++int get_plog_size()
++{
++	message m;
++
++	m.m1_i1 = 5;
++
++	return _syscall(PM_PROC_NR, PLOG, &m);
++}
+\ No newline at end of file
+diff -BNur '--exclude=.git' '--exclude=*.sln' '--exclude=*.vcxproj*' '--exclude=*.VC*' --strip-trailing-cr /mnt/c/Users/Jacob/Downloads/minix-3.2.1/lib/libc/sys-minix/Makefile.inc /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/lib/libc/sys-minix/Makefile.inc
+--- /mnt/c/Users/Jacob/Downloads/minix-3.2.1/lib/libc/sys-minix/Makefile.inc	2016-09-19 16:16:47.194194000 -0400
++++ /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/lib/libc/sys-minix/Makefile.inc	2016-09-14 14:01:58.022491400 -0400
+@@ -16,7 +16,9 @@
+ 	vectorio.c shutdown.c sigaction.c sigpending.c sigreturn.c sigsuspend.c\
+ 	sigprocmask.c socket.c socketpair.c stat.c statvfs.c symlink.c \
+ 	sync.c syscall.c sysuname.c truncate.c umask.c unlink.c write.c \
+-	_exit.c _ucontext.c environ.c __getcwd.c vfork.c sizeup.c init.c
++	_exit.c _ucontext.c environ.c __getcwd.c vfork.c sizeup.c init.c \
++	start_plog.c stop_plog.c reset_plog.c get_plog_size.c get_plog_byPID.c \
++	get_plog_byindex.c
+ 
+ # Minix specific syscalls.
+ SRCS+= cprofile.c lseek64.c sprofile.c _mcontext.c
+diff -BNur '--exclude=.git' '--exclude=*.sln' '--exclude=*.vcxproj*' '--exclude=*.VC*' --strip-trailing-cr /mnt/c/Users/Jacob/Downloads/minix-3.2.1/lib/libc/sys-minix/reset_plog.c /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/lib/libc/sys-minix/reset_plog.c
+--- /mnt/c/Users/Jacob/Downloads/minix-3.2.1/lib/libc/sys-minix/reset_plog.c	1969-12-31 19:00:00.000000000 -0500
++++ /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/lib/libc/sys-minix/reset_plog.c	2016-09-17 19:07:53.028790500 -0400
+@@ -0,0 +1,11 @@
++#include <lib.h>
++#include <unistd.h>
++
++int reset_plog()
++{
++	message m;
++
++	m.m1_i1 = 2;
++
++	return _syscall(PM_PROC_NR, PLOG, &m);	
++}
+\ No newline at end of file
+diff -BNur '--exclude=.git' '--exclude=*.sln' '--exclude=*.vcxproj*' '--exclude=*.VC*' --strip-trailing-cr /mnt/c/Users/Jacob/Downloads/minix-3.2.1/lib/libc/sys-minix/start_plog.c /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/lib/libc/sys-minix/start_plog.c
+--- /mnt/c/Users/Jacob/Downloads/minix-3.2.1/lib/libc/sys-minix/start_plog.c	1969-12-31 19:00:00.000000000 -0500
++++ /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/lib/libc/sys-minix/start_plog.c	2016-09-17 19:11:44.904272200 -0400
+@@ -0,0 +1,11 @@
++#include <lib.h>
++#include <unistd.h>
++
++int start_plog()
++{
++	message m;
++
++	m.m1_i1 = 0;
++
++	return _syscall(PM_PROC_NR, PLOG, &m);
++}
+\ No newline at end of file
+diff -BNur '--exclude=.git' '--exclude=*.sln' '--exclude=*.vcxproj*' '--exclude=*.VC*' --strip-trailing-cr /mnt/c/Users/Jacob/Downloads/minix-3.2.1/lib/libc/sys-minix/stop_plog.c /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/lib/libc/sys-minix/stop_plog.c
+--- /mnt/c/Users/Jacob/Downloads/minix-3.2.1/lib/libc/sys-minix/stop_plog.c	1969-12-31 19:00:00.000000000 -0500
++++ /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/lib/libc/sys-minix/stop_plog.c	2016-09-17 19:13:18.551246600 -0400
+@@ -0,0 +1,11 @@
++#include <lib.h>
++#include <unistd.h>
++
++int stop_plog()
++{
++	message m;
++
++	m.m1_i1 = 1;
++
++	return _syscall(PM_PROC_NR, PLOG, &m);
++}
+\ No newline at end of file
+diff -BNur '--exclude=.git' '--exclude=*.sln' '--exclude=*.vcxproj*' '--exclude=*.VC*' --strip-trailing-cr /mnt/c/Users/Jacob/Downloads/minix-3.2.1/README.md /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/README.md
+--- /mnt/c/Users/Jacob/Downloads/minix-3.2.1/README.md	1969-12-31 19:00:00.000000000 -0500
++++ /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/README.md	2016-09-16 16:12:39.122129100 -0400
+@@ -0,0 +1,3 @@
++![alt tag](http://cdns2.freepik.com/free-photo/terminal-windows_318-9332.jpg)
++
++# minix-3.2.1
+diff -BNur '--exclude=.git' '--exclude=*.sln' '--exclude=*.vcxproj*' '--exclude=*.VC*' --strip-trailing-cr /mnt/c/Users/Jacob/Downloads/minix-3.2.1/servers/pm/const.h /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/servers/pm/const.h
+--- /mnt/c/Users/Jacob/Downloads/minix-3.2.1/servers/pm/const.h	2016-09-19 16:18:09.107489200 -0400
++++ /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/servers/pm/const.h	2016-09-19 14:50:20.274183600 -0400
+@@ -19,3 +19,13 @@
+ 
+ #define SEND_PRIORITY      1	/* send current priority queue to scheduler */
+ #define SEND_TIME_SLICE    2    /* send current time slice to scheduler */
++
++#define PLOG_BUFFER_SIZE 1024
++#define PLOG_START 0
++#define PLOG_STOP 1
++#define PLOG_RESETBUF 2
++#define PLOG_GETBYIDX 3
++#define PLOG_GETBYPID 4
++#define PLOG_GETSIZE 5
++
++#define PLOG_PRINTFORMAT "Process: %d\n\tStart:\t%d\n\tEnd:\t%d\n\n"
+\ No newline at end of file
+diff -BNur '--exclude=.git' '--exclude=*.sln' '--exclude=*.vcxproj*' '--exclude=*.VC*' --strip-trailing-cr /mnt/c/Users/Jacob/Downloads/minix-3.2.1/servers/pm/forkexit.c /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/servers/pm/forkexit.c
+--- /mnt/c/Users/Jacob/Downloads/minix-3.2.1/servers/pm/forkexit.c	2016-09-19 16:18:09.551401000 -0400
++++ /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/servers/pm/forkexit.c	2016-09-19 14:22:48.368075900 -0400
+@@ -56,7 +56,7 @@
+   * way through is such a nuisance.
+   */
+   rmp = mp;
+-  if ((procs_in_use == NR_PROCS) || 
++  if ((procs_in_use == NR_PROCS) ||
+   		(procs_in_use >= NR_PROCS-LAST_FEW && rmp->mp_effuid != 0))
+   {
+   	printf("PM: warning, process table is full!\n");
+@@ -128,6 +128,8 @@
+ 	sig_proc(rmc, SIGSTOP, TRUE /*trace*/, FALSE /* ksig */);
+ #endif /* USE_TRACE */
+ 
++  log_start(new_pid);
++
+   /* Do not reply until VFS is ready to process the fork
+   * request
+   */
+@@ -157,7 +159,7 @@
+   * way through is such a nuisance.
+   */
+   rmp = mp;
+-  if ((procs_in_use == NR_PROCS) || 
++  if ((procs_in_use == NR_PROCS) ||
+   		(procs_in_use >= NR_PROCS-LAST_FEW && rmp->mp_effuid != 0))
+   {
+   	printf("PM: warning, process table is full!\n");
+@@ -245,6 +247,9 @@
+   else {
+       exit_proc(mp, m_in.status, FALSE /*dump_core*/);
+   }
++
++  log_end(mp->mp_pid);
++
+   return(SUSPEND);		/* can't communicate from beyond the grave */
+ }
+ 
+@@ -294,8 +299,8 @@
+   p_mp->mp_child_utime += user_time + rmp->mp_child_utime; /* add user time */
+   p_mp->mp_child_stime += sys_time + rmp->mp_child_stime; /* add system time */
+ 
+-  /* Tell the kernel the process is no longer runnable to prevent it from 
+-   * being scheduled in between the following steps. Then tell VFS that it 
++  /* Tell the kernel the process is no longer runnable to prevent it from
++   * being scheduled in between the following steps. Then tell VFS that it
+    * the process has exited and finally, clean up the process at the kernel.
+    * This order is important so that VFS can tell drivers to cancel requests
+    * such as copying to/ from the exiting process, before it is gone.
+@@ -346,7 +351,7 @@
+   rmp->mp_flags |= EXITING;
+ 
+   /* Keep the process around until VFS is finished with it. */
+-  
++
+   rmp->mp_exitstatus = (char) exit_status;
+ 
+   /* For normal exits, try to notify the parent as soon as possible.
+@@ -399,7 +404,7 @@
+ 	*/
+ 	printf("PM: The scheduler did not want to give up "
+ 		"scheduling %s, ret=%d.\n", rmp->mp_name, r);
+-  } 
++  }
+ 
+   /* sched_stop is either called when the process is exiting or it is
+    * being moved between schedulers. If it is being moved between
+@@ -443,9 +448,9 @@
+  *===========================================================================*/
+ int do_waitpid()
+ {
+-/* A process wants to wait for a child to terminate. If a child is already 
+- * waiting, go clean it up and let this WAIT call terminate.  Otherwise, 
+- * really wait. 
++/* A process wants to wait for a child to terminate. If a child is already
++ * waiting, go clean it up and let this WAIT call terminate.  Otherwise,
++ * really wait.
+  * A process calling WAIT never gets a reply in the usual way at the end
+  * of the main loop (unless WNOHANG is set or no qualifying child exists).
+  * If a child has already exited, the routine tell_parent() sends the reply
+diff -BNur '--exclude=.git' '--exclude=*.sln' '--exclude=*.vcxproj*' '--exclude=*.VC*' --strip-trailing-cr /mnt/c/Users/Jacob/Downloads/minix-3.2.1/servers/pm/Makefile /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/servers/pm/Makefile
+--- /mnt/c/Users/Jacob/Downloads/minix-3.2.1/servers/pm/Makefile	2016-09-19 16:18:08.227596300 -0400
++++ /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/servers/pm/Makefile	2016-09-14 14:02:05.969124600 -0400
+@@ -4,7 +4,7 @@
+ PROG=	pm
+ SRCS=	main.c forkexit.c break.c exec.c time.c alarm.c \
+ 	signal.c utility.c table.c getset.c misc.c \
+-	profile.c schedule.c
++	profile.c schedule.c plog.c
+ 
+ .if ${USE_MCONTEXT} != "no"
+ SRCS+= mcontext.c
+diff -BNur '--exclude=.git' '--exclude=*.sln' '--exclude=*.vcxproj*' '--exclude=*.VC*' --strip-trailing-cr /mnt/c/Users/Jacob/Downloads/minix-3.2.1/servers/pm/plog.c /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/servers/pm/plog.c
+--- /mnt/c/Users/Jacob/Downloads/minix-3.2.1/servers/pm/plog.c	1969-12-31 19:00:00.000000000 -0500
++++ /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/servers/pm/plog.c	2016-09-19 14:23:08.732906000 -0400
+@@ -0,0 +1,185 @@
++#include "pm.h"
++#include "mproc.h"
++#include <stdlib.h>
++#include <stdio.h>
++#include <stdbool.h>
++
++typedef struct plog
++{
++	int p_id;
++	time_t start_t;
++	time_t end_t;
++} plog;
++
++typedef struct circularBuffer
++{
++	int cur_index;
++	size_t size;
++	plog* arr[PLOG_BUFFER_SIZE];
++} circularBuffer;
++
++circularBuffer buffer;
++
++bool dirtyBuf = true;
++bool started = false;
++
++/* Entry point into functionality */
++int do_plog()
++{
++	//printf("In do_plog\n");
++	switch (m_in.m1_i1) {
++	case PLOG_START:
++		return plog_start();
++	case PLOG_STOP:
++		return plog_stop();
++	case PLOG_RESETBUF:
++		return plog_clear();
++	case PLOG_GETBYIDX:
++		return plog_IDXget();
++	case PLOG_GETBYPID:
++		return plog_PIDget();
++	case PLOG_GETSIZE:
++		return plog_get_size();
++	default:
++		return EXIT_FAILURE;
++	}
++}
++
++/* Starts process logger process */
++int plog_start()
++{
++	if (!started)
++	{
++		if (dirtyBuf)
++			init_buffer();
++		plog_clear();
++		started = true;
++		return EXIT_SUCCESS;
++	}
++	return EXIT_FAILURE;
++}
++
++/* Stops process logger process */
++int plog_stop()
++{
++	if (!started)
++		return (EXIT_FAILURE);
++
++	started = false;
++	return EXIT_SUCCESS;
++}
++
++/* Adds a new process to the buffer */
++int log_start(int id)
++{
++	if (started)
++	{
++		plog* tmp = buffer.arr[buffer.cur_index];
++		if (!tmp)
++		{
++			tmp = (plog*)malloc(sizeof(plog));
++			buffer.size = buffer.size + 1;
++		}
++		tmp->p_id = id;
++		do_time();
++		tmp->start_t = mp->mp_reply.m2_l1;
++		tmp->end_t = -1;
++		buffer.arr[buffer.cur_index++] = tmp;
++
++		if (buffer.cur_index == PLOG_BUFFER_SIZE)
++			buffer.cur_index = 0;
++		return (EXIT_SUCCESS);
++	}
++	return EXIT_FAILURE;
++}
++
++/* Adds termination time */
++int log_end(int id)
++{
++	if (started)
++	{
++		plog* found = find_by_PID(id);
++		if (found)
++		{
++			do_time();
++			found->end_t = mp->mp_reply.m2_l1;
++			return EXIT_SUCCESS;
++		}
++	}
++
++	return EXIT_FAILURE;
++}
++
++/* Clears entire buffer */
++int plog_clear()
++{
++	if (started)
++	{
++		/* For each value in the array we want to free the memory */
++		for (int i = 0; i < buffer.size; i++)
++		{
++			/* Sanity check for null pointers (may be unneccesary) */
++			if (buffer.arr[i]) { free(buffer.arr[i]); }
++		}
++	}
++	buffer.size = 0;
++	buffer.cur_index = 0;
++	return EXIT_SUCCESS;
++}
++
++/* Get current size of buffer */
++int plog_get_size()
++{
++	fprintf(stderr, "Log buffer size is %u.\n", buffer.size);
++	return EXIT_SUCCESS;
++}
++
++/* Get process by PID */
++int plog_PIDget()
++{
++	plog* found = find_by_PID(m_in.m1_i2);
++	if (found)
++	{
++		fprintf(stderr, PLOG_PRINTFORMAT,
++				m_in.m1_i2, found->start_t, found->end_t);
++		return EXIT_SUCCESS;
++	}
++	return EXIT_FAILURE;
++}
++
++/* Get process by index */
++int plog_IDXget()
++{
++	if (buffer.size > m_in.m1_i3 && m_in.m1_i3 >= 0)
++	{
++		const plog* tmp = buffer.arr[m_in.m1_i3];
++		fprintf(stderr, PLOG_PRINTFORMAT,
++				tmp->p_id, tmp->start_t, tmp->end_t);
++		return EXIT_SUCCESS;
++	}
++	return EXIT_FAILURE;
++}
++
++plog* find_by_PID(int id)
++{
++	for (int i = 0; i < buffer.size; i++)
++	{
++		if (buffer.arr[i])
++		{
++			if (id == buffer.arr[i]->p_id)
++			{
++				return buffer.arr[i];
++			}
++		}
++	}
++	return NULL;
++}
++
++void init_buffer()
++{
++	for (int i = 0; i < PLOG_BUFFER_SIZE; i++)
++	{
++		buffer.arr[i] = NULL;
++	}
++	dirtyBuf = false;
++}
+\ No newline at end of file
+diff -BNur '--exclude=.git' '--exclude=*.sln' '--exclude=*.vcxproj*' '--exclude=*.VC*' --strip-trailing-cr /mnt/c/Users/Jacob/Downloads/minix-3.2.1/servers/pm/proto.h /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/servers/pm/proto.h
+--- /mnt/c/Users/Jacob/Downloads/minix-3.2.1/servers/pm/proto.h	2016-09-19 16:18:10.525141900 -0400
++++ /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/servers/pm/proto.h	2016-09-18 00:17:04.473219100 -0400
+@@ -4,6 +4,7 @@
+ struct stat;
+ struct mem_map;
+ struct memory;
++struct plog;
+ 
+ #include <timers.h>
+ 
+@@ -103,3 +104,16 @@
+ int nice_to_priority(int nice, unsigned *new_q);
+ int pm_isokendpt(int ep, int *proc);
+ void tell_vfs(struct mproc *rmp, message *m_ptr);
++
++/* plog.c */
++int do_plog(void);
++int log_start(int id);
++int log_end(int id);
++int plog_clear(void);
++int plog_start(void);
++int plog_stop(void);
++int plog_get_size(void);
++int plog_PIDget(void);
++int plog_IDXget(void);
++void init_buffer(void);
++struct plog* find_by_PID(int);
+\ No newline at end of file
+diff -BNur '--exclude=.git' '--exclude=*.sln' '--exclude=*.vcxproj*' '--exclude=*.VC*' --strip-trailing-cr /mnt/c/Users/Jacob/Downloads/minix-3.2.1/servers/pm/table.c /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/servers/pm/table.c
+--- /mnt/c/Users/Jacob/Downloads/minix-3.2.1/servers/pm/table.c	2016-09-19 16:18:10.570685900 -0400
++++ /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/servers/pm/table.c	2016-09-17 21:30:09.326298900 -0400
+@@ -11,120 +11,120 @@
+ #include "param.h"
+ 
+ int (*call_vec[])(void) = {
+-	no_sys,		/*  0 = unused	*/
+-	do_exit,	/*  1 = exit	*/
+-	do_fork,	/*  2 = fork	*/
+-	no_sys,		/*  3 = read	*/
+-	no_sys, 	/*  4 = write	*/
+-	no_sys,		/*  5 = open	*/
+-	no_sys,		/*  6 = close	*/
+-	do_waitpid,	/*  7 = wait	*/
+-	no_sys,		/*  8 = creat	*/
+-	no_sys,		/*  9 = link	*/
+-	no_sys,		/* 10 = unlink	*/
+-	do_waitpid,	/* 11 = waitpid	*/
+-	no_sys,		/* 12 = chdir	*/
+-	do_time,	/* 13 = time	*/
+-	no_sys,		/* 14 = mknod	*/
+-	no_sys,		/* 15 = chmod	*/
+-	no_sys,		/* 16 = chown	*/
+-	do_brk,		/* 17 = break	*/
+-	no_sys,		/* 18 = stat	*/
+-	no_sys,		/* 19 = lseek	*/
+-	do_get,		/* 20 = getpid	*/
+-	no_sys,		/* 21 = mount	*/
+-	no_sys,		/* 22 = umount	*/
+-	do_set,		/* 23 = setuid	*/
+-	do_get,		/* 24 = getuid	*/
+-	do_stime,	/* 25 = stime	*/
+-	do_trace,	/* 26 = ptrace	*/
+-	do_alarm,	/* 27 = alarm	*/
+-	no_sys,		/* 28 = fstat	*/
+-	do_pause,	/* 29 = pause	*/
+-	no_sys,		/* 30 = utime	*/
+-	do_getepinfo,	/* 31 = getepinfo */
+-	do_set, 	/* 32 = setgroups */
+-	no_sys,		/* 33 = access	*/
+-	do_get,		/* 34 = getgroups */
+-	no_sys,		/* 35 = unused	*/
+-	no_sys,		/* 36 = sync	*/
+-	do_kill,	/* 37 = kill	*/
+-	no_sys,		/* 38 = rename	*/
+-	no_sys,		/* 39 = mkdir	*/
+-	no_sys,		/* 40 = rmdir	*/
+-	no_sys,		/* 41 = dup	*/
+-	no_sys,		/* 42 = pipe	*/
+-	do_times,	/* 43 = times	*/
+-	no_sys,		/* 44 = unused	*/
+-	no_sys,		/* 45 = unused	*/
+-	do_set,		/* 46 = setgid	*/
+-	do_get,		/* 47 = getgid	*/
+-	no_sys,		/* 48 = (signal)*/
+-	no_sys,		/* 49 = unused	*/
+-	no_sys,		/* 50 = lstat	*/
+-	no_sys,		/* 51 = (stat)	*/
+-	no_sys,		/* 52 = (fstat)	*/
+-	no_sys,		/* 53 = (lstat)	*/
+-	no_sys,		/* 54 = ioctl	*/
+-	no_sys,		/* 55 = fcntl	*/
+-	no_sys,		/* 56 = unused	*/
+-	no_sys,		/* 57 = unused	*/
+-	no_sys,		/* 58 = unused	*/
+-	do_exec,	/* 59 = execve	*/
+-	no_sys,		/* 60 = umask	*/
+-	no_sys,		/* 61 = chroot	*/
+-	do_set,		/* 62 = setsid	*/
+-	do_get,		/* 63 = getpgrp	*/
+-	do_itimer,	/* 64 = itimer  */
+-	do_get,		/* 65 = getgroups */
+-	do_set, 	/* 66 = setgroups */
+-	do_getmcontext,	/* 67 = getmcontext */
+-	do_setmcontext,	/* 68 = setmcontext */
+-	no_sys,		/* 69 = unused	*/
+-	no_sys,		/* 70 = unused	*/
+-	do_sigaction,	/* 71 = sigaction   */
+-	do_sigsuspend,	/* 72 = sigsuspend  */
+-	do_sigpending,	/* 73 = sigpending  */
+-	do_sigprocmask,	/* 74 = sigprocmask */
+-	do_sigreturn,	/* 75 = sigreturn   */
+-	do_reboot,	/* 76 = reboot	*/
+-	do_svrctl,	/* 77 = svrctl	*/
+-	do_sysuname,	/* 78 = sysuname */
+-	no_sys,		/* 79 = unused */
+-	no_sys,		/* 80 = (getdents) */
+-	no_sys, 	/* 81 = unused */
+-	no_sys, 	/* 82 = (fstatfs) */
+-	no_sys, 	/* 83 = unused */
+-	no_sys, 	/* 84 = unused */
+-	no_sys,		/* 85 = (select) */
+-	no_sys,		/* 86 = (fchdir) */
+-	no_sys,		/* 87 = (fsync) */
+-	do_getsetpriority, /* 88 = getpriority */
+-	do_getsetpriority, /* 89 = setpriority */
+-	do_time,	/* 90 = gettimeofday */
+-	do_set,		/* 91 = seteuid	*/
+-	do_set,		/* 92 = setegid	*/
+-	no_sys,		/* 93 = (truncate) */
+-	no_sys,		/* 94 = (ftruncate) */
+-	no_sys,		/* 95 = (fchmod) */
+-	no_sys,		/* 96 = (fchown) */
+-	no_sys,		/* 97 = unused */
+-	do_sprofile,	/* 98 = sprofile */
+-	do_cprofile,	/* 99 = cprofile */
+-	do_newexec,	/* 100 = newexec */
+-	do_srv_fork,	/* 101 = srv_fork */
+-	do_execrestart,	/* 102 = exec_restart */
+-	no_sys,		/* 103 = unused */
+-	do_getprocnr,	/* 104 = getprocnr */
+-	no_sys,		/* 105 = unused */
+-	do_get,		/* 106 = issetugid */
+-	do_getepinfo_o,	/* 107 = getepinfo XXX: old implementation*/
+-	no_sys,		/* 108 = unused */
+-	no_sys,		/* 109 = unused */
+-	no_sys,		/* 110 = unused */
+-	do_srv_kill,	/* 111 = srv_kill */
+- 	no_sys, 	/* 112 = gcov_flush */
+-	do_get,		/* 113 = getsid	*/
++	no_sys,					/*  0 = unused	*/
++	do_exit,				/*  1 = exit	*/
++	do_fork,				/*  2 = fork	*/
++	no_sys,					/*  3 = read	*/
++	no_sys, 				/*  4 = write	*/
++	no_sys,					/*  5 = open	*/
++	no_sys,					/*  6 = close	*/
++	do_waitpid,				/*  7 = wait	*/
++	no_sys,					/*  8 = creat	*/
++	no_sys,					/*  9 = link	*/
++	no_sys,					/* 10 = unlink	*/
++	do_waitpid,				/* 11 = waitpid	*/
++	no_sys,					/* 12 = chdir	*/
++	do_time,				/* 13 = time	*/
++	no_sys,					/* 14 = mknod	*/
++	no_sys,					/* 15 = chmod	*/
++	no_sys,					/* 16 = chown	*/
++	do_brk,					/* 17 = break	*/
++	no_sys,					/* 18 = stat	*/
++	no_sys,					/* 19 = lseek	*/
++	do_get,					/* 20 = getpid	*/
++	no_sys,					/* 21 = mount	*/
++	no_sys,					/* 22 = umount	*/
++	do_set,					/* 23 = setuid	*/
++	do_get,					/* 24 = getuid	*/
++	do_stime,				/* 25 = stime	*/
++	do_trace,				/* 26 = ptrace	*/
++	do_alarm,				/* 27 = alarm	*/
++	no_sys,					/* 28 = fstat	*/
++	do_pause,				/* 29 = pause	*/
++	no_sys,					/* 30 = utime	*/
++	do_getepinfo,			/* 31 = getepinfo */
++	do_set, 				/* 32 = setgroups */
++	no_sys,					/* 33 = access	*/
++	do_get,					/* 34 = getgroups */
++	no_sys,					/* 35 = unused	*/
++	no_sys,					/* 36 = sync	*/
++	do_kill,				/* 37 = kill	*/
++	no_sys,					/* 38 = rename	*/
++	no_sys,					/* 39 = mkdir	*/
++	no_sys,					/* 40 = rmdir	*/
++	no_sys,					/* 41 = dup	*/
++	no_sys,					/* 42 = pipe	*/
++	do_times,				/* 43 = times	*/
++	no_sys,					/* 44 = unused	*/
++	no_sys,					/* 45 = unused	*/
++	do_set,					/* 46 = setgid	*/
++	do_get,					/* 47 = getgid	*/
++	no_sys,					/* 48 = (signal)*/
++	no_sys,					/* 49 = unused	*/
++	no_sys,					/* 50 = lstat	*/
++	no_sys,					/* 51 = (stat)	*/
++	no_sys,					/* 52 = (fstat)	*/
++	no_sys,					/* 53 = (lstat)	*/
++	no_sys,					/* 54 = ioctl	*/
++	no_sys,					/* 55 = fcntl	*/
++	no_sys,					/* 56 = unused	*/
++	no_sys,					/* 57 = unused	*/
++	no_sys,					/* 58 = unused	*/
++	do_exec,				/* 59 = execve	*/
++	no_sys,					/* 60 = umask	*/
++	no_sys,					/* 61 = chroot	*/
++	do_set,					/* 62 = setsid	*/
++	do_get,					/* 63 = getpgrp	*/
++	do_itimer,				/* 64 = itimer  */
++	do_get,					/* 65 = getgroups */
++	do_set, 				/* 66 = setgroups */
++	do_getmcontext,			/* 67 = getmcontext */
++	do_setmcontext,			/* 68 = setmcontext */
++	do_plog,				/* 69 = process logger	*/
++	no_sys,					/* 70 = unused	*/
++	do_sigaction,			/* 71 = sigaction   */
++	do_sigsuspend,			/* 72 = sigsuspend  */
++	do_sigpending,			/* 73 = sigpending  */
++	do_sigprocmask,			/* 74 = sigprocmask */
++	do_sigreturn,			/* 75 = sigreturn   */
++	do_reboot,				/* 76 = reboot	*/
++	do_svrctl,				/* 77 = svrctl	*/
++	do_sysuname,			/* 78 = sysuname */
++	no_sys,					/* 79 = unused */
++	no_sys,					/* 80 = (getdents) */
++	no_sys,	 				/* 81 = unused */
++	no_sys,					/* 82 = (fstatfs) */
++	no_sys, 				/* 83 = unused */
++	no_sys, 				/* 84 = unused */
++	no_sys,					/* 85 = (select) */
++	no_sys,					/* 86 = (fchdir) */
++	no_sys,					/* 87 = (fsync) */
++	do_getsetpriority,		/* 88 = getpriority */
++	do_getsetpriority,		/* 89 = setpriority */
++	do_time,				/* 90 = gettimeofday */
++	do_set,					/* 91 = seteuid	*/
++	do_set,					/* 92 = setegid	*/
++	no_sys,					/* 93 = (truncate) */
++	no_sys,					/* 94 = (ftruncate) */
++	no_sys,					/* 95 = (fchmod) */
++	no_sys,					/* 96 = (fchown) */
++	no_sys,					/* 97 = unused */
++	do_sprofile,			/* 98 = sprofile */
++	do_cprofile,			/* 99 = cprofile */
++	do_newexec,				/* 100 = newexec */
++	do_srv_fork,			/* 101 = srv_fork */
++	do_execrestart,			/* 102 = exec_restart */
++	no_sys,					/* 103 = unused */
++	do_getprocnr,			/* 104 = getprocnr */
++	no_sys,					/* 105 = unused */
++	do_get,					/* 106 = issetugid */
++	do_getepinfo_o,			/* 107 = getepinfo XXX: old implementation*/
++	no_sys,					/* 108 = unused */
++	no_sys,					/* 109 = unused */
++	no_sys,					/* 110 = unused */
++	do_srv_kill,			/* 111 = srv_kill */
++ 	no_sys,	 				/* 112 = gcov_flush */
++	do_get,					/* 113 = getsid	*/
+ };
+ /* This should not fail with "array size is negative": */
+ extern int dummy[sizeof(call_vec) == NCALLS * sizeof(call_vec[0]) ? 1 : -1];
+Binary files /mnt/c/Users/Jacob/Downloads/minix-3.2.1/.vs/Minix 3/v14/.suo and /mnt/c/Users/Jacob/Source/Repos/minix-3.2.1/.vs/Minix 3/v14/.suo differ
