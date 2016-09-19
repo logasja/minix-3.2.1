@@ -248,7 +248,7 @@ int do_exit()
       exit_proc(mp, m_in.status, FALSE /*dump_core*/);
   }
 
-  log_end(mp->mp_endpoint);
+  log_end(mp->mp_pid);
 
   return(SUSPEND);		/* can't communicate from beyond the grave */
 }

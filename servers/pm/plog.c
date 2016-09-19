@@ -98,15 +98,11 @@ int log_end(int id)
 {
 	if (started)
 	{
-		fprintf(stderr, "Looking for PID %d", id);
 		plog* found = find_by_PID(id);
-		fprintf(stderr, "Process %d retrieved.\n", found->p_id);
 		if (found)
 		{
-			fprintf(stderr, "Process %d is ended.\n", id);
 			do_time();
 			found->end_t = mp->mp_reply.m2_l1;
-			fprintf(stderr, "Time ended is %ld", mp->mp_reply.m2_l1);
 			return EXIT_SUCCESS;
 		}
 	}
