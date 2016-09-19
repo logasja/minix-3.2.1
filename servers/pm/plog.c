@@ -62,8 +62,6 @@ int plog_stop()
 	if (!started)
 		return (EXIT_FAILURE);
 
-	printf("Stopping Process Logger\n");
-
 	started = false;
 	return EXIT_SUCCESS;
 }
@@ -80,7 +78,8 @@ int log_start(int id)
 			buffer.size = buffer.size + 1;
 		}
 		tmp->p_id = id;
-		tmp->start_t = do_time();
+		do_time();
+		tmp->start_t = mp->mp_reply.m2_l1;
 		tmp->end_t = -1;
 		buffer.arr[buffer.cur_index++] = tmp;
 
@@ -99,7 +98,8 @@ int log_end(int id)
 		plog* tmp = find_by_PID(id);
 		if (tmp)
 		{
-			tmp->end_t = do_time();
+			do_time();
+			tmp->end_t = mp->mp_reply.m2_l1;
 			return EXIT_SUCCESS;
 		}
 	}
