@@ -26,22 +26,20 @@ bool started = false;
 int do_plog()
 {
 	//printf("In do_plog\n");
-	int status = EXIT_FAILURE;
 	switch (m_in.m1_i1) {
 	case PLOG_START:
-		status = plog_start();
+		return plog_start();
 	case PLOG_STOP:
-		status = plog_stop();
+		return plog_stop();
 	case PLOG_RESETBUF:
-		status = plog_clear();
+		return plog_clear();
 	case PLOG_GETBYIDX:
-		status = plog_IDXget();
+		return plog_IDXget();
 	case PLOG_GETBYPID:
-		status = plog_PIDget();
+		return plog_PIDget();
 	case PLOG_GETSIZE:
-		status = plog_get_size();
+		return plog_get_size();
 	}
-	return status;
 }
 
 /* Starts process logger process */
@@ -139,7 +137,7 @@ int plog_PIDget()
 	plog* found = find_by_PID(m_in.m1_i2);
 	if (found)
 	{
-		fprintf(stderr, PLOG_PRINTFORMAT, 
+		fprintf(stderr, PLOG_PRINTFORMAT,
 				m_in.m1_i2, found->start_t, found->end_t);
 		return EXIT_SUCCESS;
 	}
@@ -152,7 +150,7 @@ int plog_IDXget()
 	if (buffer.size > m_in.m1_i3 && m_in.m1_i3 >= 0)
 	{
 		const plog* tmp = buffer.arr[m_in.m1_i3];
-		fprintf(stderr, PLOG_PRINTFORMAT, 
+		fprintf(stderr, PLOG_PRINTFORMAT,
 				tmp->p_id, tmp->start_t, tmp->end_t);
 		return EXIT_SUCCESS;
 	}
