@@ -98,6 +98,7 @@ int log_end(int id)
 {
 	if (started)
 	{
+		fprintf(stderr, "Looking for PID %d", id);
 		plog* tmp = find_by_PID(id);
 		fprintf(stderr, "Process %d retrieved.\n", tmp->p_id);
 		if (tmp)
