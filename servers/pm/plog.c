@@ -99,7 +99,7 @@ int log_end(int id)
 	if (started)
 	{
 		plog* tmp = find_by_PID(id);
-		fprintf(stderr, "Process %p retrieved.\n");
+		fprintf(stderr, "Process %d retrieved.\n", tmp->p_id);
 		if (tmp)
 		{
 			fprintf(stderr, "Process %d is ended.\n", id);
