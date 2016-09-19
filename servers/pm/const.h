@@ -28,4 +28,4 @@
 #define PLOG_GETBYPID 4
 #define PLOG_GETSIZE 5
 
-#define PLOG_PRINTFORMAT "Process: %d\n\tStart: %ld\n\tEnd: %ld\n\n"
+#define PLOG_PRINTFORMAT "Process: %d\n\tStart: %d\n\tEnd: %d\n\n"
