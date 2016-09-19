@@ -40,6 +40,8 @@ int do_plog()
 		return plog_PIDget();
 	case PLOG_GETSIZE:
 		return plog_get_size();
+	default:
+		return EXIT_FAILURE;
 	}
 }
 
