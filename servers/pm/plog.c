@@ -155,6 +155,7 @@ int plog_IDXget()
 		const plog* tmp = buffer.arr[m_in.m1_i3];
 		mp->mp_reply.m2_l1 = tmp->start_t;
 		mp->mp_reply.m2_l2 = tmp->end_t;
+		mp->mp_reply.m2_i1 = tmp->p_id;
 		return EXIT_SUCCESS;
 	}
 	return EXIT_FAILURE;
