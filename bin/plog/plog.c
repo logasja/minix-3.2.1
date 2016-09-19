@@ -23,17 +23,17 @@ int main(int argc, char *argv[])
 	{
 		if (!strcmp(argv[1],"start"))
 		{
-			fprintf(stderr, "Starting process logger.\n");
+			printf("Starting Process Logger.\n");
 			status = start_plog();
 		}
 		else if (!strcmp(argv[1],"stop"))
 		{
-			fprintf(stderr, "Stopping process logger.\n");
+			printf("Stopping Process Logger.\n");
 			status = stop_plog();
 		}
 		else if (!strcmp(argv[1], "clear"))
 		{
-			fprintf(stderr, "Clearing buffer.\n");
+			printf("Resetting Process Logger.\n");
 			status = reset_plog();
 		}
 	}
@@ -41,10 +41,8 @@ int main(int argc, char *argv[])
 	if (status > -1)
 	{
 		if (status)
-		{
 			fprintf(stderr, "Error starting or stopping service.\n");
-			exit(status);
-		}
+		exit(status);
 	}
 
 	int ch;
@@ -62,20 +60,14 @@ int main(int argc, char *argv[])
 			status = get_plog_byPID(param, &start, &end);
 			if (status)
 				fprintf(stderr, "Could not find the specified process log.\n");
-			else
-				fprintf(stderr, "PID: %d\n\tStart: %ld\n\tEnd: %ld\n", param, start, end);
 			break;
 		case 'i':
 			status = get_plog_byindex(param, &start, &end);
 			if (status)
 				fprintf(stderr, "Specified index is not valid.\n");
-			else
-				fprintf(stderr, "Index: %d\n\tStart: %ld\n\tEnd: %ld\n", param, start, end);
 			break;
 		case 's':
-			size = get_plog_size();
-			fprintf(stderr, "Buffer has a size of %d items.\n", size);
-			status = EXIT_SUCCESS;
+			get_plog_size();
 			break;
 		}
 	}

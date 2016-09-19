@@ -41,7 +41,6 @@ int do_plog()
 	case PLOG_GETSIZE:
 		status = plog_get_size();
 	}
-	send(m_in.m_source, &m_in);
 	return status;
 }
 
@@ -50,7 +49,6 @@ int plog_start()
 {
 	if (!started)
 	{
-		//printf("Starting\n");
 		if (dirtyBuf)
 			init_buffer();
 		plog_clear();
@@ -66,7 +64,7 @@ int plog_stop()
 	if (!started)
 		return (EXIT_FAILURE);
 
-	//printf("Stopping\n");
+	printf("Stopping Process Logger\n");
 
 	started = false;
 	return EXIT_SUCCESS;
@@ -77,10 +75,7 @@ int log_start(int id)
 {
 	if (started)
 	{
-		//printf("Logging Start\n");
-
 		plog* tmp = buffer.arr[buffer.cur_index];
-		fprintf(stderr, "Got pointer %p at %d.\n", tmp, buffer.cur_index);
 		if (!tmp)
 		{
 			tmp = (plog*)malloc(sizeof(plog));
@@ -103,7 +98,6 @@ int log_end(int id)
 {
 	if (started)
 	{
-		//printf("Logging End\n");
 		plog* tmp = find_by_PID(id);
 		if (tmp)
 		{
@@ -118,7 +112,6 @@ int log_end(int id)
 /* Clears entire buffer */
 int plog_clear()
 {
-	//printf("Clearing\n");
 	if (started)
 	{
 		/* For each value in the array we want to free the memory */
@@ -136,11 +129,7 @@ int plog_clear()
 /* Get current size of buffer */
 int plog_get_size()
 {
-	printf("1");
-	m_in.m2_i1 = buffer.size;
-	printf("2");
-	fprintf(stderr, "Buffer size is %u, returned size is %d", buffer.size, m_in.m2_i1);
-	printf("3");
+	fprintf(stderr, "Log buffer size is %u.\n", buffer.size);
 	return EXIT_SUCCESS;
 }
 
@@ -150,18 +139,11 @@ int plog_PIDget()
 	plog* found = find_by_PID(m_in.m1_i2);
 	if (found)
 	{
-		//printf("in PIDget if found: %p", found);
-		m_in.m2_l1 = found->start_t;
-		m_in.m2_l2 = found->end_t;
+		fprintf(stderr, PLOG_PRINTFORMAT, 
+				m_in.m1_i2, found->start_t, found->end_t);
 		return EXIT_SUCCESS;
 	}
-	else
-	{
-		printf("in PIDget else: %p", found);
-		m_in.m2_l1 = -1;
-		m_in.m2_l2 = -1;
-		return EXIT_FAILURE;
-	}
+	return EXIT_FAILURE;
 }
 
 /* Get process by index */
@@ -169,10 +151,9 @@ int plog_IDXget()
 {
 	if (buffer.size > m_in.m1_i3 && m_in.m1_i3 >= 0)
 	{
-		m_in.m2_l1 = buffer.arr[m_in.m1_i3]->start_t;
-		m_in.m2_l2 = buffer.arr[m_in.m1_i3]->end_t;
-		m_in.m1_i2 = buffer.arr[m_in.m1_i3]->p_id;
-
+		const plog* tmp = buffer.arr[m_in.m1_i3];
+		fprintf(stderr, PLOG_PRINTFORMAT, 
+				tmp->p_id, tmp->start_t, tmp->end_t);
 		return EXIT_SUCCESS;
 	}
 	return EXIT_FAILURE;
@@ -195,7 +176,6 @@ plog* find_by_PID(int id)
 
 void init_buffer()
 {
-	//printf("Starting Buffer Init\n");
 	for (int i = 0; i < PLOG_BUFFER_SIZE; i++)
 	{
 		buffer.arr[i] = NULL;
