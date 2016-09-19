@@ -26,21 +26,23 @@ bool started = false;
 int do_plog()
 {
 	//printf("In do_plog\n");
+	int status = EXIT_FAILURE;
 	switch (m_in.m1_i1) {
 	case PLOG_START:
-		return plog_start();
+		status = plog_start();
 	case PLOG_STOP:
-		return plog_stop();
+		status = plog_stop();
 	case PLOG_RESETBUF:
-		return plog_clear();
+		status = plog_clear();
 	case PLOG_GETBYIDX:
-		return plog_IDXget();
+		status = plog_IDXget();
 	case PLOG_GETBYPID:
-		return plog_PIDget();
+		status = plog_PIDget();
 	case PLOG_GETSIZE:
-		return plog_get_size();
+		status = plog_get_size();
 	}
-	return (EXIT_FAILURE);
+	send(m_in.m_source, &m_in);
+	return status;
 }
 
 /* Starts process logger process */
