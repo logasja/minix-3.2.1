@@ -9,5 +9,6 @@ int get_plog_size()
 
 	_syscall(PM_PROC_NR, PLOG, &m);
 
+	// Returns the size of the buffer
 	return m.m2_i1;
 }

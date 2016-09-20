@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+// The structure of the time logs
 typedef struct plog
 {
 	int p_id;
@@ -11,6 +12,7 @@ typedef struct plog
 	time_t end_t;
 } plog;
 
+// The circular buffer used to store info
 typedef struct circularBuffer
 {
 	int cur_index;
@@ -20,13 +22,15 @@ typedef struct circularBuffer
 
 circularBuffer buffer;
 
+// Defines whether or not the buffer has been initialized to 0
 bool dirtyBuf = true;
+// Flips when started or stopped by the user, defines when to put new processes into buffer
 bool started = false;
 
 /* Entry point into functionality */
 int do_plog()
 {
-	//printf("In do_plog\n");
+	// Switch statement that uses message passed by library to define what function to run
 	switch (m_in.m1_i1) {
 	case PLOG_START:
 		return plog_start();
@@ -52,7 +56,6 @@ int plog_start()
 	{
 		if (dirtyBuf)
 			init_buffer();
-		plog_clear();
 		started = true;
 		return EXIT_SUCCESS;
 	}
@@ -74,12 +77,15 @@ int log_start(int id)
 {
 	if (started)
 	{
+		// Gets the pointer to the next array element
 		plog* tmp = buffer.arr[buffer.cur_index];
+		// If pointer is null allocate memory for it
 		if (!tmp)
 		{
 			tmp = (plog*)malloc(sizeof(plog));
 			buffer.size = buffer.size + 1;
 		}
+		// Place info into memory
 		tmp->p_id = id;
 		do_time();
 		tmp->start_t = mp->mp_reply.m2_l1;
@@ -98,6 +104,7 @@ int log_end(int id)
 {
 	if (started)
 	{
+		// First finds the plog entry, to avoid writing to a process that no longer exists
 		plog* found = find_by_PID(id);
 		if (found)
 		{
@@ -130,6 +137,7 @@ int plog_clear()
 /* Get current size of buffer */
 int plog_get_size()
 {
+	// Set reply to the size of the buffer
 	mp->mp_reply.m2_i1 = buffer.size;
 	return EXIT_SUCCESS;
 }
@@ -150,6 +158,7 @@ int plog_PIDget()
 /* Get process by index */
 int plog_IDXget()
 {
+	// if the index given is within the size constraints returns plog info at index
 	if (buffer.size > m_in.m1_i3 && m_in.m1_i3 >= 0)
 	{
 		const plog* tmp = buffer.arr[m_in.m1_i3];
@@ -161,6 +170,7 @@ int plog_IDXget()
 	return EXIT_FAILURE;
 }
 
+// Basic linear search through buffer to find the desired PID
 plog* find_by_PID(int id)
 {
 	for (int i = 0; i < buffer.size; i++)
@@ -176,11 +186,14 @@ plog* find_by_PID(int id)
 	return NULL;
 }
 
+// Initializes buffer with null pointers
 void init_buffer()
 {
 	for (int i = 0; i < PLOG_BUFFER_SIZE; i++)
 	{
 		buffer.arr[i] = NULL;
 	}
+	buffer.cur_index = 0;
+	buffer.size = 0;
 	dirtyBuf = false;
 }

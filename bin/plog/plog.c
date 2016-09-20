@@ -39,6 +39,7 @@ int main(int argc, char *argv[])
 		}
 	}
 
+	// If the status has been set, see if it worked.
 	if (status > -1)
 	{
 		if (status)
@@ -46,6 +47,7 @@ int main(int argc, char *argv[])
 		exit(status);
 	}
 
+	// Now check for character arguments
 	int ch;
 	if ((ch = getopt(argc, argv, "sip")) != -1)
 	{
