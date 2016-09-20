@@ -32,5 +32,5 @@ plog clear
 ```
 
 ## Make Instructions
-In order to make the image with most recent patches, pull most recent commmit (or get the most recent patch tarball [here](https://github.com/Jakeman893/minix-3.2.1/releases) and place into /usr/patch/.
-Once in place, run make test in the directory /usr/src and the entire OS will be rebuilt. After building (around 10 mins) reboot the environment. Aaaand... Thats all!
+In order to make the image with most recent patches, pull most recent commmit (or get the most recent patch tarball [here](https://github.com/Jakeman893/minix-3.2.1/releases) and unzip it into any directory besize /usr/src/ (I recommend making a directory in /usr/).
+Once in place, run make test in the new directory. This make command will patch the files in /usr/src/, build, and reboot the system for you. Aaaand... Thats all!
