@@ -66,6 +66,7 @@
 #define GETMCONTEXT     67
 #define SETMCONTEXT     68
 #define PLOG			69
+#define STATLOG			70
 
 /* Posix signal handling. */
 #define SIGACTION	  71

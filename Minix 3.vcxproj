@@ -2912,12 +2912,14 @@
     <ClCompile Include="lib\libc\string\__strsignal.c" />
     <ClCompile Include="lib\libc\sys-minix\accept.c" />
     <ClCompile Include="lib\libc\sys-minix\access.c" />
+    <ClCompile Include="lib\libc\sys-minix\add_statlog.c" />
     <ClCompile Include="lib\libc\sys-minix\bind.c" />
     <ClCompile Include="lib\libc\sys-minix\brk.c" />
     <ClCompile Include="lib\libc\sys-minix\chdir.c" />
     <ClCompile Include="lib\libc\sys-minix\chmod.c" />
     <ClCompile Include="lib\libc\sys-minix\chown.c" />
     <ClCompile Include="lib\libc\sys-minix\chroot.c" />
+    <ClCompile Include="lib\libc\sys-minix\clear_statlog.c" />
     <ClCompile Include="lib\libc\sys-minix\close.c" />
     <ClCompile Include="lib\libc\sys-minix\connect.c" />
     <ClCompile Include="lib\libc\sys-minix\cprofile.c" />
@@ -2973,6 +2975,7 @@
     <ClCompile Include="lib\libc\sys-minix\nanosleep.c" />
     <ClCompile Include="lib\libc\sys-minix\open.c" />
     <ClCompile Include="lib\libc\sys-minix\pathconf.c" />
+    <ClCompile Include="lib\libc\sys-minix\pause_statlog.c" />
     <ClCompile Include="lib\libc\sys-minix\pipe.c" />
     <ClCompile Include="lib\libc\sys-minix\poll.c" />
     <ClCompile Include="lib\libc\sys-minix\pread.c" />
@@ -2987,6 +2990,7 @@
     <ClCompile Include="lib\libc\sys-minix\rename.c" />
     <ClCompile Include="lib\libc\sys-minix\reset_plog.c" />
     <ClCompile Include="lib\libc\sys-minix\rmdir.c" />
+    <ClCompile Include="lib\libc\sys-minix\rm_statlog.c" />
     <ClCompile Include="lib\libc\sys-minix\sbrk.c" />
     <ClCompile Include="lib\libc\sys-minix\select.c" />
     <ClCompile Include="lib\libc\sys-minix\sem.c" />
@@ -3013,6 +3017,7 @@
     <ClCompile Include="lib\libc\sys-minix\socketpair.c" />
     <ClCompile Include="lib\libc\sys-minix\sprofile.c" />
     <ClCompile Include="lib\libc\sys-minix\start_plog.c" />
+    <ClCompile Include="lib\libc\sys-minix\start_statlog.c" />
     <ClCompile Include="lib\libc\sys-minix\stat.c" />
     <ClCompile Include="lib\libc\sys-minix\statvfs.c" />
     <ClCompile Include="lib\libc\sys-minix\stime.c" />
@@ -4013,6 +4018,7 @@
     <ClCompile Include="servers\pm\profile.c" />
     <ClCompile Include="servers\pm\schedule.c" />
     <ClCompile Include="servers\pm\signal.c" />
+    <ClCompile Include="servers\pm\statlog.c" />
     <ClCompile Include="servers\pm\table.c" />
     <ClCompile Include="servers\pm\time.c" />
     <ClCompile Include="servers\pm\trace.c" />
