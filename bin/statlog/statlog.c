@@ -19,48 +19,49 @@ int main(int argc, char *argv[])
 {
 	int status = -1;
 
+	char* op;
+
 	if (argv[1])
+		op = argv[1];
+	else
+		exit(printf(HELP_DIALOGUE));
+
+	if (!strcmp(op, "start"))
 	{
-		if (!strcmp(argv[1], "start"))
+		printf("Starting State Logger.\n");
+		status = start_statlog();
+	}
+	else if (!strcmp(op, "stop"))
+	{
+		printf("Pausing State Logger.\n");
+		status = pause_statlog();
+	}
+	else if (!strcmp(op, "clear"))
+	{
+		printf("Clearing State Logger.\n");
+		status = clear_statlog();
+	}
+
+	if (argv[2])
+	{
+		int param;
+		param = atoi(argv[2]);
+		if (!strcmp(op, "add"))
 		{
-			printf("Starting State Logger.\n");
-			status = start_statlog();
+			printf("Adding %d...\n", param);
+			status = add_statlog(param);
 		}
-		else if (!strcmp(argv[1], "stop"))
+		else if (!strcmp(op, "remove"))
 		{
-			printf("Pausing State Logger.\n");
-			status = pause_statlog();
-		}
-		else if (!strcmp(argv[1], "clear"))
-		{
-			printf("Clearing State Logger.\n");
-			status = clear_statlog();
-		}
-		else if (!strcmp(argv[1], "add"))
-		{
-			if (argv[2])
-			{
-				printf("Adding %d...", argv[2]);
-				status = add_statlog(argv[2]);
-			}
-		}
-		else if (!strcmp(argv[1], "remove"))
-		{
-			if (argv[2])
-			{
-				printf("Removing %d...", argv[2]);
-				status = rm_statlog(argv[2]);
-			}
-		}
-		else
-		{
-			printf(HELP_DIALOGUE);
-			status = EXIT_SUCCESS;
+			printf("Removing %d...\n", param);
+			status = rm_statlog(param);
 		}
 	}
 
-	// Check status of the program
-	if (status)
-		printf("Error in service.\n");
+	if (status < 0)
+	{
+		printf(HELP_DIALOGUE);
+		status = EXIT_FAILURE;
+	}
 	exit(status);
 }
