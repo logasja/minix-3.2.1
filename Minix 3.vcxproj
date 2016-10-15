@@ -129,6 +129,7 @@
     <ClCompile Include="bin\pwd\pwd.c" />
     <ClCompile Include="bin\rmdir\rmdir.c" />
     <ClCompile Include="bin\rm\rm.c" />
+    <ClCompile Include="bin\statlog\statlog.c" />
     <ClCompile Include="bin\sync\sync.c" />
     <ClCompile Include="bin\test\test.c" />
     <ClCompile Include="commands\acknm\acknm.c" />

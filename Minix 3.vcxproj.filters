@@ -13755,6 +13755,9 @@
     <ClCompile Include="lib\libc\sys-minix\start_statlog.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="bin\statlog\statlog.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="commands\ash\builtins.def">

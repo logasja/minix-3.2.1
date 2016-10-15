@@ -59,11 +59,17 @@ node* findNode(int p_id, node* parent)
 	while (path)
 	{
 		if (p_id > path->p_id)
+		{
+			parent = path;
 			path = path->right;
+		}
 		else if (p_id < path->p_id)
+		{
+			parent = path;
 			path = path->left;
+		}
 		else
-			return path;
+			break;
 	}
 	return path;
 }

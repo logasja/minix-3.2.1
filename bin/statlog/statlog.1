@@ -1,0 +1,59 @@
+.Dd September 16, 2016
+.Dt PLOG 1
+.Os
+.Sh NAME
+.Nm plog
+.Nd Process logging
+.Sh SYNOPSIS
+.Nm
+.Op start|stop|clear
+.Op Fl p|i|s
+.Op Ar [pid...index]
+.Sh DESCRIPTION
+The
+.Nm
+utility stores the start and end time of the last 1024 processes after service is started.
+The
+.Ar pid...index
+operands are processed in command line order.
+.Pp
+.Pp
+The options are as follows:
+.Bl -tag -width Ds
+.It Fl p
+Gets the entry for the provided pid.
+.It Fl i
+Gets the entry for the provided index.
+.It Fl s
+Gets the current size of the buffer.
+.It start
+Attempts to start the logging service.
+.It stop
+Attempts to end the logging service.
+.It clear
+Clears the logging buffer.
+.Sh EXIT STATUS
+The
+.Nm
+utility exits 0 on success, and \*[Gt]0 if an error occurs.
+.Sh EXAMPLES
+The command:
+.Bd -literal -offset indent
+.Ic plog start
+.Ed
+.Pp
+will start the service.
+.Pp
+The command:
+.Bd -literal -offset indent
+.Ic plog -i 0
+.Ed
+.Pp
+will return (if possible) the pid, start, and end time of the process in the buffer.
+.Pp
+The command:
+.Bd -literal -offset indent
+.Ic plog -p 123
+.Ed
+.Pp
+will return (if possible) the pid, start, and end time of the process in the buffer.
