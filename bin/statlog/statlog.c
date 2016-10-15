@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 		printf("Starting State Logger.\n");
 		status = start_statlog();
 	}
-	else if (!strcmp(op, "stop"))
+	else if (!strcmp(op, "pause"))
 	{
 		printf("Pausing State Logger.\n");
 		status = pause_statlog();
@@ -63,5 +63,11 @@ int main(int argc, char *argv[])
 		printf(HELP_DIALOGUE);
 		status = EXIT_FAILURE;
 	}
+	else
+	{
+		if (status == EXIT_FAILURE)
+			printf("Errored");
+	}
+
 	exit(status);
 }
