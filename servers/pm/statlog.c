@@ -53,7 +53,7 @@ int statlog_pause()
 	return EXIT_SUCCESS;
 }
 
-node* findNode(int p_id)
+node* findNode(int p_id, node* parent)
 {
 	node* path = root;
 	while (path)
@@ -70,7 +70,8 @@ node* findNode(int p_id)
 
 int statlog_add()
 {
-	node* tmp = findNode(m_in.m1_i2);
+	node* parent;
+	node* tmp = findNode(m_in.m1_i2, parent);
 	if (!tmp)
 	{
 		tmp = malloc(sizeof(node));
@@ -82,14 +83,36 @@ int statlog_add()
 
 int statlog_rm()
 {
-	node* tmp = findNode(m_in.m1_i2);
-	if (tmp)
+	node* parent;
+	node* toDelete = findNode(m_in.m1_i2, parent);
+	if (toDelete)
 	{
-		node* garbage = tmp;
-		if (!tmp->left && !tmp->right)
+		if (!toDelete->left && !toDelete->right)
+			free(toDelete);
+		else if (toDelete->left && toDelete->right)
+		{
+			node* tmp = toDelete->right;
+			while (tmp->left)
+				tmp = tmp->left;
+			toDelete->p_id = tmp->p_id;
 			free(tmp);
-		else if (tmp->left && !tmp->right)
-			
+		}
+		else if (toDelete->left)
+		{
+			if (toDelete->p_id > parent->p_id)
+				parent->right = toDelete->left;
+			else
+				parent->left = toDelete->left;
+			free(toDelete);
+		}
+		else if (toDelete->right)
+		{
+			if (toDelete->p_id > parent->p_id)
+				parent->right = toDelete->right;
+			else
+				parent->left = toDelete->right;
+			free(toDelete);
+		}
 	}
 	return EXIT_FAILURE;
 }
