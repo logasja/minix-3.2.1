@@ -12,7 +12,7 @@ typedef struct node {
 
 int tracked_table[STATLOG_BUFFER_SIZE] = { 0 };
 
-node* root;
+node* root = 0;
 
 bool running = false;
 
@@ -87,43 +87,135 @@ int statlog_add()
 	return EXIT_FAILURE;
 }
 
+
 int statlog_rm()
 {
-	node* parent;
-	node* toDelete = findNode(m_in.m1_i2, parent);
-	if (toDelete)
+	int value = m_in.m1_i2;
+	if (root == NULL)
+		return EXIT_FAILURE;
+	else
 	{
-		if (!toDelete->left && !toDelete->right)
-			free(toDelete);
-		else if (toDelete->left && toDelete->right)
+		if (root->p_id == value)
 		{
-			node* tmp = toDelete->right;
-			while (tmp->left)
-				tmp = tmp->left;
-			toDelete->p_id = tmp->p_id;
-			free(tmp);
-		}
-		else if (toDelete->left)
-		{
-			if (toDelete->p_id > parent->p_id)
-				parent->right = toDelete->left;
+			node* auxRoot = malloc(sizeof(node));
+			auxRoot->left = root;
+			node* removedNode = rmBSTNode(value, &auxRoot, &root);
+			root = auxRoot->left;
+			if (removedNode != NULL)
+			{
+				free(removedNode);
+				return EXIT_SUCCESS;
+			}
 			else
-				parent->left = toDelete->left;
-			free(toDelete);
+				return EXIT_FAILURE;
 		}
-		else if (toDelete->right)
-		{
-			if (toDelete->p_id > parent->p_id)
-				parent->right = toDelete->right;
+		else {
+			node* removedNode = rmBSTNode(value, NULL, &root);
+			if (removedNode != NULL)
+			{
+				free(removedNode);
+				return EXIT_SUCCESS;
+			}
 			else
-				parent->left = toDelete->right;
-			free(toDelete);
+				return EXIT_FAILURE;
 		}
 	}
-	return EXIT_FAILURE;
 }
 
 int statlog_clear()
 {
-	
+	destroy_tree(root);
+}
+
+
+/*****************************************************************/
+/************************BST**************************************/
+/*****************************************************************/
+void destroy_tree(node* leaf)
+{
+	if (leaf != 0)
+	{
+		destroy_tree(leaf->left);
+		destroy_tree(leaf->right);
+		free(leaf);
+	}
+}
+
+node* rmBSTNode(int value, node* parent, node* current)
+{
+	node* left = current->left;
+	node* right = current->right;
+	if (value < current->p_id)
+	{
+		if (left != NULL)
+			return rmBSTNode(value, current, left);
+		else
+			return NULL;
+	}
+	else if (value > current->p_id)
+	{
+		if (right != NULL)
+			return rmBSTNode(value, current, right);
+		else
+			return NULL;
+	}
+	else {
+		if (left != NULL && right != NULL)
+		{
+			current->p_id = getMinBSTValue(right);
+			return rmBSTNode(current->p_id, current, right);
+		}
+		else if (parent->left == current)
+		{
+			if (left != NULL)
+				parent->left = left;
+			else
+				parent->left = right;
+			return current;
+		}
+		else if (parent->right == current)
+		{
+			if (left != NULL)
+				parent->right = left;
+			else
+				parent->right = right;
+			return current;
+		}
+	}
+}
+
+int getMinBSTValue(node* current) {
+	if (current->left == NULL)
+		return current->p_id;
+	else
+		return getMinBSTValue(current->left);
+}
+
+void insert(int key, struct node** leaf)
+{
+	if (*leaf == 0)
+	{
+		*leaf = (node*)malloc(sizeof(node));
+		(*leaf)->p_id = key;
+		(*leaf)->left = 0;
+		(*leaf)->right = 0;
+	}
+	else if (key < (*leaf)->p_id)
+		insert(key, &(*leaf)->left);
+	else if (key > (*leaf)->p_id)
+		insert(key, &(*leaf)->right);
+}
+
+node* search(int key, node *leaf)
+{
+	if (leaf != 0)
+	{
+		if (key == leaf->p_id)
+			return leaf;
+		else if (key < leaf->p_id)
+			return search(key, leaf->left);
+		else
+			return search(key, leaf->right);
+	}
+	else return 0;
 }
