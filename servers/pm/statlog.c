@@ -172,7 +172,7 @@ int statlog_rm()
 		{
 			node* auxRoot = malloc(sizeof(node));
 			auxRoot->left = root;
-			node* removedNode = rmBSTNode(m_in.m1_i2, &auxRoot, &root);
+			node* removedNode = rmBSTNode(m_in.m1_i2, auxRoot, root);
 			root = auxRoot->left;
 			if (removedNode != NULL)
 			{
@@ -183,7 +183,7 @@ int statlog_rm()
 				return EXIT_FAILURE;
 		}
 		else {
-			node* removedNode = rmBSTNode(m_in.m1_i2, NULL, &root);
+			node* removedNode = rmBSTNode(m_in.m1_i2, NULL, root);
 			if (removedNode != NULL)
 			{
 				free(removedNode);
