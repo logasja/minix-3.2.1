@@ -68,7 +68,7 @@ node* findMax(node* current)
 		return NULL;
 	if (current->right)
 		/* Follow right to find maximum */
-		findMax(current->right);
+		return findMax(current->right);
 	else
 		return current;
 }
@@ -170,6 +170,7 @@ int statlog_add()
 int statlog_rm()
 {
 	delete(root, m_in.m1_i2);
+	return EXIT_SUCCESS;
 }
 
 int statlog_clear()
