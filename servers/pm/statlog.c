@@ -49,6 +49,13 @@ void destroy_tree(node* leaf)
 	}
 }
 
+int getMinBSTValue(node* current) {
+	if (current->left == NULL)
+		return current->p_id;
+	else
+		return getMinBSTValue(current->left);
+}
+
 node* rmBSTNode(int value, node* parent, node* current)
 {
 	node* left = current->left;
@@ -92,14 +99,7 @@ node* rmBSTNode(int value, node* parent, node* current)
 	}
 }
 
-int getMinBSTValue(node* current) {
-	if (current->left == NULL)
-		return current->p_id;
-	else
-		return getMinBSTValue(current->left);
-}
-
-void insert(int key, struct node** leaf)
+void insert(int key, node** leaf)
 {
 	if (*leaf == 0)
 	{
@@ -155,7 +155,7 @@ int statlog_add()
 	node* tmp = search(m_in.m1_i2, root);
 	if (!tmp)
 	{
-		insert(m_in.m1_i2, root);
+		insert(m_in.m1_i2, &root);
 		return EXIT_SUCCESS;
 	}
 	return EXIT_FAILURE;
