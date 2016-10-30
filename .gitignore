@@ -6,3 +6,4 @@
 /.vs/Minix 3/v14
 *.opendb
 *.suo
+/Debug

@@ -53,35 +53,12 @@ int statlog_pause()
 	return EXIT_SUCCESS;
 }
 
-node* findNode(int p_id, node* parent)
-{
-	node* path = root;
-	while (path)
-	{
-		if (p_id > path->p_id)
-		{
-			parent = path;
-			path = path->right;
-		}
-		else if (p_id < path->p_id)
-		{
-			parent = path;
-			path = path->left;
-		}
-		else
-			break;
-	}
-	return path;
-}
-
 int statlog_add()
 {
-	node* parent;
-	node* tmp = findNode(m_in.m1_i2, parent);
+	node* tmp = search(m_in.m1_i2, root);
 	if (!tmp)
 	{
-		tmp = malloc(sizeof(node));
-		tmp->p_id = m_in.m1_i2;
+		insert(m_in.m1_i2, root);
 		return EXIT_SUCCESS;
 	}
 	return EXIT_FAILURE;
@@ -90,16 +67,15 @@ int statlog_add()
 
 int statlog_rm()
 {
-	int value = m_in.m1_i2;
 	if (root == NULL)
 		return EXIT_FAILURE;
 	else
 	{
-		if (root->p_id == value)
+		if (root->p_id == m_in.m1_i2)
 		{
 			node* auxRoot = malloc(sizeof(node));
 			auxRoot->left = root;
-			node* removedNode = rmBSTNode(value, &auxRoot, &root);
+			node* removedNode = rmBSTNode(m_in.m1_i2, &auxRoot, &root);
 			root = auxRoot->left;
 			if (removedNode != NULL)
 			{
@@ -110,7 +86,7 @@ int statlog_rm()
 				return EXIT_FAILURE;
 		}
 		else {
-			node* removedNode = rmBSTNode(value, NULL, &root);
+			node* removedNode = rmBSTNode(m_in.m1_i2, NULL, &root);
 			if (removedNode != NULL)
 			{
 				free(removedNode);
