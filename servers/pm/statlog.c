@@ -41,7 +41,7 @@ int do_statlog()
 /*****************************************************************/
 void destroy_tree(node* leaf)
 {
-	if (leaf != 0)
+	if (leaf)
 	{
 		destroy_tree(leaf->left);
 		destroy_tree(leaf->right);
@@ -49,82 +49,95 @@ void destroy_tree(node* leaf)
 	}
 }
 
-int getMinBSTValue(node* current) {
-	if (current->left == NULL)
-		return current->p_id;
+node* findMin(node* current)
+{
+	if (!current)
+		/* No element */
+		return NULL;
+	if (current->left)
+		/* Follow left to find minimum */
+		return findMin(current->left);
 	else
-		return getMinBSTValue(current->left);
+		return current;
 }
 
-node* rmBSTNode(int value, node* parent, node* current)
+node* findMax(node* current)
 {
-	node* left = current->left;
-	node* right = current->right;
-	if (value < current->p_id)
+	if (!current)
+		/* No element */
+		return NULL;
+	if (current->right)
+		/* Follow right to find maximum */
+		findMax(current->right);
+	else
+		return current;
+}
+
+node* insert(node* current, int value)
+{
+	if (!current)
 	{
-		if (left != NULL)
-			return rmBSTNode(value, current, left);
+		node* tmp;
+		tmp = (node*)malloc(sizeof(node));
+		tmp->p_id = value;
+		tmp->left = NULL;
+		tmp->right = NULL;
+		return tmp;
 	}
+
+	if (value > current->p_id)
+		current->right = insert(current->right, value);
+	else if (value < current->p_id)
+		current->left = insert(current->left, value);
+	// Otherwise nothing to do as data already present
+	return current;
+}
+
+node* delete(node* current, int value)
+{
+	node* tmp;
+	if (!current)
+		printf("Element not found");
+	else if (value < current->p_id)
+		current->left = delete(current->left, value);
 	else if (value > current->p_id)
+		current->right = delete(current->right, value);
+	else
 	{
-		if (right != NULL)
-			return rmBSTNode(value, current, right);
-	}
-	else {
-		if (left != NULL && right != NULL)
+		//Able to delete node and replace it with right sub-tree or max element on left
+		if (current->right && current->left)
 		{
-			current->p_id = getMinBSTValue(right);
-			return rmBSTNode(current->p_id, current, right);
+			// Replace with minimum element in right tree
+			tmp = findMin(current->right);
+			current->p_id = tmp->p_id;
+			// As we replaced it with another node, the node needs to be deleted
+			current->right = delete(current->right, tmp->p_id);
 		}
-		else if (parent->left == current)
-		{
-			if (left != NULL)
-				parent->left = left;
-			else
-				parent->left = right;
-			return current;
-		}
-		else if (parent->right == current)
-		{
-			if (left != NULL)
-				parent->right = left;
-			else
-				parent->right = right;
-			return current;
-		}
-	}
-	return NULL;
-}
-
-void insert(int key, node** leaf)
-{
-	if (*leaf == 0)
-	{
-		*leaf = (node*)malloc(sizeof(node));
-		(*leaf)->p_id = key;
-		(*leaf)->left = 0;
-		(*leaf)->right = 0;
-	}
-	else if (key < (*leaf)->p_id)
-		insert(key, &(*leaf)->left);
-	else if (key >(*leaf)->p_id)
-		insert(key, &(*leaf)->right);
-}
-
-node* search(int key, node *leaf)
-{
-	if (leaf != 0)
-	{
-		if (key == leaf->p_id)
-			return leaf;
-		else if (key < leaf->p_id)
-			return search(key, leaf->left);
 		else
-			return search(key, leaf->right);
+		{
+			// If only one or 0 children we directly remove it from tree and connect parent to child
+			tmp = current;
+			if (!current->left)
+				current = current->right;
+			else if (!current->right)
+				current = current->left;
+			free(tmp);
+		}
 	}
-	else return 0;
+	return current;
 }
 
+node* find(node* current, int value)
+{
+	if (!current)
+		return NULL;
+	if (value > current->p_id)
+		return find(current->right, value);
+	else if (value < current->p_id)
+		return find(current->left, value);
+	else
+		return current;
+}
 
 /**********************************************************/
 /**********************Statlog*****************************/
@@ -149,47 +162,14 @@ int statlog_pause()
 
 int statlog_add()
 {
-	node* tmp = search(m_in.m1_i2, root);
-	if (!tmp)
-	{
-		insert(m_in.m1_i2, &root);
-		return EXIT_SUCCESS;
-	}
-	return EXIT_FAILURE;
+	insert(root, m_in.m1_i2);
+	return EXIT_SUCCESS;
 }
 
 
 int statlog_rm()
 {
-	if (root == NULL)
-		return EXIT_FAILURE;
-	else
-	{
-		if (root->p_id == m_in.m1_i2)
-		{
-			node* auxRoot = malloc(sizeof(node));
-			auxRoot->left = root;
-			node* removedNode = rmBSTNode(m_in.m1_i2, auxRoot, root);
-			root = auxRoot->left;
-			if (removedNode != NULL)
-			{
-				free(removedNode);
-				return EXIT_SUCCESS;
-			}
-			else
-				return EXIT_FAILURE;
-		}
-		else {
-			node* removedNode = rmBSTNode(m_in.m1_i2, NULL, root);
-			if (removedNode != NULL)
-			{
-				free(removedNode);
-				return EXIT_SUCCESS;
-			}
-			else
-				return EXIT_FAILURE;
-		}
-	}
+	delete(root, m_in.m1_i2);
 }
 
 int statlog_clear()
