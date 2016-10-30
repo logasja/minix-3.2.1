@@ -35,74 +35,6 @@ int do_statlog()
 	}
 }
 
-int statlog_start()
-{
-	if (!running)
-		running = true;
-	else
-		return EXIT_FAILURE;
-	return EXIT_SUCCESS;
-}
-
-int statlog_pause()
-{
-	if (running)
-		running = false;
-	else
-		return EXIT_FAILURE;
-	return EXIT_SUCCESS;
-}
-
-int statlog_add()
-{
-	node* tmp = search(m_in.m1_i2, root);
-	if (!tmp)
-	{
-		insert(m_in.m1_i2, root);
-		return EXIT_SUCCESS;
-	}
-	return EXIT_FAILURE;
-}
-
-
-int statlog_rm()
-{
-	if (root == NULL)
-		return EXIT_FAILURE;
-	else
-	{
-		if (root->p_id == m_in.m1_i2)
-		{
-			node* auxRoot = malloc(sizeof(node));
-			auxRoot->left = root;
-			node* removedNode = rmBSTNode(m_in.m1_i2, &auxRoot, &root);
-			root = auxRoot->left;
-			if (removedNode != NULL)
-			{
-				free(removedNode);
-				return EXIT_SUCCESS;
-			}
-			else
-				return EXIT_FAILURE;
-		}
-		else {
-			node* removedNode = rmBSTNode(m_in.m1_i2, NULL, &root);
-			if (removedNode != NULL)
-			{
-				free(removedNode);
-				return EXIT_SUCCESS;
-			}
-			else
-				return EXIT_FAILURE;
-		}
-	}
-}
-
-int statlog_clear()
-{
-	destroy_tree(root);
-}
-
 
 /*****************************************************************/
 /************************BST**************************************/
@@ -178,7 +110,7 @@ void insert(int key, struct node** leaf)
 	}
 	else if (key < (*leaf)->p_id)
 		insert(key, &(*leaf)->left);
-	else if (key > (*leaf)->p_id)
+	else if (key >(*leaf)->p_id)
 		insert(key, &(*leaf)->right);
 }
 
@@ -194,4 +126,76 @@ node* search(int key, node *leaf)
 			return search(key, leaf->right);
 	}
 	else return 0;
+}
+
+
+/**********************************************************/
+/**********************Statlog*****************************/
+/**********************************************************/
+int statlog_start()
+{
+	if (!running)
+		running = true;
+	else
+		return EXIT_FAILURE;
+	return EXIT_SUCCESS;
+}
+
+int statlog_pause()
+{
+	if (running)
+		running = false;
+	else
+		return EXIT_FAILURE;
+	return EXIT_SUCCESS;
+}
+
+int statlog_add()
+{
+	node* tmp = search(m_in.m1_i2, root);
+	if (!tmp)
+	{
+		insert(m_in.m1_i2, root);
+		return EXIT_SUCCESS;
+	}
+	return EXIT_FAILURE;
+}
+
+
+int statlog_rm()
+{
+	if (root == NULL)
+		return EXIT_FAILURE;
+	else
+	{
+		if (root->p_id == m_in.m1_i2)
+		{
+			node* auxRoot = malloc(sizeof(node));
+			auxRoot->left = root;
+			node* removedNode = rmBSTNode(m_in.m1_i2, &auxRoot, &root);
+			root = auxRoot->left;
+			if (removedNode != NULL)
+			{
+				free(removedNode);
+				return EXIT_SUCCESS;
+			}
+			else
+				return EXIT_FAILURE;
+		}
+		else {
+			node* removedNode = rmBSTNode(m_in.m1_i2, NULL, &root);
+			if (removedNode != NULL)
+			{
+				free(removedNode);
+				return EXIT_SUCCESS;
+			}
+			else
+				return EXIT_FAILURE;
+		}
+	}
+}
+
+int statlog_clear()
+{
+	destroy_tree(root);
 }
