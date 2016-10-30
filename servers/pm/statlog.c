@@ -195,4 +195,5 @@ int statlog_rm()
 int statlog_clear()
 {
 	destroy_tree(root);
+	return EXIT_SUCCESS;
 }
