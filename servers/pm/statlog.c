@@ -64,15 +64,11 @@ node* rmBSTNode(int value, node* parent, node* current)
 	{
 		if (left != NULL)
 			return rmBSTNode(value, current, left);
-		else
-			return NULL;
 	}
 	else if (value > current->p_id)
 	{
 		if (right != NULL)
 			return rmBSTNode(value, current, right);
-		else
-			return NULL;
 	}
 	else {
 		if (left != NULL && right != NULL)
@@ -97,6 +93,7 @@ node* rmBSTNode(int value, node* parent, node* current)
 			return current;
 		}
 	}
+	return NULL;
 }
 
 void insert(int key, node** leaf)
