@@ -73,24 +73,23 @@ node* findMax(node* current)
 		return current;
 }
 
-node* insert(node* current, int value)
+node* insert(node** current, int value)
 {
-	if (!current)
+	if (!*current)
 	{
-		node* tmp;
-		tmp = (node*)malloc(sizeof(node));
-		tmp->p_id = value;
-		tmp->left = NULL;
-		tmp->right = NULL;
-		return tmp;
+		*current = (node*)malloc(sizeof(node));
+		(*current)->p_id = value;
+		(*current)->left = NULL;
+		(*current)->right = NULL;
+		return *current;
 	}
 
-	if (value > current->p_id)
-		current->right = insert(current->right, value);
-	else if (value < current->p_id)
-		current->left = insert(current->left, value);
+	if (value > (*current)->p_id)
+		return insert(&(*current)->right, value);
+	else if (value < (*current)->p_id)
+		return insert(&(*current)->left, value);
 	// Otherwise nothing to do as data already present
-	return current;
+	return NULL;
 }
 
 node* delete(node* current, int value)
@@ -162,7 +161,8 @@ int statlog_pause()
 
 int statlog_add()
 {
-	insert(root, m_in.m1_i2);
+	if (!insert(&root, m_in.m1_i2))
+		return EXIT_FAILURE;
 	return EXIT_SUCCESS;
 }
 
