@@ -138,6 +138,40 @@ node* find(node* current, int value)
 		return current;
 }
 
+
+void PrintInorder(node* current)
+{
+	if (current == NULL)
+	{
+		return;
+	}
+	PrintInorder(current->left);
+	printf("%d ", current->p_id);
+	PrintInorder(current->right);
+}
+
+void PrintPreorder(node* current)
+{
+	if (current == NULL)
+	{
+		return;
+	}
+	printf("%d ", current->p_id);
+	PrintPreorder(current->left);
+	PrintPreorder(current->right);
+}
+
+void PrintPostorder(node* current)
+{
+	if (current == NULL)
+	{
+		return;
+	}
+	PrintPostorder(current->left);
+	PrintPostorder(current->right);
+	printf("%d ", current->p_id);
+}
+
 /**********************************************************/
 /**********************Statlog*****************************/
 /**********************************************************/
@@ -161,8 +195,8 @@ int statlog_pause()
 
 int statlog_add()
 {
-	if (!insert(&root, m_in.m1_i2))
-		return EXIT_FAILURE;
+	insert(&root, m_in.m1_i2);
+	PrintInorder(root);
 	return EXIT_SUCCESS;
 }
 
@@ -170,6 +204,7 @@ int statlog_add()
 int statlog_rm()
 {
 	delete(root, m_in.m1_i2);
+	PrintInorder(root);
 	return EXIT_SUCCESS;
 }
 
