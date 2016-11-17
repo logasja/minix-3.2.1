@@ -100,7 +100,7 @@ node* delete(node* current, int value)
 	else if (value < current->p_id)
 		current->left = delete(current->left, value);
 	else if (value > current->p_id)
-		*(current->right) = *delete(current, value);
+		*(current->right) = *delete(current->right, value);
 	else
 	{
 		//Able to delete node and replace it with right sub-tree or max element on left
@@ -207,7 +207,7 @@ int statlog_add()
 
 int statlog_rm()
 {
-	delete(root, m_in.m1_i2);
+	root = delete(root, m_in.m1_i2);
 	PrintInorder(root);
 	return EXIT_SUCCESS;
 }
