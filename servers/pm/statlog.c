@@ -121,6 +121,8 @@ node* delete(node* current, int value)
 			else if (!current->right)
 				current = current->left;
 			free(tmp);
+			if (tmp == root)
+				root = NULL;
 		}
 	}
 	return current;
