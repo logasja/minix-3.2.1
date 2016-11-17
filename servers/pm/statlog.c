@@ -96,17 +96,11 @@ node* delete(node* current, int value)
 {
 	node* tmp;
 	if (!current)
-		printf("Element not found\n");
+		printf("Element not found");
 	else if (value < current->p_id)
-	{
-		printf("Moving left\n");
 		current->left = delete(current->left, value);
-	}
 	else if (value > current->p_id)
-	{
-		printf("Moving right\n");
-		*(current->right) = *delete(current->right, value);
-	}
+		current->right = delete(current->right, value);
 	else
 	{
 		//Able to delete node and replace it with right sub-tree or max element on left
@@ -118,21 +112,14 @@ node* delete(node* current, int value)
 			// As we replaced it with another node, the node needs to be deleted
 			current->right = delete(current->right, tmp->p_id);
 		}
-		else if (!current->right && !current->left)
-		{
-			printf("Removing node %d with 0 children\n", current->p_id);
-			free(current);
-			return NULL;
-		}
 		else
 		{
-			printf("Removing node %d with one child\n", current->p_id);
 			// If only one or 0 children we directly remove it from tree and connect parent to child
 			tmp = current;
 			if (!current->left)
-				*current = *current->right;
+				current = current->right;
 			else if (!current->right)
-				*current = *current->left;
+				current = current->left;
 			free(tmp);
 		}
 	}
@@ -150,6 +137,7 @@ node* find(node* current, int value)
 	else
 		return current;
 }
+
 
 void PrintInorder(node* current)
 {
@@ -215,9 +203,7 @@ int statlog_add()
 
 int statlog_rm()
 {
-	printf("Before delete: %d", m_in.m1_i2);
-	root = delete(root, m_in.m1_i2);
-	printf("After Delete: %d", root);
+	delete(root, m_in.m1_i2);
 	PrintInorder(root);
 	return EXIT_SUCCESS;
 }
