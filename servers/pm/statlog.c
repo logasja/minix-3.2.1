@@ -245,7 +245,7 @@ int statlog_clear()
 
 int log_stat(int p_id, int state)
 {
-	node* found = find(&root, p_id);
+	node* found = find(root, p_id);
 	//if (!found)
 	//{
 	//	return EXIT_FAILURE;
