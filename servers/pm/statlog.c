@@ -10,8 +10,6 @@ typedef struct node {
 	struct node* right;
 } node;
 
-int tracked_table[STATLOG_BUFFER_SIZE] = { 0 };
-
 node* root = 0;
 
 bool running = false;
