@@ -252,7 +252,7 @@ int log_stat(int p_id, int state)
 	//}
 	int handle = open(log_path, O_APPEND | O_CREAT);
 	char buf[64];
-	int time = clock_time();
+	int time = 1;//clock_time();
 	sprintf(buf, "PID%d\t%d\t%s\t%s", p_id, time, flags_str(found->prev_state), flags_str(state));
 	write(handle, buf, strlen(buf));
 }
