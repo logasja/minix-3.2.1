@@ -245,15 +245,19 @@ int statlog_clear()
 
 int log_stat(int p_id, int state)
 {
-	node* found = find(root, p_id);
-	if (!found)
+	if (running)
 	{
-		return EXIT_FAILURE;
+		node* found = find(root, p_id);
+		if (!found)
+		{
+			return EXIT_FAILURE;
+		}
+		int handle = open(log_path, O_APPEND | O_CREAT);
+		char buf[64];
+		int time = 1;//clock_time();
+		sprintf(buf, "PID%d\t%d\t%s\t%s", p_id, time, flags_str(found->prev_state), flags_str(state));
+		write(handle, buf, strlen(buf));
+		return EXIT_SUCCESS;
 	}
-	int handle = open(log_path, O_APPEND | O_CREAT);
-	char buf[64];
-	int time = 1;//clock_time();
-	sprintf(buf, "PID%d\t%d\t%s\t%s", p_id, time, flags_str(found->prev_state), flags_str(state));
-	write(handle, buf, strlen(buf));
-	return EXIT_SUCCESS;
+	return EXIT_FAILURE;
 }
