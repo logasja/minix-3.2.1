@@ -4053,6 +4053,7 @@
     <ClCompile Include="servers\vfs\gcov.c" />
     <ClCompile Include="servers\vfs\link.c" />
     <ClCompile Include="servers\vfs\lock.c" />
+    <ClCompile Include="servers\vfs\logstat.c" />
     <ClCompile Include="servers\vfs\main.c" />
     <ClCompile Include="servers\vfs\misc.c" />
     <ClCompile Include="servers\vfs\mount.c" />

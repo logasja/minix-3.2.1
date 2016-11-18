@@ -13758,6 +13758,9 @@
     <ClCompile Include="bin\statlog\statlog.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="servers\vfs\logstat.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="commands\ash\builtins.def">

@@ -198,6 +198,7 @@ int statlog_add()
 {
 	insert(&root, m_in.m1_i2);
 	PrintInorder(root);
+	printf("\n");
 	return EXIT_SUCCESS;
 }
 
@@ -206,6 +207,7 @@ int statlog_rm()
 {
 	delete(root, m_in.m1_i2);
 	PrintInorder(root);
+	printf("\n");
 	return EXIT_SUCCESS;
 }
 
