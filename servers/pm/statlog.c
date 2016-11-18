@@ -92,40 +92,39 @@ node* insert(node** current, int value)
 	return NULL;
 }
 
-node* delete(node* current, int value)
+node* delete(node** current, int value)
 {
 	node* tmp;
-	if (!current)
+	if (!*current)
 		printf("Element not found");
-	else if (value < current->p_id)
-		current->left = delete(current->left, value);
-	else if (value > current->p_id)
-		current->right = delete(current->right, value);
+	else if (value < (*current)->p_id)
+		(*current)->left = delete(&(*current)->left, value);
+	else if (value >(*current)->p_id)
+		(*current)->right = delete(&(*current)->right, value);
 	else
 	{
 		//Able to delete node and replace it with right sub-tree or max element on left
-		if (current->right && current->left)
+		if ((*current)->right && (*current)->left)
 		{
 			// Replace with minimum element in right tree
-			tmp = findMin(current->right);
-			current->p_id = tmp->p_id;
+			tmp = findMin((*current)->right);
+			(*current)->p_id = tmp->p_id;
 			// As we replaced it with another node, the node needs to be deleted
-			current->right = delete(current->right, tmp->p_id);
+			(*current)->right = delete(&(*current)->right, tmp->p_id);
 		}
 		else
 		{
 			// If only one or 0 children we directly remove it from tree and connect parent to child
-			tmp = current;
-			if (!current->left)
-				current = current->right;
-			else if (!current->right)
-				current = current->left;
+			tmp = *current;
+			if (!tmp->left)
+				*current = tmp->right;
+			else if (!tmp->right)
+				*current = tmp->left;
+
 			free(tmp);
-			if (tmp == root)
-				root = NULL;
 		}
 	}
-	return current;
+	return *current;
 }
 
 node* find(node* current, int value)
