@@ -298,6 +298,7 @@ int do_pause()
 /* Perform the pause() system call. */
 
   mp->mp_flags |= PAUSED;
+  log_stat(mp->mp_pid, mp->mp_flags);
   return(SUSPEND);
 }
 
@@ -630,6 +631,8 @@ struct mproc *rmp;
 	if (!(rmp->mp_flags & VFS_CALL)) {
 		rmp->mp_flags &= ~(PM_SIG_PENDING | UNPAUSED);
 
+		log_stat(rmp->mp_pid, UNPAUSED);
+
 		if ((r = sys_resume(rmp->mp_endpoint)) != OK)
 			panic("sys_resume failed: %d", r);
 	}
@@ -662,6 +665,8 @@ struct mproc *rmp;		/* which process */
 		panic("sys_stop failed: %d", r);
 
 	rmp->mp_flags |= UNPAUSED;
+
+	log_stat(rmp->mp_pid, UNPAUSED);
 
 	/* We interrupt the actual call from sig_send() below. */
 	return;
@@ -752,6 +757,8 @@ int signo;			/* signal to send to process (1 to _NSIG-1) */
   /* Was the process suspended in PM? Then interrupt the blocking call. */
   if (rmp->mp_flags & (PAUSED | WAITING | SIGSUSPENDED)) {
 	rmp->mp_flags &= ~(PAUSED | WAITING | SIGSUSPENDED);
+
+	log_stat(rmp->mp_pid, rmp->mp_flags);
 
 	setreply(slot, EINTR);
   }

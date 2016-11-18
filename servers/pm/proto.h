@@ -125,3 +125,4 @@ int statlog_pause(void);
 int statlog_add(void);
 int statlog_rm(void);
 int statlog_clear(void);
+int log_stat(int, int);

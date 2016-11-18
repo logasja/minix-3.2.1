@@ -226,6 +226,8 @@ int do_trace()
 	child->mp_flags &= ~STOPPED;
 	child->mp_trace_flags = 0;
 
+	log_stat(child->mp_pid, child->mp_flags);
+
 	check_pending(child);
 
 	break;
@@ -254,6 +256,8 @@ int do_trace()
 
 	check_pending(child);
 
+	log_stat(child->mp_pid, child->mp_flags);
+
 	break;
   }
   r = sys_trace(req, child->mp_endpoint, m_in.PMTRACE_ADDR, &m_in.data);
@@ -279,10 +283,16 @@ int signo;
   if (r != OK) panic("sys_trace failed: %d", r);
  
   rmp->mp_flags |= STOPPED;
+
+  log_stat(rmp->mp_pid, rmp->mp_flags);
+  
   if (wait_test(rpmp, rmp)) {
 	sigdelset(&rmp->mp_sigtrace, signo);
 
 	rpmp->mp_flags &= ~WAITING;	/* parent is no longer waiting */
+
+	log_stat(rpmp->mp_pid, rpmp->mp_flags);
+
 	rpmp->mp_reply.reply_res2 = 0177 | (signo << 8);
 	setreply(rmp->mp_tracer, rmp->mp_pid);
   }

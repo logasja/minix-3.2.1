@@ -1,11 +1,14 @@
 #include "pm.h"
 #include "mproc.h"
+#include <fcntl.h>
+#include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
 
 typedef struct node {
 	int p_id;
+	int prev_state;
 	struct node* left;
 	struct node* right;
 } node;
@@ -13,6 +16,8 @@ typedef struct node {
 node* root = 0;
 
 bool running = false;
+
+char* log_path = "/usr/tmp/statlog.txt";
 
 int do_statlog()
 {
@@ -33,6 +38,29 @@ int do_statlog()
 	}
 }
 
+/*===========================================================================*
+*				mproc_dmp				     *
+*===========================================================================*/
+static char *flags_str(int flags)
+{
+	static char str[14];
+	str[0] = (flags & WAITING) ? 'W' : '-';
+	str[1] = (flags & ZOMBIE) ? 'Z' : '-';
+	str[2] = (flags & PAUSED) ? 'P' : '-';
+	str[3] = (flags & ALARM_ON) ? 'A' : '-';
+	str[4] = (flags & EXITING) ? 'E' : '-';
+	str[5] = (flags & STOPPED) ? 'S' : '-';
+	str[6] = (flags & SIGSUSPENDED) ? 'U' : '-';
+	str[7] = (flags & REPLY) ? 'R' : '-';
+	str[8] = (flags & VFS_CALL) ? 'F' : '-';
+	str[9] = (flags & PM_SIG_PENDING) ? 's' : '-';
+	str[10] = (flags & PRIV_PROC) ? 'p' : '-';
+	str[11] = (flags & PARTIAL_EXEC) ? 'x' : '-';
+	str[12] = (flags & DELAY_CALL) ? 'd' : '-';
+	str[13] = '\0';
+
+	return str;
+}
 
 /*****************************************************************/
 /************************BST**************************************/
@@ -203,7 +231,7 @@ int statlog_add()
 
 int statlog_rm()
 {
-	delete(root, m_in.m1_i2);
+	delete(&root, m_in.m1_i2);
 	PrintInorder(root);
 	printf("\n");
 	return EXIT_SUCCESS;
@@ -213,4 +241,18 @@ int statlog_clear()
 {
 	destroy_tree(root);
 	return EXIT_SUCCESS;
+}
+
+int log_stat(int p_id, int state)
+{
+	node* found = find(&root, p_id);
+	//if (!found)
+	//{
+	//	return EXIT_FAILURE;
+	//}
+	int handle = open(log_path, O_APPEND | O_CREAT);
+	char buf[64];
+	int time = clock_time();
+	sprintf(buf, "PID%d\t%d\t%s\t%s", p_id, time, flags_str(found->prev_state), flags_str(state));
+	write(handle, buf, strlen(buf));
 }
