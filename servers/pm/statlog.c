@@ -258,7 +258,7 @@ int log_stat(int p_id, int state)
 		printf("\tFile open returned %d.\n", handle);
 		char buf[64];
 		int time = 1;//clock_time();
-		print("Making entry.\n");
+		printf("Making entry.\n");
 		sprintf(buf, "PID%d\t%d\t%s\t%s\n", p_id, time, "N/A"/*flags_str(found->prev_state)*/, flags_str(state));
 		printf("Writing to file.\n");
 		write(handle, buf, strlen(buf));
