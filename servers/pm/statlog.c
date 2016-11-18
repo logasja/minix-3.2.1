@@ -248,10 +248,10 @@ int log_stat(int p_id, int state)
 	if (running)
 	{
 		node* found = find(root, p_id);
-		if (!found)
-		{
-			return EXIT_FAILURE;
-		}
+		//if (!found)
+		//{
+		//	return EXIT_FAILURE;
+		//}
 		int handle = open(log_path, O_APPEND | O_CREAT);
 		char buf[64];
 		int time = 1;//clock_time();
