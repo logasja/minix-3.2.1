@@ -255,8 +255,7 @@ int log_stat(int p_id, int state)
 		char buf[64];
 		int time = 1;//clock_time();
 		printf("Making entry.\n");
-		sprintf(buf, "PID%d\t%d\t%s\t%s\n", p_id, time, "N/A"/*flags_str(found->prev_state)*/, flags_str(state));
-		printf(buf);
+		sprintf(buf, "PID%d\t%d\t%s\t%s\n", p_id, time, flags_str(found->prev_state), flags_str(state));
 		writelog(log_path, buf, strlen(buf));
 		return EXIT_SUCCESS;
 	}
