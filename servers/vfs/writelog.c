@@ -1,7 +1,9 @@
-#include <fcntl.h>
 #include <sys/stat.h>
+#include <unistd.h>
+#include <fcntl.h>
 #include <sys/types.h>
 #include <string.h>
+#include <stdio.h>
 
 char* fp = "/usr/tmp/log.txt";
 
