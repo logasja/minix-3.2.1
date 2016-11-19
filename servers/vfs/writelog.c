@@ -1,8 +1,11 @@
 #include <fcntl.h>
 #include <sys/stat.h>
 #include <sys/types.h>
+#include <string.h>
 
-void writelog(char* fp, char* buf, int buflen)
+char* fp = "/usr/tmp/log.txt";
+
+void writelog(char* buf)
 {
 	printf("\tOpening file.\n");
 	int handle = open(fp, O_APPEND | O_CREAT, S_IWRITE);

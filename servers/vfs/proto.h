@@ -366,5 +366,5 @@ void sys_worker_start(void *(*func)(void *arg));
 void dl_worker_start(void *(*func)(void *arg));
 
 /* writelog.c */
-void writelog(char*, char*, int);
+void writelog(char*);
 #endif

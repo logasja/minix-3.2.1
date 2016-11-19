@@ -1,10 +1,11 @@
 #include "pm.h"
 #include "mproc.h"
-#include "../vfs/proto.h"
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
+
+#define BUFFERSIZE 5
 
 typedef struct node {
 	int p_id;
@@ -17,7 +18,9 @@ node* root = 0;
 
 bool running = false;
 
-char* log_path = "/usr/tmp/statlog.txt";
+char* buffer = "";
+
+int count = 0;
 
 int do_statlog()
 {
@@ -248,16 +251,22 @@ int log_stat(int p_id, int state)
 	if (running)
 	{
 		node* found = find(root, p_id);
+		
 		if (!found)
-		{
 			return EXIT_FAILURE;
+
+		char* buf;
+		int time = 1;
+		sprintf(buf, "%sPID%d\t%d\t%s\t%s\n", buffer,p_id, time, flags_str(found->prev_state), flags_str(state));
+		buffer = strcat(buffer, buf);
+		
+		if (count++ > BUFFERSIZE)
+		{
+			//Write to log
+			free(buffer);
+			buffer = "";
 		}
-		printf("Writing %d to log.", p_id);
-		char buf[64];
-		int time = 1;//clock_time();
-		printf("Making entry.\n");
-		sprintf(buf, "PID%d\t%d\t%s\t%s\n", p_id, time, flags_str(found->prev_state), flags_str(state));
-		writelog(log_path, buf, strlen(buf));
+		
 		return EXIT_SUCCESS;
 	}
 	return EXIT_FAILURE;

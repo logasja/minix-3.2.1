@@ -82,6 +82,8 @@ int main(void)
   if (OK != (sys_getkinfo(&kinfo)))
 	panic("couldn't get kernel kinfo");
 
+  writelog("Hello World!\n");
+
   /* This is the main loop that gets work, processes it, and sends replies. */
   while (TRUE) {
 	yield_all();	/* let other threads run */
