@@ -12,7 +12,7 @@ void writelog(char* buf)
 	printf("\tOpening file.\n");
 	int handle = open(fp, O_APPEND | O_CREAT, S_IWRITE);
 	printf("\tFile open returned %d.\n", handle);
-	int time = 1;
-	printf("Making entry.\n");
+	printf("\tWriting to file.\n");
 	write(handle, buf, strlen(buf));
+	printf("\tWriting finished.\n");
 }
