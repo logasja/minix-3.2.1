@@ -1,5 +1,6 @@
 #include "pm.h"
 #include "mproc.h"
+#include "../vfs/proto.h"
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
