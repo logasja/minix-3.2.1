@@ -13758,7 +13758,7 @@
     <ClCompile Include="bin\statlog\statlog.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="servers\vfs\logstat.c">
+    <ClCompile Include="servers\vfs\writelog.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

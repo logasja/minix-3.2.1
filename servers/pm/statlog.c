@@ -1,6 +1,7 @@
 #include "pm.h"
 #include "mproc.h"
 #include <fcntl.h>
+#include <sys/stat.h>
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
@@ -253,16 +254,16 @@ int log_stat(int p_id, int state)
 			return EXIT_FAILURE;
 		}
 		printf("Writing %d to log.", p_id);
-		//printf("\tOpening file.\n");
-		//int handle = open(log_path, O_APPEND | O_CREAT);
-		//printf("\tFile open returned %d.\n", handle);
+		printf("\tOpening file.\n");
+		int handle = open(log_path, O_APPEND | O_CREAT, S_IWRITE);
+		printf("\tFile open returned %d.\n", handle);
 		char buf[64];
 		int time = 1;//clock_time();
 		printf("Making entry.\n");
 		sprintf(buf, "PID%d\t%d\t%s\t%s\n", p_id, time, "N/A"/*flags_str(found->prev_state)*/, flags_str(state));
 		printf(buf);
 		printf("Writing to file.\n");
-		//write(handle, buf, strlen(buf));
+		write(handle, buf, strlen(buf));
 		return EXIT_SUCCESS;
 	}
 	return EXIT_FAILURE;
