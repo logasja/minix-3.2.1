@@ -108,6 +108,7 @@ node* insert(node** current, int value)
 	{
 		*current = (node*)malloc(sizeof(node));
 		(*current)->p_id = value;
+		(*current)->prev_state = 0;
 		(*current)->left = NULL;
 		(*current)->right = NULL;
 		return *current;
@@ -255,18 +256,10 @@ int log_stat(int p_id, int state)
 		if (!found)
 			return EXIT_FAILURE;
 
-		char* buf;
-		int time = 1;
-		sprintf(buf, "%sPID%d\t%d\t%s\t%s\n", buffer,p_id, time, flags_str(found->prev_state), flags_str(state));
-		buffer = strcat(buffer, buf);
-		
-		if (count++ > BUFFERSIZE)
-		{
-			//Write to log
-			free(buffer);
-			buffer = "";
-		}
-		
+		do_time();
+		int time = mp->mp_reply.m2_l1;
+
+		printf("PID%d\t%d\t%s\t%s\n",p_id, time, flags_str(found->prev_state), flags_str(state));
 		return EXIT_SUCCESS;
 	}
 	return EXIT_FAILURE;
