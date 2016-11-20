@@ -42,7 +42,7 @@ int do_statlog()
 *===========================================================================*/
 static char *flags_str(int flags)
 {
-	static char str[14];
+	char str[14];
 	str[0] = (flags & WAITING) ? 'W' : '-';
 	str[1] = (flags & ZOMBIE) ? 'Z' : '-';
 	str[2] = (flags & PAUSED) ? 'P' : '-';
@@ -254,7 +254,7 @@ int log_stat(int p_id, int state)
 
 		do_time();
 		int time = mp->mp_reply.m2_l1;
-
+		
 		printf("PID%d\t%d\t%s\t%s\n",p_id, time, flags_str(found->prev_state), flags_str(state));
 		found->prev_state = state;
 		return EXIT_SUCCESS;
