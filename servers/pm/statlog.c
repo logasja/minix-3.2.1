@@ -9,7 +9,7 @@
 
 typedef struct node {
 	int p_id;
-	int prev_state;
+	uint16_t prev_state;
 	struct node* left;
 	struct node* right;
 } node;
@@ -17,10 +17,6 @@ typedef struct node {
 node* root = 0;
 
 bool running = false;
-
-char* buffer = "";
-
-int count = 0;
 
 int do_statlog()
 {
@@ -108,7 +104,7 @@ node* insert(node** current, int value)
 	{
 		*current = (node*)malloc(sizeof(node));
 		(*current)->p_id = value;
-		(*current)->prev_state = 0;
+		(*current)->prev_state = 0u;
 		(*current)->left = NULL;
 		(*current)->right = NULL;
 		return *current;
@@ -260,6 +256,7 @@ int log_stat(int p_id, int state)
 		int time = mp->mp_reply.m2_l1;
 
 		printf("PID%d\t%d\t%s\t%s\n",p_id, time, flags_str(found->prev_state), flags_str(state));
+		found->prev_state = state;
 		return EXIT_SUCCESS;
 	}
 	return EXIT_FAILURE;
