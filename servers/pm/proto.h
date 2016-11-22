@@ -117,3 +117,12 @@ int plog_PIDget(void);
 int plog_IDXget(void);
 void init_buffer(void);
 struct plog* find_by_PID(int);
+
+/* statlog.c */
+int do_statlog(void);
+int statlog_start(void);
+int statlog_pause(void);
+int statlog_add(void);
+int statlog_rm(void);
+int statlog_clear(void);
+int log_stat(int, int);

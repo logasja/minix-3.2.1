@@ -31,6 +31,21 @@ The buffer is of size 0.
 plog clear
 ```
 
+## 2. State Logger
+* Logs the state transitions of processes specified by the user
+```bash
+statlog start
+statlog add 740
+ls
+PID740  1479846379      --------------      R----E--F-----
+PID740  1479846379      R----E--F-----      R-Z--E--F-----
+PID740  1479846379      R-Z--E--F-----      R----E--F-----
+statlog pause
+```
+* User able to clear the ids to be tracked.
+```bash
+statlog clear
+```
 ## Make Instructions
 In order to make the image with most recent patches, pull most recent commmit (or get the most recent patch tarball [here](https://github.com/Jakeman893/minix-3.2.1/releases) and unzip it into any directory besize /usr/src/ (I recommend making a directory in /usr/).
 Once in place, run make test in the new directory. This make command will patch the files in /usr/src/, build, and reboot the system for you. Aaaand... Thats all!

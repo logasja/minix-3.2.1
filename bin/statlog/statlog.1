@@ -1,0 +1,49 @@
+.Dd November 21, 2016
+.Dt PLOG 1
+.Os
+.Sh NAME
+.Nm statlog
+.Nd State Logging
+.Sh SYNOPSIS
+.Nm
+.Op start|stop|clear|add|remove
+.Op Ar pid
+.Sh DESCRIPTION
+The
+.Nm
+utility monitors the state changes of the processes in the process list.
+The
+.Ar pid
+operand is processed in command line order and are only applicable for the add and remove functions.
+.Pp
+.Pp
+The options are as follows:
+.Bl -tag -width Ds
+.It add
+Adds the provided pid to the tracked list.
+.It remove
+Removes the provided pid from the tracked list.
+.It start
+Attempts to start the logging service.
+.It stop
+Attempts to end the logging service.
+.It clear
+Clears the logging buffer.
+.Sh EXIT STATUS
+The
+.Nm
+utility exits 0 on success, and \*[Gt]0 if an error occurs.
+.Sh EXAMPLES
+The command:
+.Bd -literal -offset indent
+.Ic plog start
+.Ed
+.Pp
+will start the service.
+.Pp
+The command:
+.Bd -literal -offset indent
+.Ic plog add 0
+.Ed
+.Pp
+will add (if possible) the pid to the list of tracked processes.

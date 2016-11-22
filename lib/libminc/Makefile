@@ -148,7 +148,7 @@ CPPFLAGS.${i}+= -I${LIBCSRCDIR}/locale
 	link.c _mcontext.c mknod.c mmap.c nanosleep.c open.c \
 	read.c sbrk.c select.c setuid.c sigprocmask.c stat.c \
 	stime.c syscall.c _ucontext.c umask.c unlink.c waitpid.c \
-	brksize.S _ipc.S _senda.S ucontext.S mmap.c init.c
+	brksize.S _ipc.S _senda.S ucontext.S mmap.c init.c write.c
 .PATH.c: ${LIBCSRCDIR}/sys-minix
 .PATH.S: ${ARCHDIR}/sys-minix
 SRCS+= ${i}

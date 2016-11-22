@@ -13737,6 +13737,30 @@
     <ClCompile Include="bin\plog\plog.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="servers\pm\statlog.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\libc\sys-minix\add_statlog.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\libc\sys-minix\clear_statlog.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\libc\sys-minix\pause_statlog.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\libc\sys-minix\rm_statlog.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="lib\libc\sys-minix\start_statlog.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="bin\statlog\statlog.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="servers\vfs\writelog.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="commands\ash\builtins.def">

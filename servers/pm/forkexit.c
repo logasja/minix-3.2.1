@@ -106,6 +106,9 @@ int do_fork()
   rmc->mp_exitstatus = 0;
   rmc->mp_sigstatus = 0;
   rmc->mp_endpoint = child_ep;		/* passed back by VM */
+
+  log_stat(rmc->mp_pid, rmc->mp_flags);
+
   for (i = 0; i < NR_ITIMERS; i++)
 	rmc->mp_interval[i] = 0;	/* reset timer intervals */
 
@@ -201,6 +204,9 @@ int do_srv_fork()
   rmc->mp_effuid = (uid_t) m_in.m1_i1;
   rmc->mp_realgid = (uid_t) m_in.m1_i2;
   rmc->mp_effgid = (uid_t) m_in.m1_i2;
+
+  log_stat(rmc->mp_pid, rmc->mp_flags);
+
   for (i = 0; i < NR_ITIMERS; i++)
 	rmc->mp_interval[i] = 0;	/* reset timer intervals */
 
@@ -349,6 +355,8 @@ int dump_core;			/* flag indicating whether to dump core */
    */
   rmp->mp_flags &= (IN_USE|VFS_CALL|PRIV_PROC|TRACE_EXIT);
   rmp->mp_flags |= EXITING;
+
+  log_stat(rmp->mp_pid, rmp->mp_flags);
 
   /* Keep the process around until VFS is finished with it. */
 
@@ -525,6 +533,9 @@ int do_waitpid()
 		return(0);    /* parent does not want to wait */
 	}
 	mp->mp_flags |= WAITING;	     /* parent wants to wait */
+
+	log_stat(mp->mp_pid, mp->mp_flags);
+
 	mp->mp_wpid = (pid_t) pidarg;	     /* save pid for later */
 	return(SUSPEND);		     /* do not reply, let it wait */
   } else {
@@ -587,6 +598,7 @@ struct mproc *rmp;
   }
   else {
 	rmp->mp_flags |= ZOMBIE;
+	log_stat(rmp->mp_pid, rmp->mp_flags);
   }
 
   /* No tracer, or tracer is parent, or tracer has now been notified. */
@@ -654,8 +666,13 @@ register struct mproc *child;	/* tells which process is exiting */
   parent->mp_reply.reply_res2 = exitstatus;
   setreply(child->mp_parent, child->mp_pid);
   parent->mp_flags &= ~WAITING;		/* parent no longer waiting */
+  
+  log_stat(parent->mp_pid, parent->mp_flags);
+
   child->mp_flags &= ~ZOMBIE;		/* child no longer a zombie */
   child->mp_flags |= TOLD_PARENT;	/* avoid informing parent twice */
+
+  log_stat(child->mp_pid, child->mp_flags);
 }
 
 #if USE_TRACE
