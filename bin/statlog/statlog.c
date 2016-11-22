@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
 	else
 	{
 		if (status == EXIT_FAILURE)
-			printf("Errored");
+			printf("Errored.\n");
 	}
 
 	exit(status);
