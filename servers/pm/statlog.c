@@ -5,8 +5,6 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-#define BUFFERSIZE 5
-
 typedef struct node {
 	int p_id;
 	uint16_t prev_state;
@@ -43,20 +41,21 @@ int do_statlog()
 char *flags_str(int flags)
 {
 	char* str = (char*)malloc(sizeof(char));
-	str[0] = (flags & WAITING) ? 'W' : '-';
-	str[1] = (flags & ZOMBIE) ? 'Z' : '-';
-	str[2] = (flags & PAUSED) ? 'P' : '-';
-	str[3] = (flags & ALARM_ON) ? 'A' : '-';
-	str[4] = (flags & EXITING) ? 'E' : '-';
-	str[5] = (flags & STOPPED) ? 'S' : '-';
-	str[6] = (flags & SIGSUSPENDED) ? 'U' : '-';
-	str[7] = (flags & REPLY) ? 'R' : '-';
+	str[0] = (flags & IN_USE) ? 'R' : '-';
+	str[1] = (flags & WAITING) ? 'W' : '-';
+	str[2] = (flags & ZOMBIE) ? 'Z' : '-';
+	str[3] = (flags & PAUSED) ? 'P' : '-';
+	str[4] = (flags & ALARM_ON) ? 'A' : '-';
+	str[5] = (flags & EXITING) ? 'E' : '-';
+	str[6] = (flags & STOPPED) ? 'S' : '-';
+	str[7] = (flags & SIGSUSPENDED) ? 'U' : '-';
 	str[8] = (flags & VFS_CALL) ? 'F' : '-';
-	str[9] = (flags & PM_SIG_PENDING) ? 's' : '-';
-	str[10] = (flags & PRIV_PROC) ? 'p' : '-';
-	str[11] = (flags & PARTIAL_EXEC) ? 'x' : '-';
-	str[12] = (flags & DELAY_CALL) ? 'd' : '-';
-	str[13] = '\0';
+	str[9] = (flags & REPLY) ? 'r' : '-';
+	str[10] = (flags & PM_SIG_PENDING) ? 's' : '-';
+	str[11] = (flags & PRIV_PROC) ? 'p' : '-';
+	str[12] = (flags & PARTIAL_EXEC) ? 'x' : '-';
+	str[13] = (flags & DELAY_CALL) ? 'd' : '-';
+	str[14] = '\0';
 
 	return str;
 }

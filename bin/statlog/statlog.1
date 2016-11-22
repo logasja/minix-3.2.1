@@ -1,31 +1,28 @@
-.Dd September 16, 2016
+.Dd November 21, 2016
 .Dt PLOG 1
 .Os
 .Sh NAME
-.Nm plog
-.Nd Process logging
+.Nm statlog
+.Nd State Logging
 .Sh SYNOPSIS
 .Nm
-.Op start|stop|clear
-.Op Fl p|i|s
-.Op Ar [pid...index]
+.Op start|stop|clear|add|remove
+.Op Ar pid
 .Sh DESCRIPTION
 The
 .Nm
-utility stores the start and end time of the last 1024 processes after service is started.
+utility monitors the state changes of the processes in the process list.
 The
-.Ar pid...index
-operands are processed in command line order.
+.Ar pid
+operand is processed in command line order and are only applicable for the add and remove functions.
 .Pp
 .Pp
 The options are as follows:
 .Bl -tag -width Ds
-.It Fl p
-Gets the entry for the provided pid.
-.It Fl i
-Gets the entry for the provided index.
-.It Fl s
-Gets the current size of the buffer.
+.It add
+Adds the provided pid to the tracked list.
+.It remove
+Removes the provided pid from the tracked list.
 .It start
 Attempts to start the logging service.
 .It stop
@@ -46,14 +43,7 @@ will start the service.
 .Pp
 The command:
 .Bd -literal -offset indent
-.Ic plog -i 0
+.Ic plog add 0
 .Ed
 .Pp
-will return (if possible) the pid, start, and end time of the process in the buffer.
-.Pp
-The command:
-.Bd -literal -offset indent
-.Ic plog -p 123
-.Ed
-.Pp
-will return (if possible) the pid, start, and end time of the process in the buffer.
+will add (if possible) the pid to the list of tracked processes.
