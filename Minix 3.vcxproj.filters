@@ -23364,6 +23364,9 @@
     <ClInclude Include="include\minix\vtreefs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="kernel\statlog.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="common\dist\zlib\contrib\vstudio\vc7\zlib.rc">

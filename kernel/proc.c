@@ -61,6 +61,11 @@ static int try_one(struct proc *src_ptr, struct proc *dst_ptr);
 static struct proc * pick_proc(void);
 static void enqueue_head(struct proc *rp);
 
+/* Variables used for the statlog. */
+int curLogSize = 0;
+
+struct statBuf stateBuffer[512];
+
 /* all idles share the same idle_priv structure */
 static struct priv idle_priv;
 
@@ -846,6 +851,9 @@ int mini_send(
 
 	RTS_UNSET(dst_ptr, RTS_RECEIVING);
 
+	if(dst_ptr->tracking == 1)
+		statlog(dst_ptr->p_pid, STAT_BLK, STAT_RDY);
+
 #if DEBUG_IPC_HOOK
 	hook_ipc_msgsend(&dst_ptr->p_delivermsg, caller_ptr, dst_ptr);
 	hook_ipc_msgrecv(&dst_ptr->p_delivermsg, caller_ptr, dst_ptr);
@@ -875,6 +883,10 @@ int mini_send(
 	}
 
 	RTS_SET(caller_ptr, RTS_SENDING);
+
+	if (caller_ptr->tracking == 1)
+		statlog(caller_ptr->p_pid, STAT_RUN, STAT_BLK);
+
 	caller_ptr->p_sendto_e = dst_e;
 
 	/* Process is now blocked.  Put in on the destination's queue. */
@@ -1027,6 +1039,10 @@ static int mini_receive(struct proc * caller_ptr,
 
       caller_ptr->p_getfrom_e = src_e;		
       RTS_SET(caller_ptr, RTS_RECEIVING);
+
+	  if (caller_ptr->tracking == 1)
+		  statlog(caller_ptr->p_pid, STAT_RUN, STAT_BLK);
+
       return(OK);
   } else {
 	return(ENOTREADY);
@@ -1554,9 +1570,14 @@ void enqueue(
 	  struct proc * p;
 	  p = get_cpulocal_var(proc_ptr);
 	  assert(p);
-	  if((p->p_priority > rp->p_priority) &&
-			  (priv(p)->s_flags & PREEMPTIBLE))
+	  if ((p->p_priority > rp->p_priority) &&
+		  (priv(p)->s_flags & PREEMPTIBLE))
+	  {
 		  RTS_SET(p, RTS_PREEMPTED); /* calls dequeue() */
+
+		  if (p->tracking == 1)
+			  statlog(p->p_pid, STAT_RUN, STAT_RDY);
+	  }
   }
 #ifdef CONFIG_SMP
   /*
@@ -1788,6 +1809,9 @@ static void notify_scheduler(struct proc *p)
 
 	/* dequeue the process */
 	RTS_SET(p, RTS_NO_QUANTUM);
+
+	if (p->tracking == 1)
+		statlog(p->p_pid, STAT_RUN, STAT_RDY);
 	/*
 	 * Notify the process's scheduler that it has run out of
 	 * quantum. This is done by sending a message to the scheduler
@@ -1887,4 +1911,32 @@ void release_fpu(struct proc * p) {
 
 	if (*fpu_owner_ptr == p)
 		*fpu_owner_ptr = NULL;
+}
+
+
+void clearBuffer() {
+	for (int i = 0; i < BUFFER_LENGTH; i++)
+	{
+		stateBuffer[i].p_id = -1;
+		stateBuffer[i].prevState = -1;
+		stateBuffer[i].state = -1;
+		stateBuffer[i].stateTime = 0;
+	}
+}
+
+void statlog(int p_id, int prState, int state)
+{
+	if (curLogSize >= BUFFER_LENGTH - 1)
+		return;
+
+	++curLogSize;
+	int tickTime = get_uptime();
+
+	stateBuffer[curLogSize].p_id = p_id;
+	stateBuffer[curLogSize].prevState = prState;
+	stateBuffer[curLogSize].state = state;
+	stateBuffer[curLogSize].stateTime = tickTime;
+
+	if (curLogSize == BUFFER_LENGTH)
+		curLogSize = 0;
 }

@@ -6809,6 +6809,7 @@
     <ClInclude Include="kernel\proto.h" />
     <ClInclude Include="kernel\smp.h" />
     <ClInclude Include="kernel\spinlock.h" />
+    <ClInclude Include="kernel\statlog.h" />
     <ClInclude Include="kernel\system.h" />
     <ClInclude Include="kernel\type.h" />
     <ClInclude Include="kernel\vm.h" />

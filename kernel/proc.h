@@ -17,9 +17,14 @@
 #include <minix/com.h>
 #include <minix/portio.h>
 #include "const.h"
+#include "statlog.h"
 #include "priv.h"
 
+void statlog(int p_id, int prState, int state);
+
 struct proc {
+  int p_pid;
+  int tracking;
   struct stackframe_s p_reg;	/* process' registers saved in stack frame */
   struct segframe p_seg;	/* segment descriptors */
   proc_nr_t p_nr;		/* number of this process (for fast access) */
@@ -274,6 +279,10 @@ struct proc {
 #ifndef __ASSEMBLY__
 
 EXTERN struct proc proc[NR_TASKS + NR_PROCS];	/* process table */
+
+EXTERN struct statBuf stateBuffer[BUFFER_LENGTH];
+
+EXTERN int curLogSize;
 
 int mini_send(struct proc *caller_ptr, endpoint_t dst_e, message *m_ptr,
 	int flags);
