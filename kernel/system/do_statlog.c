@@ -95,19 +95,7 @@ int statlog_stop()
 	return EXIT_SUCCESS;
 }
 
-int statlog_poll(char * out)
-{
-	// Polls the log and returns the log entries as a single character array
-	int i = 0;
-	while (i < logSize)
-	{
-		++i;
-		strcat(out, printState(stateBuffer[logStart++]));
-		if (logStart > BUFFER_LENGTH)
-			logStart = 0;
-	}
-	return EXIT_SUCCESS;
-}
+/* Polling Functions */
 
 char* decode(int state)
 {
@@ -132,4 +120,18 @@ char* printState(struct statBuf in)
 
 	sprintf(out, "PID%d\t%d\t%s\t%s\n", in.p_id, in.stateTime, str1, str2);
 	return out;
+}
+
+int statlog_poll(char * out)
+{
+	// Polls the log and returns the log entries as a single character array
+	int i = 0;
+	while (i < logSize)
+	{
+		++i;
+		strcat(out, printState(stateBuffer[logStart++]));
+		if (logStart > BUFFER_LENGTH)
+			logStart = 0;
+	}
+	return EXIT_SUCCESS;
 }
