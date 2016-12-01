@@ -41,6 +41,8 @@ int sys_schedule(endpoint_t proc_ep, int priority, int quantum, int
 int sys_schedctl(unsigned flags, endpoint_t proc_ep, int priority, int
 	quantum, int cpu);
 
+int sys_statlog(int funct, int pid, char* out);
+
 /* Shorthands for sys_runctl() system call. */
 #define sys_stop(proc_ep) sys_runctl(proc_ep, RC_STOP, 0)
 #define sys_delay_stop(proc_ep) sys_runctl(proc_ep, RC_STOP, RC_DELAY)

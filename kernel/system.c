@@ -199,6 +199,7 @@ void system_init(void)
   map(SYS_RUNCTL, do_runctl);		/* set/clear stop flag of a process */
   map(SYS_UPDATE, do_update);		/* update a process into another */
   map(SYS_STATECTL, do_statectl);	/* let a process control its state */
+  map(SYS_STATLOG, do_statlog);		/* track the progress of a certain process */
 
   /* Signal handling. */
   map(SYS_KILL, do_kill); 		/* cause a process to be signaled */

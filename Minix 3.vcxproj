@@ -1569,6 +1569,7 @@
     <ClCompile Include="kernel\system\do_sigsend.c" />
     <ClCompile Include="kernel\system\do_sprofile.c" />
     <ClCompile Include="kernel\system\do_statectl.c" />
+    <ClCompile Include="kernel\system\do_statlog.c" />
     <ClCompile Include="kernel\system\do_stime.c" />
     <ClCompile Include="kernel\system\do_sysctl.c" />
     <ClCompile Include="kernel\system\do_times.c" />
@@ -3759,6 +3760,7 @@
     <ClCompile Include="lib\libsys\sys_sigsend.c" />
     <ClCompile Include="lib\libsys\sys_sprof.c" />
     <ClCompile Include="lib\libsys\sys_statectl.c" />
+    <ClCompile Include="lib\libsys\sys_statlog.c" />
     <ClCompile Include="lib\libsys\sys_stime.c" />
     <ClCompile Include="lib\libsys\sys_sysctl.c" />
     <ClCompile Include="lib\libsys\sys_times.c" />

@@ -30,6 +30,8 @@ int do_statlog()
 		return statlog_rm();
 	case STATLOG_CLEAR:
 		return statlog_clear();
+	case STATLOG_POLL:
+		return statlog_poll();
 	default:
 		return EXIT_FAILURE;
 	}
@@ -263,4 +265,10 @@ int log_stat(int p_id, int state)
 		return EXIT_SUCCESS;
 	}
 	return EXIT_FAILURE;
+}
+
+int statlog_poll()
+{
+	char* out;
+	sys_statlog();
 }
