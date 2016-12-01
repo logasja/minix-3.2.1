@@ -16,6 +16,8 @@ node* root = 0;
 
 bool running = false;
 
+char* out = "";
+
 int do_statlog()
 {
 	// Switch statement to use passed message as function identifier
@@ -35,6 +37,8 @@ int do_statlog()
 	default:
 		return EXIT_FAILURE;
 	}
+
+	mp->mp_reply.m1_p1 = out;
 }
 
 /*===========================================================================*
@@ -206,7 +210,10 @@ void PrintPostorder(node* current)
 int statlog_start()
 {
 	if (!running)
+	{
 		running = true;
+		sys_statlog(1, 0, out);
+	}
 	else
 		return EXIT_FAILURE;
 	return EXIT_SUCCESS;
@@ -226,6 +233,8 @@ int statlog_add()
 	insert(&root, m_in.m1_i2);
 	PrintInorder(root);
 	printf("\n");
+	sys_statlog(2, m_in.m1_i2, out);
+	printf(out);
 	return EXIT_SUCCESS;
 }
 
@@ -244,7 +253,7 @@ int statlog_clear()
 	return EXIT_SUCCESS;
 }
 
-int log_stat(int p_id, int state)
+int log_stat(int p_id, int state, int funct)
 {
 	if (running)
 	{
@@ -262,6 +271,7 @@ int log_stat(int p_id, int state)
 		printf("PID%d\t%d\t%s\t%s\n",p_id, time, prev, cur);
 		free(prev); free(cur);
 		found->prev_state = state;
+		sys_statlog(5, p_id, out);
 		return EXIT_SUCCESS;
 	}
 	return EXIT_FAILURE;
@@ -270,5 +280,8 @@ int log_stat(int p_id, int state)
 int statlog_poll()
 {
 	char* out;
-	sys_statlog();
+	sys_statlog(0, 0, out);
+
+	// Debug purposes
+	printf(out);
 }

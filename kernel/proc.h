@@ -282,7 +282,9 @@ EXTERN struct proc proc[NR_TASKS + NR_PROCS];	/* process table */
 
 EXTERN struct statBuf stateBuffer[BUFFER_LENGTH];
 
-EXTERN int curLogSize;
+EXTERN int logStart;
+EXTERN int logEnd;
+EXTERN int logSize;
 
 int mini_send(struct proc *caller_ptr, endpoint_t dst_e, message *m_ptr,
 	int flags);

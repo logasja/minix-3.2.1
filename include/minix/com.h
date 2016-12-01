@@ -352,6 +352,7 @@
 
 #  define SYS_SAFEMEMSET (KERNEL_CALL + 56)	/* sys_safememset() */
 #  define SYS_STATLOG (KERNEL_CALL + 57) /* sys_statlog() */
+
 /* Total */
 #define NR_SYS_CALLS	58	/* number of kernel calls */
 

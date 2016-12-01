@@ -116,6 +116,8 @@ int do_fork()
   new_pid = get_free_pid();
   rmc->mp_pid = new_pid;	/* assign pid to child */
 
+
+
   m.m_type = PM_FORK;
   m.PM_PROC = rmc->mp_endpoint;
   m.PM_PPROC = rmp->mp_endpoint;

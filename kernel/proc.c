@@ -62,7 +62,9 @@ static struct proc * pick_proc(void);
 static void enqueue_head(struct proc *rp);
 
 /* Variables used for the statlog. */
-int curLogSize = 0;
+int logEnd = 0;
+int logStart = 0;
+int logSize = 0;
 
 struct statBuf stateBuffer[512];
 
@@ -1926,17 +1928,13 @@ void clearBuffer() {
 
 void statlog(int p_id, int prState, int state)
 {
-	if (curLogSize >= BUFFER_LENGTH - 1)
+	if (++logSize > BUFFER_LENGTH)
 		return;
 
-	++curLogSize;
 	int tickTime = get_uptime();
 
-	stateBuffer[curLogSize].p_id = p_id;
-	stateBuffer[curLogSize].prevState = prState;
-	stateBuffer[curLogSize].state = state;
-	stateBuffer[curLogSize].stateTime = tickTime;
-
-	if (curLogSize == BUFFER_LENGTH)
-		curLogSize = 0;
+	stateBuffer[++logEnd].p_id = p_id;
+	stateBuffer[logEnd].prevState = prState;
+	stateBuffer[logEnd].state = state;
+	stateBuffer[logEnd].stateTime = tickTime;
 }
