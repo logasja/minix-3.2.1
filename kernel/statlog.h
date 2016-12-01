@@ -23,8 +23,8 @@ struct statBuf {
 #define ADD_PID				2
 #define STOP_TRACKING		3
 #define RM_PID				4
-#define FORK				5
-#define EXIT				6
+#define STAT_FORK			5
+#define STAT_EXIT				6
 
 #define PROCESS_TABLE_LIMIT 261
 

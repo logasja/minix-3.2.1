@@ -33,7 +33,7 @@ int do_statlog(struct proc *caller_ptr, message * m_ptr)
 		status = statlog_add(p_id);
 	case RM_PID:
 		status = statlog_rm(p_id);
-	case FORK:
+	case STAT_FORK:
 		status = statlog_fork(p_id, index);
 	}
 

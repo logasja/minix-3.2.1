@@ -63,6 +63,7 @@ SRCS+=  \
 	sys_sigsend.c \
 	sys_sprof.c \
 	sys_statectl.c \
+	sys_statlog.c \
 	sys_stime.c \
 	sys_sysctl.c \
 	sys_times.c \
