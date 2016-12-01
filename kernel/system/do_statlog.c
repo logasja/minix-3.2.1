@@ -42,6 +42,16 @@ int do_statlog(struct proc *caller_ptr, message * m_ptr)
 	return status;
 }
 
+int statlog_rm(int p_pid)
+{
+
+}
+
+int statlog_fork(int p_pid, int index)
+{
+
+}
+
 int statlog_add(int p_pid)
 {
 	// Bypass tasks in process table
