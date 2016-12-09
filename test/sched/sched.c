@@ -66,7 +66,7 @@ int main(void)
 			exit(EXIT_FAILURE);
 		}
 
-		char cmd[CMD_LENGTH];
+		char cmd[CMD_LENGTH] = "";
 
 		printf("Write q to stop typing.");
 
@@ -74,7 +74,7 @@ int main(void)
 		while (strcmp(cmd, "q"))
 		{
 			scanf("%100s", cmd);
-			getchar();
+			//getchar();
 			fprintf(fpout, "%s\n", cmd);
 		}
 
