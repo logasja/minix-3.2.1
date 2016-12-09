@@ -50,17 +50,15 @@ int main(void)
 		printf("Starting I/O intensive process on %d...\n", b);
 		clock_t start = clock();
 
-		FILE *fp1, *fp2, *fpout;
+		FILE *fp, *fpout;
 		char *line = NULL;
 		size_t len = 0;
 		ssize_t read;
 		int sum;
 
 		fpout = fopen("./dataout.txt", "w+");
-		fp1 = fopen("./data1.txt", "r+");
 
-
-		if (fpout == NULL || fp1 == NULL || fp2 == NULL)
+		if (fpout == NULL)
 		{
 			printf("One of the files could not be opened.\n");
 			exit(EXIT_FAILURE);
@@ -69,11 +67,13 @@ int main(void)
 		for (int i = 0; i < 10000; i++)
 		{
 			if (i % 2)
-				read = getline(&line, &len, fp1);
+				fp = fopen("./data1.txt", "r+");
 			else
-				read = getline(&line, &len, fp2);
+				fp = fopen("./data2.txt", "r+");
 			sum += atoi(line);
+			read = getline(&line, &len, fp);
 			fprintf(fpout, "%d\n", sum);
+			fclose(fp);
 		}
 
 		clock_t diff = clock() - start;
