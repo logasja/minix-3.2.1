@@ -118,6 +118,8 @@ struct pstat {			/* structure filled by pstat() */
   time_t ps_stime;		/* accumulated system time */
   char ps_name[PROC_NAME_LEN+1];/* process name */
   char *ps_args;		/* concatenated argument string */
+
+  int ps_sttrans;		/* number of state transitions that occured */
 };
 
 int main(int argc, char *argv []);
