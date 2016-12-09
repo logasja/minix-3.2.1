@@ -21,13 +21,13 @@ void sched_init(void)
 {
 	struct mproc *trmp;
 	endpoint_t parent_e;
-	int proc_nr, s, maxprio;
+	int proc_nr, s, rv;
+	unsigned maxprio;
  
 	/* convert nice to priority */
 	if ((rv = nice_to_priority(trmp->mp_nice, &maxprio)) != OK) {
 		return rv;
 	}
-	printf("Priority of %d is %d", trmp->mp_pid, maxprio);
 
 	for (proc_nr=0, trmp=mproc; proc_nr < NR_PROCS; proc_nr++, trmp++) {
 		/* Don't take over system processes. When the system starts,
@@ -44,7 +44,7 @@ void sched_init(void)
 				trmp->mp_endpoint,	/* schedulee_e */
 				parent_e,		/* parent_e */
 				USER_Q, 		/* maxprio */
-				USER_QT(maxprio), 		/* quantum */
+				USR_QT(maxprio), 		/* quantum */
 				-1,			/* don't change cpu */
 				&trmp->mp_scheduler);	/* *newsched_e */
 			if (s != OK) {

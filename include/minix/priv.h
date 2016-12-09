@@ -6,20 +6,6 @@
 #include <minix/com.h>
 #include <minix/config.h>
 
-/* User quantum choosing */
-inline static int FIND_USR_QT(int p)
-{
-	if (p == USER_Q)
-		return USER_QUANTUM_SHORT;
-	else if (p == USER_Q + 1)
-		return USER_QUANTUM_MEDIUM;
-	else if (p == USER_Q + 2)
-		return USER_QUANTUM_LONG;
-	else
-		return USER_QUANTUM_DEFAULT;
-}
-
-
 /* Static privilege id definitions. */
 #define NR_STATIC_PRIV_IDS         NR_BOOT_PROCS
 #define is_static_priv_id(id)	   (id >= 0 && id < NR_STATIC_PRIV_IDS)
@@ -105,7 +91,7 @@ inline static int FIND_USR_QT(int p)
 /* scheduling quantum. */
 #define SRV_QT    USER_QUANTUM_DEFAULT                     /* system services */
 #define DSRV_QT   USER_QUANTUM_DEFAULT                     /* dynamic system services */
-#define USR_QT(p) FIND_USR_QT(p);                     /* user processes */
+//USR_QT was here
 
 /* default CPU */
 #define DSRV_CPU USER_DEFAULT_CPU
