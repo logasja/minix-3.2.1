@@ -72,7 +72,6 @@ int main(void)
 			result = do_nice(&m_in);
 			break;
 		case SCHEDULING_NO_QUANTUM:
-			printf("I'm out of time!\n");
 			/* This message was sent from the kernel, don't reply */
 			if (IPC_STATUS_FLAGS_TEST(ipc_status,
 				IPC_FLG_MSG_FROM_KERNEL)) {

@@ -14,7 +14,7 @@ int main(void)
 		clock_t start = clock();
 		clock_t diff;
 
-		int n = 1000000;
+		int n = 10000;
 		int i = 3;
 		int count, c;
 
@@ -68,7 +68,7 @@ int main(void)
 
 		while ((read = getline(&line, &len, fp)) != -1) {
 			sum += atoi(line);
-			fprintf(fpout, "%d/n", sum);
+			fprintf(fpout, "%d\n", sum);
 		}
 
 		clock_t diff = clock() - start;
