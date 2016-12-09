@@ -161,7 +161,7 @@ struct proc {
 				   queue again */
 #define RTS_BOOTINHIBIT	0x10000	/* not ready until VM has made it */
 
-/* A process is runnable iff p_rts_flags == 0. */
+				   /* A process is runnable iff p_rts_flags == 0. */
 #define rts_f_is_runnable(flg)	((flg) == 0)
 #define proc_is_runnable(p)	(rts_f_is_runnable((p)->p_rts_flags))
 
@@ -193,7 +193,7 @@ struct proc {
 		)							\
 	)
 
-/* These runtime flags can be tested and manipulated by these macros. */
+ /* These runtime flags can be tested and manipulated by these macros. */
 
 #define RTS_ISSET(rp, f) (((rp)->p_rts_flags & (f)) == (f))
 
@@ -205,6 +205,7 @@ struct proc {
 		(rp)->p_rts_flags |= (f);				\
 		if(rts_f_is_runnable(rts) && !proc_is_runnable(rp)) {	\
 			dequeue(rp);					\
+			(rp)->p_state_changes = (rp)->p_state_changes + 1; \
 		}							\
 	} while(0)
 
@@ -216,6 +217,7 @@ struct proc {
 		(rp)->p_rts_flags &= ~(f);				\
 		if(!rts_f_is_runnable(rts) && proc_is_runnable(rp)) {	\
 			enqueue(rp);					\
+			(rp)->p_state_changes = (rp)->p_state_changes + 1; \
 		}							\
 	} while(0)
 
