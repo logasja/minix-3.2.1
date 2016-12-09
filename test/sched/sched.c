@@ -68,10 +68,10 @@ int main(void)
 
 		while ((read = getline(&line, &len, fp)) != -1) {
 			sum += atoi(line);
-			print(fpout, "%d", sum);
+			fprintf(fpout, "%d", sum);
 		}
 
-		printf(fp, "SUM: %d", sum);
+		fprintf(fp, "SUM: %d", sum);
 
 		clock_t diff = clock() - start;
 		printf("The computaion took %d.", diff);
