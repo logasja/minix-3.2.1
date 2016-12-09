@@ -7874,7 +7874,8 @@
     <ResourceCompile Include="external\public-domain\xz\dist\src\xz\xz_w32res.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="test\sched\data.txt" />
+    <Text Include="test\sched\data1.txt" />
+    <Text Include="test\sched\data2.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

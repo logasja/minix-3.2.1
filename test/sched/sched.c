@@ -57,16 +57,21 @@ int main(void)
 		ssize_t read;
 		int sum;
 
-		fp = fopen("./data.txt", "r+");
 		fpout = fopen("./dataout.txt", "w+");
 
-		if (fp == NULL || fpout == NULL)
+		if (fpout == NULL)
 		{
 			printf("One of the files could not be opened.\n");
 			exit(EXIT_FAILURE);
 		}
 
-		while ((read = getline(&line, &len, fp)) != -1) {
+		for (int i = 0; i < 10000; i++)
+		{
+			if (i % 2)
+				fp = fopen("./data1.txt", "r+");
+			else
+				fp = fopen("./data2.txt", "r+");
+			read = getline(&line, &len, fp);
 			sum += atoi(line);
 			fprintf(fpout, "%d\n", sum);
 		}

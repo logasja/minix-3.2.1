@@ -23398,6 +23398,7 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="test\sched\data.txt" />
+    <Text Include="test\sched\data2.txt" />
+    <Text Include="test\sched\data1.txt" />
   </ItemGroup>
 </Project>
