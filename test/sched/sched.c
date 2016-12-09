@@ -46,9 +46,7 @@ int main(void)
 		printf("The CPU computation took %d.\n", diff);
 		exit(EXIT_SUCCESS);
 	}
-
-	b = fork();
-	if (b != 0)
+	else
 	{
 		printf("Starting I/O intensive process on %d...\n", b);
 		clock_t start = clock();
@@ -66,16 +64,15 @@ int main(void)
 			exit(EXIT_FAILURE);
 		}
 
-		char cmd[CMD_LENGTH] = "";
+		char cmd = ' ';
 
-		printf("Write q to stop typing.");
+		printf("Write '-' to stop typing.");
 
 		// Get user input and save to file
-		while (strcmp(cmd, "q"))
+		while (cmd != '-')
 		{
-			scanf("%100s", cmd);
-			getchar();
-			fprintf(fpout, "%s\n", cmd);
+			cmd = getchar();
+			fprintf(fpout, cmd);
 		}
 
 		//// Read from file and do calculations on number in it
