@@ -48,7 +48,7 @@ int main(void)
 	if (b != 0)
 	{
 		printf("Starting I/O intensive process on %d...\n", b);
-		clock_t start = ;
+		clock_t start = clock();
 
 		FILE *fp, *fpout;
 		char *line = NULL;
