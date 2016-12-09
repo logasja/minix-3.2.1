@@ -93,7 +93,7 @@ static void pid_psinfo(int i)
 	 * proc entry still contains the old (but valid) information. Currently
 	 * this is true, but in the future we may have to filter some fields.
 	 */
-	buf_printf("%d %c %d %s %c %d %d %lu %lu %lu %lu",
+	buf_printf("%d %c %d %s %c %d %d %lu %lu %lu %lu %lu",
 		PSINFO_VERSION,			/* information version */
 		type,				/* process type */
 		(int) proc[i].p_endpoint,	/* process endpoint */
@@ -104,7 +104,8 @@ static void pid_psinfo(int i)
 		(long) proc[i].p_user_time,	/* user time */
 		(long) proc[i].p_sys_time,	/* system time */
 		ex64hi(proc[i].p_cycles),	/* execution cycles */
-		ex64lo(proc[i].p_cycles)
+		ex64lo(proc[i].p_cycles),
+		ex64hi(proc[i].p_state_changes)	/* total number of state changes */
 	);
 
 	memset(&vui, 0, sizeof(vui));
@@ -167,11 +168,6 @@ static void pid_psinfo(int i)
 
 	/* add total memory for tasks at the end */
 	if(task) buf_printf(" %lu", vui.vui_total);
-
-	/* add number of state transitions at end */
-	buf_printf(" a%lu",
-		ex64hi(proc[i].p_state_changes)	/* total number of state changes */
-	);
 
 	/* Newline at the end of the file. */
 	buf_printf("\n");
