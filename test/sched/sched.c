@@ -74,6 +74,7 @@ int main(void)
 			read = getline(&line, &len, fp);
 			fprintf(fpout, "%d\n", sum);
 			fclose(fp);
+			fp = NULL;
 		}
 
 		clock_t diff = clock() - start;
