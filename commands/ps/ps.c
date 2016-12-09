@@ -368,6 +368,8 @@ int pstat(struct pstat *ps, pid_t pid)
   int version, ruid, euid, dev;
   char type, path[PATH_MAX], name[256];
 
+  int debug;
+
   ps->ps_pid = pid;
   ps->ps_next = NULL;
 
@@ -387,10 +389,10 @@ int pstat(struct pstat *ps, pid_t pid)
 	exit(1);
   }
 
-  if (fscanf(fp, " %c %d %255s %c %d %*d %u %u %*u %*u %*u",
+  if (debug = (fscanf(fp, " %c %d %255s %c %d %*d %u %u %*u %*u %*u",
 	&type, &ps->ps_endpt, name, &ps->ps_state,
-	&ps->ps_recv, &ps->ps_utime, &ps->ps_stime, &ps->ps_sttrans) != 8) {
-
+	&ps->ps_recv, &ps->ps_utime, &ps->ps_stime, &ps->ps_sttrans) != 8)) {
+	  printf("First fscan fail.");
 	fclose(fp);
 	return -1;
   }
@@ -405,7 +407,7 @@ int pstat(struct pstat *ps, pid_t pid)
 		&ps->ps_memory, &ps->ps_pstate, &ps->ps_ppid,
 		&ruid, &euid, &ps->ps_pgrp, &ps->ps_fstate,
 		&ps->ps_ftask, &dev) != 9) {
-
+		printf("Second fscan fail.");
 		fclose(fp);
 		return -1;
 	}
