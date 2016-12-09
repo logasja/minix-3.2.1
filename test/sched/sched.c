@@ -71,11 +71,11 @@ int main(void)
 		printf("Write q to stop typing.");
 
 		// Get user input and save to file
-		while (strcmp(line, "q"))
+		while (strcmp(cmd, "q"))
 		{
-			scanf("%100s", line);
+			scanf("%100s", cmd);
 			getchar();
-			fprintf(fpout, "%s\n", line);
+			fprintf(fpout, "%s\n", cmd);
 		}
 
 		//// Read from file and do calculations on number in it
