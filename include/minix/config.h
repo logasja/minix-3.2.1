@@ -83,20 +83,6 @@
 #define USER_QUANTUM_MEDIUM 100
 /* Scheduling long quanta */
 #define USER_QUANTUM_LONG 150
-
-/* Finds appropriate quantum based on priority */
-static inline int USR_QT(int p)
-{
-	if (p == USER_Q)
-		return USER_QUANTUM_SHORT;
-	else if (p == USER_Q + 1)
-		return USER_QUANTUM_MEDIUM;
-	else if (p == USER_Q + 2)
-		return USER_QUANTUM_LONG;
-	else
-		return USER_QUANTUM_DEFAULT;
-}
-
 /* defualt user process cpu */
 #define USER_DEFAULT_CPU	-1 /* use the default cpu or do not change the
 				      current one */

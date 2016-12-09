@@ -83,6 +83,19 @@ static void pick_cpu(struct schedproc * proc)
 #endif
 }
 
+/* Finds appropriate quantum based on priority */
+static unsigned int pick_quantum(int p)
+{
+	if (p == USER_Q)
+		return USER_QUANTUM_SHORT;
+	else if (p == USER_Q + 1)
+		return USER_QUANTUM_MEDIUM;
+	else if (p == USER_Q + 2)
+		return USER_QUANTUM_LONG;
+	else
+		return USER_QUANTUM_DEFAULT;
+}
+
 /*===========================================================================*
  *				do_noquantum				     *
  *===========================================================================*/
@@ -110,7 +123,7 @@ int do_noquantum(message *m_ptr)
 		// Set priority to the new ++ priority
 		rmp->priority = priority;
 		// Set quantum to time calculated by 
-		rmp->time_slice = USR_QT(priority);
+		rmp->time_slice = pick_quantum(priority);
 	}
 	
 
