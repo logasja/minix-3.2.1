@@ -57,6 +57,7 @@ int main(void)
 		int sum;
 
 		fpout = fopen("./dataout.txt", "w+");
+		fp = fopen("./data1.txt", "r+");
 
 		if (fpout == NULL)
 		{
@@ -66,16 +67,26 @@ int main(void)
 
 		for (int i = 0; i < 10000; i++)
 		{
-			if (i % 2)
-				fp = fopen("./data1.txt", "r+");
-			else
-				fp = fopen("./data2.txt", "r+");
 			sum += atoi(line);
 			read = getline(&line, &len, fp);
 			fprintf(fpout, "%d\n", sum);
-			fclose(fp);
-			fp = NULL;
 		}
+		fclose(fp);
+		fp = NULL;
+		fclose(fpout);
+		fpout = NULL;
+
+		fpout = fopen("./dataout2.txt", "w+");
+		fp = fopen("./data2.txt", "r+");
+
+		for (int i = 0; i < 10000; i++)
+		{
+			sum += atoi(line);
+			read = getline(&line, &len, fp);
+			fprintf(fpout, "%d\n", sum);
+		}
+		fclose(fp);
+		fp = NULL;
 
 		clock_t diff = clock() - start;
 		printf("The I/O computation took %d.\n", diff);
