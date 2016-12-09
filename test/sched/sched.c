@@ -92,6 +92,6 @@ int main(void)
 
 		clock_t diff = clock() - start;
 		printf("The I/O computation took %d.\n", diff);
-		exit(EXIT_SUCCESS);
+		_exit(EXIT_SUCCESS);
 	}
 }
