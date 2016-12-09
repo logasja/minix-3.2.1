@@ -84,7 +84,7 @@
 /* Scheduling long quanta */
 #define USER_QUANTUM_LONG 150
 /* Finds appropriate quantum based on priority */
-static inline int USR_QT(int p)
+static int USR_QT(int p)
 {
 	if (p == USER_Q)
 		return USER_QUANTUM_SHORT;
