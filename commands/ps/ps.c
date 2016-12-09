@@ -94,6 +94,8 @@ struct pstat *ptable;		/* table with process information */
  */
 #define S_HEADER "  PID TTY  TIME CMD\n"
 #define S_FORMAT "%5s %3s %s %s\n"
+#define M_HEADER "  PID TTY  TIME TRANS CMD\n"
+#define M_FORMAT "%5s %3s %s %12s %s\n"
 #define L_HEADER "ST UID   PID  PPID  PGRP     SZ         RECV TTY  TIME CMD\n"
 #define L_FORMAT " %c %3d %5s %5d %5d %6d %12s %3s %s %s\n"
 
@@ -273,7 +275,7 @@ char *argv[];
   plist();
 
   /* Now loop through process table and handle each entry */
-  printf("%s", opt_long ? L_HEADER : S_HEADER);
+  printf("%s", opt_long ? L_HEADER : M_HEADER);
   for (n = 0; n < nr_procs + nr_tasks; n++) {
 	ps = &ptable[n];
 	if (ps->ps_endpt == NONE)
@@ -310,9 +312,10 @@ char *argv[];
 			       ps->ps_args != NULL ? ps->ps_args : ps->ps_name
 			       );
 		else
-			printf(S_FORMAT,
+			printf(M_FORMAT,
 			       pid, tname((dev_t) ps->ps_dev),
 			       cpu,
+				   ps->ps_sttrans,
 			       ps->ps_args != NULL ? ps->ps_args : ps->ps_name
 			       );
 	}
