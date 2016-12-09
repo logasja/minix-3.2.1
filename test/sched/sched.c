@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
 #define CMD_LENGTH 100
 
@@ -67,12 +68,14 @@ int main(void)
 
 		char cmd[CMD_LENGTH];
 
+		printf("Write q to stop typing.");
+
 		// Get user input and save to file
-		while (line != "q")
+		while (strcmp(line, "q"))
 		{
-			scanf("%s", &line);
+			scanf("%100s", line);
 			getchar();
-			fprintf(fpout, "%100s\n", line);
+			fprintf(fpout, "%s\n", line);
 		}
 
 		//// Read from file and do calculations on number in it
