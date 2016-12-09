@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <time.h>
 
+#define CMD_LENGTH 100
+
 int main(void)
 {
 	int b;
@@ -55,7 +57,6 @@ int main(void)
 		size_t len = 0;
 		ssize_t read;
 		int sum;
-
 		fpout = fopen("./dataout.txt", "w+");
 
 		if (fpout == NULL)
@@ -64,17 +65,28 @@ int main(void)
 			exit(EXIT_FAILURE);
 		}
 
-		for (int i = 0; i < 10000; i++)
+		char cmd[CMD_LENGTH];
+
+		// Get user input and save to file
+		while (line != "q")
 		{
-			if (i % 2)
-				fp = fopen("./data1.txt", "r+");
-			else
-				fp = fopen("./data2.txt", "r+");
-			read = getline(&line, &len, fp);
-			sum += atoi(line);
-			fprintf(fpout, "%d\n", sum);
-			fclose(fp);
+			scanf("%s", &line);
+			getchar();
+			fprintf(fpout, "%100s\n", line);
 		}
+
+		//// Read from file and do calculations on number in it
+		//for (int i = 0; i < 10000; i++)
+		//{
+		//	if (i % 2)
+		//		fp = fopen("./data1.txt", "r+");
+		//	else
+		//		fp = fopen("./data2.txt", "r+");
+		//	read = getline(&line, &len, fp);
+		//	sum += atoi(line);
+		//	fprintf(fpout, "%d\n", sum);
+		//	fclose(fp);
+		//}
 
 		clock_t diff = clock() - start;
 		printf("The I/O computation took %d.\n", diff);
