@@ -123,8 +123,10 @@ int do_noquantum(message *m_ptr)
 		rmp->time_slice = pick_quantum(priority);
 		printf("do_noquantum!\n\tEndpoint: %d\n\tNew Priority %d\n\tNew Quantum %d\n", rmp->endpoint, rmp->priority, rmp->time_slice);
 	}
-	else if (rmp->priority < MIN_USER_Q)
+	/* Ensure this existing code does not allow processes to jump between scheduling schemes*/
+	else if (rmp->priority < MIN_USER_Q && rmp->priority > USER_Q + 3)
 	{
+		printf("Endpoint %d in second if.\n", rmp->endpoint);
 		rmp->priority += 1; /* lower priority */
 		// If the priority goes beyond the first three queues, keep a default quantum
 		rmp->time_slice = USER_QUANTUM_DEFAULT;
