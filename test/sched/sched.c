@@ -93,6 +93,6 @@ int main(void)
 
 		diff = clock() - start;
 		printf("The CPU computation took %d.\n", diff);
-		wait(&status);
+		_exit(EXIT_SUCCESS);
 	}
 }
