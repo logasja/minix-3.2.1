@@ -202,7 +202,8 @@ int do_start_scheduling(message *m_ptr)
 		/* We have a special case here for init, which is the first
 		   process scheduled, and the parent of itself. */
 		rmp->priority   = USER_Q;
-		rmp->time_slice = DEFAULT_USER_TIME_SLICE;
+		rmp->time_slice = USER_QUANTUM_SHORT;
+		//rmp->time_slice = DEFAULT_USER_TIME_SLICE;
 
 		/*
 		 * Since kernel never changes the cpu of a process, all are
@@ -388,6 +389,7 @@ static void balance_queues(struct timer *tp)
 		if (rmp->flags & IN_USE) {
 			if (rmp->priority > rmp->max_priority) {
 				rmp->priority -= 1; /* increase priority */
+				rmp->time_slice = pick_quantum(rmp->priority);
 				schedule_process_local(rmp);
 			}
 		}
