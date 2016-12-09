@@ -94,8 +94,8 @@ struct pstat *ptable;		/* table with process information */
  */
 #define S_HEADER "  PID TTY  TIME CMD\n"
 #define S_FORMAT "%5s %3s %s %s\n"
-#define M_HEADER "  PID TTY  TIME TRANS CMD\n"
-#define M_FORMAT "%5s %3s %s %12s %s\n"
+#define M_HEADER "\tPID\tTTY\tTIME\tTRANS\tCMD\n"
+#define M_FORMAT "\t%5s\t%3s\t%s\t%6d\t%s\n"
 #define L_HEADER "ST UID   PID  PPID  PGRP     SZ         RECV TTY  TIME CMD\n"
 #define L_FORMAT " %c %3d %5s %5d %5d %6d %12s %3s %s %s\n"
 
