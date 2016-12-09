@@ -98,6 +98,7 @@ int do_noquantum(message *m_ptr)
 		return EBADEPT;
 	}
 	rmp = &schedproc[proc_nr_n];
+	printf("Do no quantum!\n\tEndpoint: %d\n\tPriority %d", rmp->endpoint, rmp->priority);
 	if (rmp->priority < MIN_USER_Q) {
 		rmp->priority += 1; /* lower priority */
 	}
