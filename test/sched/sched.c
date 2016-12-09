@@ -33,14 +33,14 @@ int main(void)
 			}
 			if (c == i)
 			{
-				printf("%d\n", i);
+				//printf("%d\n", i);
 				count++;
 			}
 			i++;
 		}
 
 		diff = clock() - start;
-		printf("The CPU computation took %d.", diff);
+		printf("The CPU computation took %d.\n", diff);
 		exit(EXIT_SUCCESS);
 	}
 
@@ -72,7 +72,7 @@ int main(void)
 		}
 
 		clock_t diff = clock() - start;
-		printf("The computaion took %d.", diff);
+		printf("The I/O computation took %d.\n", diff);
 		exit(EXIT_SUCCESS);
 	}
 }
