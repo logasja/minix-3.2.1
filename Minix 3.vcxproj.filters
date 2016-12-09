@@ -13761,6 +13761,9 @@
     <ClCompile Include="servers\vfs\writelog.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="test\sched\sched.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="commands\ash\builtins.def">
@@ -23393,5 +23396,8 @@
     <ResourceCompile Include="external\public-domain\xz\dist\src\xzdec\xzdec_w32res.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="test\sched\data.txt" />
   </ItemGroup>
 </Project>

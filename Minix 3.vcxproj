@@ -4335,6 +4335,7 @@
     <ClCompile Include="test\safecopy\grantor.c" />
     <ClCompile Include="test\safecopy\requestor.c" />
     <ClCompile Include="test\scancodes\test-scancodes.c" />
+    <ClCompile Include="test\sched\sched.c" />
     <ClCompile Include="test\select\speed.c" />
     <ClCompile Include="test\select\test00.c" />
     <ClCompile Include="test\select\test01.c" />
@@ -7871,6 +7872,9 @@
     <ResourceCompile Include="external\public-domain\xz\dist\src\xzdec\lzmadec_w32res.rc" />
     <ResourceCompile Include="external\public-domain\xz\dist\src\xzdec\xzdec_w32res.rc" />
     <ResourceCompile Include="external\public-domain\xz\dist\src\xz\xz_w32res.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="test\sched\data.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
