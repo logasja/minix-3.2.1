@@ -14,7 +14,7 @@ int main(void)
 	int parent = getpid();
 	b = fork();
 	if (b != 0)
-	// Parent process
+	// Child process
 	{
 		printf("Starting I/O intensive process on %d...\n", b);
 		clock_t start = clock();
@@ -34,7 +34,7 @@ int main(void)
 
 		char cmd = ' ';
 
-		printf("Write '-' to stop typing.");
+		printf("Write '-' to stop typing.\n");
 
 		// Get user input and save to file
 		while (cmd != '-')
@@ -63,7 +63,7 @@ int main(void)
 	}
 	else
 	{
-		printf("Starting CPU intensive process on %d...\n", b);
+		printf("Starting CPU intensive process on %d...\n", parent);
 		clock_t start = clock();
 		clock_t diff;
 
