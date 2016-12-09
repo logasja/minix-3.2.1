@@ -22,6 +22,8 @@ void sched_init(void)
 	struct mproc *trmp;
 	endpoint_t parent_e;
 	int proc_nr, s;
+	
+	int qt = USR_QT(trmp->mp_nice);
 
 	for (proc_nr=0, trmp=mproc; proc_nr < NR_PROCS; proc_nr++, trmp++) {
 		/* Don't take over system processes. When the system starts,
@@ -38,7 +40,7 @@ void sched_init(void)
 				trmp->mp_endpoint,	/* schedulee_e */
 				parent_e,		/* parent_e */
 				USER_Q, 		/* maxprio */
-				USR_QT(trmp->mp_nice), 		/* quantum */
+				qt, 		/* quantum */
 				-1,			/* don't change cpu */
 				&trmp->mp_scheduler);	/* *newsched_e */
 			if (s != OK) {
