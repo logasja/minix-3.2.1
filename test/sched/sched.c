@@ -40,6 +40,7 @@ int main(void)
 		while (cmd != '-')
 		{
 			cmd = getchar();
+			fprintf(fpout, "%c", cmd);
 			printf("%c", cmd);
 		}
 
