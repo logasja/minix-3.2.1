@@ -14,6 +14,53 @@ int main(void)
 	int parent = getpid();
 	b = fork();
 	if (b != 0)
+	// Parent process
+	{
+		printf("Starting I/O intensive process on %d...\n", b);
+		clock_t start = clock();
+
+		FILE *fp, *fpout;
+		char *line = NULL;
+		size_t len = 0;
+		ssize_t read;
+		int sum;
+		fpout = fopen("./dataout.txt", "w+");
+
+		if (fpout == NULL)
+		{
+			printf("One of the files could not be opened.\n");
+			exit(EXIT_FAILURE);
+		}
+
+		char cmd = ' ';
+
+		printf("Write '-' to stop typing.");
+
+		// Get user input and save to file
+		while (cmd != '-')
+		{
+			cmd = getchar();
+			fprintf(fpout, "%c", cmd);
+		}
+
+		//// Read from file and do calculations on number in it
+		//for (int i = 0; i < 10000; i++)
+		//{
+		//	if (i % 2)
+		//		fp = fopen("./data1.txt", "r+");
+		//	else
+		//		fp = fopen("./data2.txt", "r+");
+		//	read = getline(&line, &len, fp);
+		//	sum += atoi(line);
+		//	fprintf(fpout, "%d\n", sum);
+		//	fclose(fp);
+		//}
+
+		clock_t diff = clock() - start;
+		printf("The I/O computation took %d.\n", diff);
+		_exit(EXIT_SUCCESS);
+	}
+	else
 	{
 		printf("Starting CPU intensive process on %d...\n", b);
 		clock_t start = clock();
@@ -46,52 +93,6 @@ int main(void)
 
 		diff = clock() - start;
 		printf("The CPU computation took %d.\n", diff);
-		_exit(EXIT_SUCCESS);
-	}
-	else
-	{
-		printf("Starting I/O intensive process on %d...\n", b);
-		clock_t start = clock();
-
-		FILE *fp, *fpout;
-		char *line = NULL;
-		size_t len = 0;
-		ssize_t read;
-		int sum;
-		fpout = fopen("./dataout.txt", "w+");
-
-		if (fpout == NULL)
-		{
-			printf("One of the files could not be opened.\n");
-			exit(EXIT_FAILURE);
-		}
-
-		char cmd = ' ';
-
-		printf("Write '-' to stop typing.");
-
-		// Get user input and save to file
-		while (cmd != '-')
-		{
-			cmd = getchar();
-			fprintf(fpout, "%c",cmd);
-		}
-
-		//// Read from file and do calculations on number in it
-		//for (int i = 0; i < 10000; i++)
-		//{
-		//	if (i % 2)
-		//		fp = fopen("./data1.txt", "r+");
-		//	else
-		//		fp = fopen("./data2.txt", "r+");
-		//	read = getline(&line, &len, fp);
-		//	sum += atoi(line);
-		//	fprintf(fpout, "%d\n", sum);
-		//	fclose(fp);
-		//}
-
-		clock_t diff = clock() - start;
-		printf("The I/O computation took %d.\n", diff);
-		_exit(EXIT_SUCCESS);
+		wait(&status);
 	}
 }
