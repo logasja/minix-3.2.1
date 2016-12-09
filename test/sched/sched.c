@@ -10,7 +10,7 @@ int main(void)
 	b = fork();
 	if (b != 0)
 	{
-		printf("Starting CPU intensive process...\n");
+		printf("Starting CPU intensive process on %d...\n", b);
 		clock_t start = clock();
 		clock_t diff;
 
@@ -41,14 +41,14 @@ int main(void)
 
 		diff = clock() - start;
 		printf("The CPU computation took %d.", diff);
-		exit();
+		exit(EXIT_SUCCESS);
 	}
 
 	b = fork();
 	if (b != 0)
 	{
-		printf("Starting I/O intensive process...\n");
-		start = clock();
+		printf("Starting I/O intensive process on %d...\n", b);
+		clock_t start = clock();
 
 		FILE *fp;
 		FILE *fpout;
@@ -73,8 +73,8 @@ int main(void)
 
 		fprintf(fp, "SUM: %d", sum);
 
-		diff = clock() - start;
+		clock_t diff = clock() - start;
 		printf("The computaion took %d.", diff);
-		exit();
+		exit(EXIT_SUCCESS);
 	}
 }
