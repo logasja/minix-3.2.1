@@ -114,7 +114,7 @@ int do_noquantum(message *m_ptr)
 	rmp = &schedproc[proc_nr_n];
 	unsigned int priority = rmp->priority + 1;
 	/* Check to see if priority should be incremented and quantum changed for Project 3 */
-	if (priority < USER_Q + 2 && priority > USER_Q)
+	if (priority < USER_Q + 3 && priority > USER_Q)
 	{
 		printf("Do no quantum!\n\tEndpoint: %d\n\tPriority %d\n\tQuantum %d\n", rmp->endpoint, rmp->priority, rmp->time_slice);
 		// Set priority to the new ++ priority
