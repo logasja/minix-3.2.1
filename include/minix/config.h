@@ -75,8 +75,8 @@
 						(should correspond to nice 0) */
 #define MIN_USER_Q	  (NR_SCHED_QUEUES - 1)	/* minimum priority for user
 						   processes */
-///* default scheduling quanta */
-//#define USER_QUANTUM_DEFAULT 200
+/* default scheduling quanta */
+#define USER_QUANTUM_DEFAULT 200
 ///* Scheduling short quanta */
 //#define USER_QUANTUM_SHORT 10
 ///* Scheduling medium quanta */
