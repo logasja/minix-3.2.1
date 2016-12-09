@@ -113,7 +113,7 @@ int do_noquantum(message *m_ptr)
 
 	rmp = &schedproc[proc_nr_n];
 	unsigned int priority = rmp->priority + 1;
-	printf("Do no quantum!\n\tEndpoint: %d\n\tPriority %d\n\tQuantum %d", rmp->endpoint, rmp->priority, rmp->time_slice);
+	printf("Do no quantum!\n\tEndpoint: %d\n\tPriority %d\n\tQuantum %d\n", rmp->endpoint, rmp->priority, rmp->time_slice);
 	if (rmp->priority < MIN_USER_Q) {
 		rmp->priority += 1; /* lower priority */
 	}
@@ -130,7 +130,7 @@ int do_noquantum(message *m_ptr)
 		// If the priority goes beyond the first three queues, keep a default quantum
 		rmp->time_slice = USER_QUANTUM_DEFAULT;
 
-	printf("Do no quantum!\n\tEndpoint: %d\n\tNew Priority %d\n\tNew Quantum %d", rmp->endpoint, rmp->priority, rmp->time_slice);
+	printf("Do no quantum!\n\tEndpoint: %d\n\tNew Priority %d\n\tNew Quantum %d\n", rmp->endpoint, rmp->priority, rmp->time_slice);
 
 	if ((rv = schedule_process_local(rmp)) != OK) {
 		return rv;
