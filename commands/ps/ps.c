@@ -275,7 +275,7 @@ char *argv[];
   plist();
 
   /* Now loop through process table and handle each entry */
-  printf("%s", opt_long ? L_HEADER : M_HEADER);
+  printf("%s", opt_long ? L_HEADER : S_HEADER);
   for (n = 0; n < nr_procs + nr_tasks; n++) {
 	ps = &ptable[n];
 	if (ps->ps_endpt == NONE)
@@ -312,10 +312,9 @@ char *argv[];
 			       ps->ps_args != NULL ? ps->ps_args : ps->ps_name
 			       );
 		else
-			printf(M_FORMAT,
+			printf(S_FORMAT,
 			       pid, tname((dev_t) ps->ps_dev),
 			       cpu,
-				   ps->ps_sttrans,
 			       ps->ps_args != NULL ? ps->ps_args : ps->ps_name
 			       );
 	}
