@@ -40,7 +40,7 @@ int main(void)
 		while (cmd != '-')
 		{
 			cmd = getchar();
-			fprintf("%c", cmd);
+			printf("%c", cmd);
 		}
 
 		//// Read from file and do calculations on number in it
