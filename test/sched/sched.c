@@ -14,7 +14,7 @@ int main(void)
 		clock_t start = clock();
 		clock_t diff;
 
-		int n = 10;
+		int n = 1000000;
 		int i = 3;
 		int count, c;
 
@@ -68,10 +68,8 @@ int main(void)
 
 		while ((read = getline(&line, &len, fp)) != -1) {
 			sum += atoi(line);
-			fprintf(fpout, "%d", sum);
+			fprintf(fpout, "%d/n", sum);
 		}
-
-		fprintf(fp, "SUM: %d", sum);
 
 		clock_t diff = clock() - start;
 		printf("The computaion took %d.", diff);
