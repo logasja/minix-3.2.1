@@ -43,8 +43,6 @@ int main(void)
 		/* Wait for the next message and extract useful information from it. */
 		if (sef_receive_status(ANY, &m_in, &ipc_status) != OK)
 			panic("SCHED sef_receive error");
-		else
-			printf("I'm scheduling!");
 		who_e = m_in.m_source;	/* who sent the message */
 		call_nr = m_in.m_type;	/* system call number */
 

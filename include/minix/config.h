@@ -77,6 +77,12 @@
 						   processes */
 /* default scheduling quanta */
 #define USER_QUANTUM 200
+/* Scheduling quanta A */
+#define USER_QUANTUM_A 50
+/* Scheduling quanta B */
+#define USER_QUANTUM_B 100
+/* Scheduling quanta C */
+#define USER_QUANTUM_C 150
 
 /* defualt user process cpu */
 #define USER_DEFAULT_CPU	-1 /* use the default cpu or do not change the
