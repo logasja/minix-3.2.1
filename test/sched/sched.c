@@ -72,7 +72,7 @@ int main(void)
 		while (cmd != '-')
 		{
 			cmd = getchar();
-			fprintf(fpout, cmd);
+			fprintf(fpout, "%c",cmd);
 		}
 
 		//// Read from file and do calculations on number in it
