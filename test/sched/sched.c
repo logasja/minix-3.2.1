@@ -50,14 +50,13 @@ int main(void)
 		printf("Starting I/O intensive process on %d...\n", b);
 		clock_t start = clock();
 
-		FILE *fp, *fpout, *fpout2, *fp2;
+		FILE *fp, *fpout;
 		char *line = NULL;
 		size_t len = 0;
 		ssize_t read;
 		int sum;
 
 		fpout = fopen("./dataout.txt", "w+");
-		fp = fopen("./data1.txt", "r+");
 
 		if (fpout == NULL)
 		{
@@ -67,30 +66,15 @@ int main(void)
 
 		for (int i = 0; i < 10000; i++)
 		{
-			sum += atoi(line);
+			if (i % 2)
+				fp = fopen("./data1.txt", "r+");
+			else
+				fp = fopen("./data2.txt", "r+");
 			read = getline(&line, &len, fp);
-			fprintf(stderr, "%d\n", sum);
-		}
-
-		fclose(fp);
-		fp = NULL;
-		fclose(fpout);
-		fpout = NULL;
-
-		fpout2 = fopen("./dataout2.txt", "w+");
-		fp2 = fopen("./data2.txt", "r+");
-
-		for (int i = 0; i < 10000; i++)
-		{
 			sum += atoi(line);
-			read = getline(&line, &len, fp2);
-			fprintf(stderr, "%d\n", sum);
+			fprintf(fpout, "%d\n", sum);
+			fclose(fp);
 		}
-
-		fclose(fp2);
-		fp = NULL;
-		fclose(fpout2);
-		fpout = NULL;
 
 		clock_t diff = clock() - start;
 		printf("The I/O computation took %d.\n", diff);
