@@ -105,7 +105,7 @@ static void pid_psinfo(int i)
 		(long) proc[i].p_sys_time,	/* system time */
 		ex64hi(proc[i].p_cycles),	/* execution cycles */
 		ex64lo(proc[i].p_cycles),
-		ex64hi(proc[i].p_state_changes)	/* total number of state changes */
+		proc[i].p_state_changes	/* total number of state changes */
 	);
 
 	memset(&vui, 0, sizeof(vui));
