@@ -63,7 +63,7 @@ struct proc {
   u64_t p_cycles;		/* how many cycles did the process use */
   u64_t p_kcall_cycles;		/* kernel cycles caused by this proc (kcall) */
   u64_t p_kipc_cycles;		/* cycles caused by this proc (ipc) */
-  u64_t p_state_changes;	/* Number of times the process changed states */
+  int p_state_changes;	/* Number of times the process changed states */
 
   struct proc *p_nextready;	/* pointer to next ready process */
   struct proc *p_caller_q;	/* head of list of procs wishing to send */
@@ -205,7 +205,6 @@ struct proc {
 		(rp)->p_rts_flags |= (f);				\
 		if(rts_f_is_runnable(rts) && !proc_is_runnable(rp)) {	\
 			dequeue(rp);					\
-			(rp)->p_state_changes = (rp)->p_state_changes + 1; \
 		}							\
 	} while(0)
 
@@ -217,7 +216,6 @@ struct proc {
 		(rp)->p_rts_flags &= ~(f);				\
 		if(!rts_f_is_runnable(rts) && proc_is_runnable(rp)) {	\
 			enqueue(rp);					\
-			(rp)->p_state_changes = (rp)->p_state_changes + 1; \
 		}							\
 	} while(0)
 

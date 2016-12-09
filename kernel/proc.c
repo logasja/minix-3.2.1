@@ -1786,6 +1786,7 @@ static void notify_scheduler(struct proc *p)
 
 	assert(!proc_kernel_scheduler(p));
 
+	p->p_state_changes++;
 	/* dequeue the process */
 	RTS_SET(p, RTS_NO_QUANTUM);
 	/*

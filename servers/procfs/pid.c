@@ -93,7 +93,7 @@ static void pid_psinfo(int i)
 	 * proc entry still contains the old (but valid) information. Currently
 	 * this is true, but in the future we may have to filter some fields.
 	 */
-	buf_printf("%d %c %d %s %c %d %d %lu %lu %lu %lu %lu",
+	buf_printf("%d %c %d %s %c %d %d %lu %lu %lu %lu %d",
 		PSINFO_VERSION,			/* information version */
 		type,				/* process type */
 		(int) proc[i].p_endpoint,	/* process endpoint */
