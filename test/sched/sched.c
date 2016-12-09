@@ -4,12 +4,14 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <unistd.h>
 
 #define CMD_LENGTH 100
 
 int main(void)
 {
 	int b;
+	int parent = getpid();
 	b = fork();
 	if (b != 0)
 	{
@@ -44,7 +46,7 @@ int main(void)
 
 		diff = clock() - start;
 		printf("The CPU computation took %d.\n", diff);
-		exit(EXIT_SUCCESS);
+		_exit(EXIT_SUCCESS);
 	}
 	else
 	{
