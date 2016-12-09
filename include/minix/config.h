@@ -78,11 +78,11 @@
 /* default scheduling quanta */
 #define USER_QUANTUM_DEFAULT 200
 /* Scheduling short quanta */
-#define USER_QUANTUM_SHORT 50
+#define USER_QUANTUM_SHORT 10
 /* Scheduling medium quanta */
-#define USER_QUANTUM_MEDIUM 100
+#define USER_QUANTUM_MEDIUM 20
 /* Scheduling long quanta */
-#define USER_QUANTUM_LONG 150
+#define USER_QUANTUM_LONG 200
 /* defualt user process cpu */
 #define USER_DEFAULT_CPU	-1 /* use the default cpu or do not change the
 				      current one */

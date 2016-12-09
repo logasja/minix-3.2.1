@@ -116,12 +116,12 @@ int do_noquantum(message *m_ptr)
 	/* Check to see if priority should be incremented and quantum changed for Project 3 */
 	if (priority < USER_Q + 3 && priority > USER_Q)
 	{
-		printf("Do no quantum!\n\tEndpoint: %d\n\tPriority %d\n\tQuantum %d\n", rmp->endpoint, rmp->priority, rmp->time_slice);
+		printf("do_noquantum!\n\tEndpoint: %d\n\tPriority %d\n\tQuantum %d\n", rmp->endpoint, rmp->priority, rmp->time_slice);
 		// Set priority to the new ++ priority
 		rmp->priority = priority;
 		// Set quantum to time calculated by 
 		rmp->time_slice = pick_quantum(priority);
-		printf("Do no quantum!\n\tEndpoint: %d\n\tNew Priority %d\n\tNew Quantum %d\n", rmp->endpoint, rmp->priority, rmp->time_slice);
+		printf("do_noquantum!\n\tEndpoint: %d\n\tNew Priority %d\n\tNew Quantum %d\n", rmp->endpoint, rmp->priority, rmp->time_slice);
 	}
 	else if (rmp->priority < MIN_USER_Q)
 	{
@@ -199,7 +199,8 @@ int do_start_scheduling(message *m_ptr)
 	 * value is local and we assert that the parent endpoint is valid */
 	if (rmp->endpoint == rmp->parent) {
 		/* We have a special case here for init, which is the first
-		   process scheduled, and the parent of itself. */
+		   process scheduled, and the parent of itself. As it is being
+		   set to the nice(0) value the short quantum time is given to it.*/
 		rmp->priority   = USER_Q;
 		rmp->time_slice = USER_QUANTUM_SHORT;
 		//rmp->time_slice = DEFAULT_USER_TIME_SLICE;
@@ -244,7 +245,7 @@ int do_start_scheduling(message *m_ptr)
 	}
 
 	/* Take over scheduling the process. The kernel reply message populates
-	 * the processes current priority and its time slice */
+	 * the process' current priority and its time slice */
 	if ((rv = sys_schedctl(0, rmp->endpoint, 0, 0, 0)) != OK) {
 		printf("Sched: Error taking over scheduling for %d, kernel said %d\n",
 			rmp->endpoint, rv);
