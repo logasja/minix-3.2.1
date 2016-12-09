@@ -43,8 +43,7 @@ int main(void)
 		/* Wait for the next message and extract useful information from it. */
 		if (sef_receive_status(ANY, &m_in, &ipc_status) != OK)
 			panic("SCHED sef_receive error");
-		else
-			printf("I'm scheduling!");
+
 		who_e = m_in.m_source;	/* who sent the message */
 		call_nr = m_in.m_type;	/* system call number */
 
@@ -73,6 +72,7 @@ int main(void)
 			result = do_nice(&m_in);
 			break;
 		case SCHEDULING_NO_QUANTUM:
+			printf("I'm out of time!");
 			/* This message was sent from the kernel, don't reply */
 			if (IPC_STATUS_FLAGS_TEST(ipc_status,
 				IPC_FLG_MSG_FROM_KERNEL)) {
