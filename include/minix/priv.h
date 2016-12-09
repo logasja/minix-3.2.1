@@ -91,7 +91,7 @@
 /* scheduling quantum. */
 #define SRV_QT    USER_QUANTUM_DEFAULT                     /* system services */
 #define DSRV_QT   USER_QUANTUM_DEFAULT                     /* dynamic system services */
-//USR_QT was here
+//#define USR_QT    USER_QUANTUM_DEFAULT                     /* user processes */
 
 /* default CPU */
 #define DSRV_CPU USER_DEFAULT_CPU
