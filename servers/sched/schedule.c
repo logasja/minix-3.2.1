@@ -287,7 +287,7 @@ int do_nice(message *m_ptr)
 	struct schedproc *rmp;
 	int rv;
 	int proc_nr_n;
-	unsigned new_q, old_q, old_max_q;
+	unsigned new_q, old_q, old_max_q, old_quantum;
 
 	/* check who can send you requests */
 	if (!accept_message(m_ptr))
@@ -308,15 +308,18 @@ int do_nice(message *m_ptr)
 	/* Store old values, in case we need to roll back the changes */
 	old_q     = rmp->priority;
 	old_max_q = rmp->max_priority;
+	old_quantum = rmp->time_slice;
 
 	/* Update the proc entry and reschedule the process */
 	rmp->max_priority = rmp->priority = new_q;
+	rmp->time_slice = pick_quantum(new_q);
 
 	if ((rv = schedule_process_local(rmp)) != OK) {
 		/* Something went wrong when rescheduling the process, roll
 		 * back the changes to proc struct */
 		rmp->priority     = old_q;
 		rmp->max_priority = old_max_q;
+		rmp->time_slice = old_quantum;
 	}
 
 	return rv;
