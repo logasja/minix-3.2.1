@@ -76,7 +76,6 @@
 #define MIN_USER_Q	  (NR_SCHED_QUEUES - 1)	/* minimum priority for user
 						   processes */
 /* default scheduling quanta */
-#define USER_QUANTUM 200
 #define USER_QUANTUM_DEFAULT 200
 /* Scheduling short quanta */
 #define USER_QUANTUM_SHORT 50
@@ -84,8 +83,9 @@
 #define USER_QUANTUM_MEDIUM 100
 /* Scheduling long quanta */
 #define USER_QUANTUM_LONG 150
+
 /* Finds appropriate quantum based on priority */
-static int USR_QT(int p)
+static inline int USR_QT(int p)
 {
 	if (p == USER_Q)
 		return USER_QUANTUM_SHORT;
