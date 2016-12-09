@@ -74,7 +74,7 @@ int main(void)
 		while (strcmp(cmd, "q"))
 		{
 			scanf("%100s", cmd);
-			//getchar();
+			getchar();
 			fprintf(fpout, "%s\n", cmd);
 		}
 
