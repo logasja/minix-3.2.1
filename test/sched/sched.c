@@ -69,7 +69,7 @@ int main(void)
 		{
 			sum += atoi(line);
 			read = getline(&line, &len, fp);
-			fprintf(fpout, "%d\n", sum);
+			fprintf(stderr, "%d\n", sum);
 		}
 
 		fclose(fp);
@@ -84,7 +84,7 @@ int main(void)
 		{
 			sum += atoi(line);
 			read = getline(&line, &len, fp2);
-			fprintf(fpout, "%d\n", sum);
+			fprintf(stderr, "%d\n", sum);
 		}
 
 		fclose(fp2);
