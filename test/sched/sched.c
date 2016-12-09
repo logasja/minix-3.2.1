@@ -71,6 +71,7 @@ int main(void)
 			read = getline(&line, &len, fp);
 			fprintf(fpout, "%d\n", sum);
 		}
+
 		fclose(fp);
 		fp = NULL;
 		fclose(fpout);
@@ -82,10 +83,11 @@ int main(void)
 		for (int i = 0; i < 10000; i++)
 		{
 			sum += atoi(line);
-			read = getline(&line, &len, fp);
+			read = getline(&line, &len, fp2);
 			fprintf(fpout, "%d\n", sum);
 		}
-		fclose(fp);
+
+		fclose(fp2);
 		fp = NULL;
 		fclose(fpout2);
 		fpout = NULL;
