@@ -76,13 +76,13 @@
 #define MIN_USER_Q	  (NR_SCHED_QUEUES - 1)	/* minimum priority for user
 						   processes */
 /* default scheduling quanta */
-#define USER_QUANTUM 200
-/* Scheduling quanta A */
-#define USER_QUANTUM_A 50
-/* Scheduling quanta B */
-#define USER_QUANTUM_B 100
-/* Scheduling quanta C */
-#define USER_QUANTUM_C 150
+#define USER_QUANTUM_DEFAULT 200
+/* Scheduling short quanta */
+#define USER_QUANTUM_SHORT 50
+/* Scheduling medium quanta */
+#define USER_QUANTUM_MEDIUM 100
+/* Scheduling long quanta */
+#define USER_QUANTUM_LONG 150
 
 /* defualt user process cpu */
 #define USER_DEFAULT_CPU	-1 /* use the default cpu or do not change the

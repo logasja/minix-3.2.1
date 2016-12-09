@@ -316,7 +316,7 @@ static int sef_cb_init_fresh(int UNUSED(type), sef_init_info_t *UNUSED(info))
       /* Scheduling parameters. */
       rp->r_scheduler = SRV_OR_USR(rp, SRV_SCH, USR_SCH);
       rp->r_priority = SRV_OR_USR(rp, SRV_Q, USR_Q);
-      rp->r_quantum = SRV_OR_USR(rp, SRV_QT, USR_QT);
+      rp->r_quantum = SRV_OR_USR(rp, SRV_QT, USR_QT(rp->r_priority));
 
       /* Get some settings from the boot image table. */
       rpub->endpoint = ip->endpoint;
