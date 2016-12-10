@@ -28,5 +28,5 @@ int main()
 		i++;
 	}
 
-	getchar();
+	sleep(5);
 }
