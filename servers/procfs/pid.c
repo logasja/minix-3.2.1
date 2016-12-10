@@ -93,7 +93,7 @@ static void pid_psinfo(int i)
 	 * proc entry still contains the old (but valid) information. Currently
 	 * this is true, but in the future we may have to filter some fields.
 	 */
-	buf_printf("%d %c %d %s %c %d %d %lu %lu %lu %lu",
+	buf_printf("%d %c %d %s %c %d %d %lu %lu %lu %lu %d %d",
 		PSINFO_VERSION,			/* information version */
 		type,				/* process type */
 		(int) proc[i].p_endpoint,	/* process endpoint */
@@ -104,7 +104,9 @@ static void pid_psinfo(int i)
 		(long) proc[i].p_user_time,	/* user time */
 		(long) proc[i].p_sys_time,	/* system time */
 		ex64hi(proc[i].p_cycles),	/* execution cycles */
-		ex64lo(proc[i].p_cycles)
+		ex64lo(proc[i].p_cycles),
+		proc[i].p_context_switches,	/* total number of context changes */
+		proc[i].p_quantum_size_ms		/* current quantum size assigned ot the process */
 	);
 
 	memset(&vui, 0, sizeof(vui));

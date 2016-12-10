@@ -83,6 +83,19 @@ static void pick_cpu(struct schedproc * proc)
 #endif
 }
 
+/* Finds appropriate quantum based on priority */
+static unsigned int pick_quantum(int p)
+{
+	if (p == USER_Q)
+		return USER_QUANTUM_SHORT;
+	else if (p == USER_Q + 1)
+		return USER_QUANTUM_MEDIUM;
+	else if (p == USER_Q + 2)
+		return USER_QUANTUM_LONG;
+	else
+		return USER_QUANTUM_DEFAULT;
+}
+
 /*===========================================================================*
  *				do_noquantum				     *
  *===========================================================================*/
@@ -99,8 +112,24 @@ int do_noquantum(message *m_ptr)
 	}
 
 	rmp = &schedproc[proc_nr_n];
-	if (rmp->priority < MIN_USER_Q) {
+	unsigned int priority = rmp->priority + 1;
+	/* Check to see if priority should be incremented and quantum changed for Project 3 */
+	if (priority < USER_Q + 3 && priority > USER_Q)
+	{
+		//printf("do_noquantum!\n\tEndpoint: %d\n\tPriority %d\n\tQuantum %d\n", rmp->endpoint, rmp->priority, rmp->time_slice);
+		// Set priority to the new ++ priority
+		rmp->priority = priority;
+		// Set quantum to time calculated by 
+		rmp->time_slice = pick_quantum(priority);
+		//printf("\n\tNew Priority %d\n\tNew Quantum %d\n", rmp->priority, rmp->time_slice);
+	}
+	/* Ensure this existing code does not allow processes to jump between scheduling schemes*/
+	else if (rmp->priority < MIN_USER_Q && rmp->priority > USER_Q + 3)
+	{
+		printf("Endpoint %d in second if.\n", rmp->endpoint);
 		rmp->priority += 1; /* lower priority */
+		// If the priority goes beyond the first three queues, keep a default quantum
+		rmp->time_slice = USER_QUANTUM_DEFAULT;
 	}
 
 	if ((rv = schedule_process_local(rmp)) != OK) {
@@ -172,9 +201,11 @@ int do_start_scheduling(message *m_ptr)
 	 * value is local and we assert that the parent endpoint is valid */
 	if (rmp->endpoint == rmp->parent) {
 		/* We have a special case here for init, which is the first
-		   process scheduled, and the parent of itself. */
+		   process scheduled, and the parent of itself. As it is being
+		   set to the nice(0) value the short quantum time is given to it.*/
 		rmp->priority   = USER_Q;
-		rmp->time_slice = DEFAULT_USER_TIME_SLICE;
+		rmp->time_slice = USER_QUANTUM_SHORT;
+		//rmp->time_slice = DEFAULT_USER_TIME_SLICE;
 
 		/*
 		 * Since kernel never changes the cpu of a process, all are
@@ -216,7 +247,7 @@ int do_start_scheduling(message *m_ptr)
 	}
 
 	/* Take over scheduling the process. The kernel reply message populates
-	 * the processes current priority and its time slice */
+	 * the process' current priority and its time slice */
 	if ((rv = sys_schedctl(0, rmp->endpoint, 0, 0, 0)) != OK) {
 		printf("Sched: Error taking over scheduling for %d, kernel said %d\n",
 			rmp->endpoint, rv);
@@ -258,7 +289,7 @@ int do_nice(message *m_ptr)
 	struct schedproc *rmp;
 	int rv;
 	int proc_nr_n;
-	unsigned new_q, old_q, old_max_q;
+	unsigned new_q, old_q, old_max_q, old_quantum;
 
 	/* check who can send you requests */
 	if (!accept_message(m_ptr))
@@ -279,15 +310,18 @@ int do_nice(message *m_ptr)
 	/* Store old values, in case we need to roll back the changes */
 	old_q     = rmp->priority;
 	old_max_q = rmp->max_priority;
+	old_quantum = rmp->time_slice;
 
 	/* Update the proc entry and reschedule the process */
 	rmp->max_priority = rmp->priority = new_q;
+	rmp->time_slice = pick_quantum(new_q);
 
 	if ((rv = schedule_process_local(rmp)) != OK) {
 		/* Something went wrong when rescheduling the process, roll
 		 * back the changes to proc struct */
 		rmp->priority     = old_q;
 		rmp->max_priority = old_max_q;
+		rmp->time_slice = old_quantum;
 	}
 
 	return rv;
@@ -355,9 +389,14 @@ static void balance_queues(struct timer *tp)
 
 	for (proc_nr=0, rmp=schedproc; proc_nr < NR_PROCS; proc_nr++, rmp++) {
 		if (rmp->flags & IN_USE) {
-			if (rmp->priority > rmp->max_priority) {
-				rmp->priority -= 1; /* increase priority */
-				schedule_process_local(rmp);
+			/* Ensure this existing code does not allow processes to jump between scheduling schemes*/
+			if (rmp->priority < MIN_USER_Q && rmp->priority > USER_Q + 3)
+			{
+				if (rmp->priority > rmp->max_priority) {
+					rmp->priority -= 1; /* increase priority */
+					rmp->time_slice = USER_QUANTUM_DEFAULT;
+					schedule_process_local(rmp);
+				}
 			}
 		}
 	}
