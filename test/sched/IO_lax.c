@@ -21,6 +21,7 @@ int main(void)
 	else
 	{
 		FILE* fp = fopen("./data1.txt", "r+");
+		FILE* fpout = fopen("./dataout2.txt", "w+");
 		char *line = NULL;
 		size_t len = 0;
 		ssize_t read;
