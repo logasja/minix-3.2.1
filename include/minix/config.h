@@ -78,7 +78,7 @@
 /* default scheduling quanta */
 #define USER_QUANTUM_DEFAULT 200
 /* Scheduling short quanta */
-#define USER_QUANTUM_SHORT 5
+#define USER_QUANTUM_SHORT 2
 /* Scheduling medium quanta */
 #define USER_QUANTUM_MEDIUM 15
 /* Scheduling long quanta */
