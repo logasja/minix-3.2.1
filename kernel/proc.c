@@ -1790,6 +1790,9 @@ static void notify_scheduler(struct proc *p)
 	/* dequeue the process */
 	RTS_SET(p, RTS_NO_QUANTUM);
 
+	p->p_state_changes += 1;
+	//p->p_total_quantum = p->p_quantum_size_ms;
+
 	/*
 	 * Notify the process's scheduler that it has run out of
 	 * quantum. This is done by sending a message to the scheduler
@@ -1812,9 +1815,6 @@ static void notify_scheduler(struct proc *p)
 					&m_no_quantum, FROM_KERNEL))) {
 		panic("WARNING: Scheduling: mini_send returned %d\n", err);
 	}
-
-	p->p_state_changes++;
-	p->p_total_quantum = p->p_quantum_size_ms;
 }
 
 void proc_no_time(struct proc * p)
