@@ -4335,7 +4335,11 @@
     <ClCompile Include="test\safecopy\grantor.c" />
     <ClCompile Include="test\safecopy\requestor.c" />
     <ClCompile Include="test\scancodes\test-scancodes.c" />
-    <ClCompile Include="test\sched\sched.c" />
+    <ClCompile Include="test\sched\CPU_intensive.c" />
+    <ClCompile Include="test\sched\CPU_lax.c" />
+    <ClCompile Include="test\sched\IO_intensive.c" />
+    <ClCompile Include="test\sched\IO_lax.c" />
+    <ClCompile Include="test\sched\mix.c" />
     <ClCompile Include="test\select\speed.c" />
     <ClCompile Include="test\select\test00.c" />
     <ClCompile Include="test\select\test01.c" />

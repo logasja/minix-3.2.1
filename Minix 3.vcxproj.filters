@@ -13761,7 +13761,19 @@
     <ClCompile Include="servers\vfs\writelog.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="test\sched\sched.c">
+    <ClCompile Include="test\sched\CPU_intensive.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\sched\IO_intensive.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\sched\CPU_lax.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\sched\IO_lax.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test\sched\mix.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
