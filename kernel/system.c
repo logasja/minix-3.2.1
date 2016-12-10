@@ -638,8 +638,9 @@ int sched_proc(struct proc *p,
 			// Initialize our state changes counter
 			p->p_state_changes = 1;
 			// Initialize quantum total
-			p->p_total_quantum = 0;
+			p->p_total_quantum = USER_QUANTUM_SHORT;
 		}
+		printf("%d",p->p_priority);
 	}
 #ifdef CONFIG_SMP
 	if (cpu != -1)
