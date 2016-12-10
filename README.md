@@ -46,6 +46,26 @@ statlog pause
 ```bash
 statlog clear
 ```
+
+## 3. CTSS-like Scheduler
+* Modifies the default scheduling algorithm to provide a CTSS like scheduling policy.
+  * This only applies to the first three queues (aka nice 0-2)
+* Additionally changes made to "ps"
+  * Show number of context switches per process
+  * Show current quantum assigned to process
 ## Make Instructions
+With the patch.tar file:
+
+```bash
+tar -xvf patch.tar
+cd patch
+make test #if you wish to only get the functionality
+#or
+make full #to get changes to command modules such as "ps"
+```
+
 In order to make the image with most recent patches, pull most recent commmit (or get the most recent patch tarball [here](https://github.com/Jakeman893/minix-3.2.1/releases) and unzip it into any directory besize /usr/src/ (I recommend making a directory in /usr/).
-Once in place, run make test in the new directory. This make command will patch the files in /usr/src/, build, and reboot the system for you. Aaaand... Thats all!
+Once in place, run *make test* in the new directory. This make command will patch the files in /usr/src/, build the kernel, and reboot the system for you.
+
+> Note: If commands in the bin were changed (as they were in the CTSS-like Scheduler) a full build will need to be run. For this, run make full.
+> However often this is not necessary as most commands are only needed for debugging purposes.
