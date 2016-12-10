@@ -640,10 +640,13 @@ int sched_proc(struct proc *p,
 			// Keep track of highest quantum being used
 			p->p_total_quantum = USER_QUANTUM_SHORT;
 		}
-		if (quantum > p->p_total_quantum)
+		else
 		{
-			// Keep track of highest quantum being used
-			p->p_total_quantum = quantum;
+			if (quantum > p->p_total_quantum)
+			{
+				// Keep track of highest quantum being used
+				p->p_total_quantum = quantum;
+			}
 		}
 	}
 #ifdef CONFIG_SMP
