@@ -1525,9 +1525,6 @@ void enqueue(
  * process is assigned to.
  */
   int q = rp->p_priority;	 		/* scheduling queue to use */
-  // Track quantums assigned and how often per process
-  rp->p_total_quantum += rp->p_quantum_size_ms;
-  rp->p_state_changes += 1;
 
   struct proc **rdy_head, **rdy_tail;
   
@@ -1792,6 +1789,10 @@ static void notify_scheduler(struct proc *p)
 
 	/* dequeue the process */
 	RTS_SET(p, RTS_NO_QUANTUM);
+
+	// Track quantums assigned and how often per process
+	rp->p_total_quantum += rp->p_quantum_size_ms;
+	rp->p_state_changes += 1;
 
 	/*
 	 * Notify the process's scheduler that it has run out of
