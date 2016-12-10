@@ -28,5 +28,5 @@ int main()
 		i++;
 	}
 
-	sleep(5);
+	//sleep(5);
 }
