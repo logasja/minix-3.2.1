@@ -1790,9 +1790,6 @@ static void notify_scheduler(struct proc *p)
 	/* dequeue the process */
 	RTS_SET(p, RTS_NO_QUANTUM);
 
-	p->p_state_changes += 1;
-	//p->p_total_quantum = p->p_quantum_size_ms;
-
 	/*
 	 * Notify the process's scheduler that it has run out of
 	 * quantum. This is done by sending a message to the scheduler
@@ -1822,6 +1819,7 @@ void proc_no_time(struct proc * p)
 	if (!proc_kernel_scheduler(p) && priv(p)->s_flags & PREEMPTIBLE) {
 		/* this dequeues the process */
 		notify_scheduler(p);
+		p->p_state_changes += 1;
 	}
 	else {
 		/*
