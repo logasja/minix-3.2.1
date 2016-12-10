@@ -17,41 +17,6 @@ int main(void)
 	if (b != 0)
 	{
 		// Child
-		printf("Starting I/O intensive process on %d...\n", b);
-		clock_t start = clock();
-
-		FILE *fp, *fpout;
-		char *line = NULL;
-		size_t len = 0;
-		ssize_t read;
-		int sum;
-		fpout = fopen("./dataout.txt", "w+");
-
-		if (fpout == NULL)
-		{
-			printf("One of the files could not be opened.\n");
-			exit(EXIT_FAILURE);
-		}
-
-		char cmd = ' ';
-
-		printf("Write '-' to stop typing.\n");
-
-		// Get user input and save to file
-		while (cmd != '-')
-		{
-			cmd = getchar();
-			fprintf(fpout, "%c", cmd);
-		}
-
-		clock_t diff = clock() - start;
-		printf("The I/O computation took %d.\n", diff);
-		_exit(EXIT_SUCCESS);
-	}
-	b = fork();
-	if (b != 0)
-	{
-		// Child
 		printf("Starting CPU intensive process on %d...\n", b);
 		clock_t start = clock();
 		clock_t diff;
@@ -78,8 +43,36 @@ int main(void)
 		printf("The CPU computation took %d.\n", diff);
 		_exit(EXIT_SUCCESS);
 	}
+	printf("Starting I/O intensive process on %d...\n", b);
+	clock_t start = clock();
 
-	getchar();
+	FILE *fp, *fpout;
+	char *line = NULL;
+	size_t len = 0;
+	ssize_t read;
+	int sum;
+	fpout = fopen("./dataout.txt", "w+");
+
+	if (fpout == NULL)
+	{
+		printf("One of the files could not be opened.\n");
+		exit(EXIT_FAILURE);
+	}
+
+	char cmd = ' ';
+
+	printf("Write '-' to stop typing.\n");
+
+	// Get user input and save to file
+	while (cmd != '-')
+	{
+		cmd = getchar();
+		fprintf(fpout, "%c", cmd);
+	}
+
+	clock_t diff = clock() - start;
+	printf("The I/O computation took %d.\n", diff);
+	exit(EXIT_SUCCESS);
 	//// Read from file and do calculations on number in it
 	//for (int i = 0; i < 10000; i++)
 	//{
