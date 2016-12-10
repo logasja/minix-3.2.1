@@ -635,6 +635,7 @@ int sched_proc(struct proc *p,
 		p->p_cpu_time_left = ms_2_cpu_time(quantum);
 		if (p->p_total_quantum < quantum)
 		{
+			printf("%d < %d", p->p_total_quantum, quantum);
 			// Increment when new quantum is greater than last
 			p->p_state_changes++;
 		}
