@@ -633,10 +633,13 @@ int sched_proc(struct proc *p,
 	if (quantum != -1) {
 		p->p_quantum_size_ms = quantum;
 		p->p_cpu_time_left = ms_2_cpu_time(quantum);
-		// Initialize our state changes counter
-		//p->p_state_changes = 1;
-		// Initialize quantum total
-		//p->p_total_quantum = quantum;
+		if (p->p_state_changes == 0)
+		{
+			// Initialize our state changes counter
+			p->p_state_changes = 1;
+			// Initialize quantum total
+			p->p_total_quantum = quantum;
+		}
 	}
 #ifdef CONFIG_SMP
 	if (cpu != -1)
