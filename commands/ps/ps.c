@@ -314,12 +314,6 @@ char *argv[];
 			       );
 		else
 		{
-			if(ps->ps_cntxnum > 0)
-			//printf(S_FORMAT,
-			//	pid, tname((dev_t)ps->ps_dev),
-			//	cpu,
-			//	ps->ps_args != NULL ? ps->ps_args : ps->ps_name
-			//);
 			printf(M_FORMAT,
 				pid, tname((dev_t)ps->ps_dev),
 				cpu,
