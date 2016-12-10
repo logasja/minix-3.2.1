@@ -105,8 +105,8 @@ static void pid_psinfo(int i)
 		(long) proc[i].p_sys_time,	/* system time */
 		ex64hi(proc[i].p_cycles),	/* execution cycles */
 		ex64lo(proc[i].p_cycles),
-		proc[i].p_state_changes,	/* total number of state changes */
-		proc[i].p_total_quantum		/* total quantum assigned to the process */
+		proc[i].p_context_switches,	/* total number of context changes */
+		proc[i].p_quantum_size_ms		/* current quantum size assigned ot the process */
 	);
 
 	memset(&vui, 0, sizeof(vui));

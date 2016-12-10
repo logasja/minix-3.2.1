@@ -1819,7 +1819,7 @@ void proc_no_time(struct proc * p)
 	if (!proc_kernel_scheduler(p) && priv(p)->s_flags & PREEMPTIBLE) {
 		/* this dequeues the process */
 		notify_scheduler(p);
-		p->p_state_changes += 1;
+		p->p_context_switches += 1;
 	}
 	else {
 		/*
