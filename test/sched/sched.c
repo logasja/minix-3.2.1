@@ -12,10 +12,11 @@ int main(void)
 {
 	int b;
 	int parent = getpid();
+	printf("Parent is %d.", parent);
 	b = fork();
 	if (b != 0)
-	// Child process
 	{
+		// Child
 		printf("Starting I/O intensive process on %d...\n", b);
 		clock_t start = clock();
 
@@ -41,41 +42,23 @@ int main(void)
 		{
 			cmd = getchar();
 			fprintf(fpout, "%c", cmd);
-			printf("%c", cmd);
 		}
-
-		//// Read from file and do calculations on number in it
-		//for (int i = 0; i < 10000; i++)
-		//{
-		//	if (i % 2)
-		//		fp = fopen("./data1.txt", "r+");
-		//	else
-		//		fp = fopen("./data2.txt", "r+");
-		//	read = getline(&line, &len, fp);
-		//	sum += atoi(line);
-		//	fprintf(fpout, "%d\n", sum);
-		//	fclose(fp);
-		//}
 
 		clock_t diff = clock() - start;
 		printf("The I/O computation took %d.\n", diff);
 		_exit(EXIT_SUCCESS);
 	}
-	else
+	b = fork();
+	if (b != 0)
 	{
-		printf("Starting CPU intensive process on %d...\n", parent);
+		// Child
+		printf("Starting CPU intensive process on %d...\n", b);
 		clock_t start = clock();
 		clock_t diff;
 
 		int n = 10000;
 		int i = 3;
 		int count, c;
-
-		if (n >= 1)
-		{
-			printf("First %d prime numbers are :\n", n);
-			printf("2\n");
-		}
 
 		for (count = 2; count <= n; )
 		{
@@ -86,7 +69,6 @@ int main(void)
 			}
 			if (c == i)
 			{
-				//printf("%d\n", i);
 				count++;
 			}
 			i++;
@@ -96,4 +78,19 @@ int main(void)
 		printf("The CPU computation took %d.\n", diff);
 		_exit(EXIT_SUCCESS);
 	}
+
+	getchar();
+	//// Read from file and do calculations on number in it
+	//for (int i = 0; i < 10000; i++)
+	//{
+	//	if (i % 2)
+	//		fp = fopen("./data1.txt", "r+");
+	//	else
+	//		fp = fopen("./data2.txt", "r+");
+	//	read = getline(&line, &len, fp);
+	//	sum += atoi(line);
+	//	fprintf(fpout, "%d\n", sum);
+	//	fclose(fp);
+	//}
+
 }

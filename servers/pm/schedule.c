@@ -38,7 +38,7 @@ void sched_init(void)
 				trmp->mp_endpoint,	/* schedulee_e */
 				parent_e,		/* parent_e */
 				USER_Q, 		/* maxprio */
-				USER_QUANTUM_SHORT, 		/* quantum */
+				USER_QUANTUM_SHORT, 		/* quantum for nice 0 */
 				-1,			/* don't change cpu */
 				&trmp->mp_scheduler);	/* *newsched_e */
 			if (s != OK) {
