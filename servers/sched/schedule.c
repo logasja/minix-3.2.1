@@ -116,12 +116,12 @@ int do_noquantum(message *m_ptr)
 	/* Check to see if priority should be incremented and quantum changed for Project 3 */
 	if (priority < USER_Q + 3 && priority > USER_Q)
 	{
-		//printf("do_noquantum!\n\tEndpoint: %d\n\tPriority %d\n\tQuantum %d\n", rmp->endpoint, rmp->priority, rmp->time_slice);
+		printf("do_noquantum!\n\tEndpoint: %d\n\tPriority %d\n\tQuantum %d\n", rmp->endpoint, rmp->priority, rmp->time_slice);
 		// Set priority to the new ++ priority
 		rmp->priority = priority;
 		// Set quantum to time calculated by 
 		rmp->time_slice = pick_quantum(priority);
-		//printf("\n\tNew Priority %d\n\tNew Quantum %d\n", rmp->priority, rmp->time_slice);
+		printf("\n\tNew Priority %d\n\tNew Quantum %d\n", rmp->priority, rmp->time_slice);
 	}
 	/* Ensure this existing code does not allow processes to jump between scheduling schemes*/
 	else if (rmp->priority < MIN_USER_Q && rmp->priority > USER_Q + 3)
