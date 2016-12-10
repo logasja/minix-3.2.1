@@ -5005,6 +5005,7 @@
     <None Include="test\blocktest\Makefile.inc" />
     <None Include="test\ds\Makefile.inc" />
     <None Include="test\kernel\sys_vumap\Makefile.inc" />
+    <None Include="test\sched\Makefile" />
     <None Include="usr.bin\ldd\Makefile.inc" />
     <None Include="usr.bin\Makefile.inc" />
     <None Include="usr.bin\nvi\Makefile.inc" />

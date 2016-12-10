@@ -14815,6 +14815,7 @@
     <None Include="external\bsd\bzip2\dist\manual.html" />
     <None Include="lib\libc\time\tz-art.htm" />
     <None Include="lib\libc\time\tz-link.htm" />
+    <None Include="test\sched\Makefile" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="benchmarks\unixbench-5.1.2\src\dhry.h">
