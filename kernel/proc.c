@@ -1525,6 +1525,10 @@ void enqueue(
  * process is assigned to.
  */
   int q = rp->p_priority;	 		/* scheduling queue to use */
+  // Track quantums assigned and how often per process
+  rp->p_total_quantum += rp->p_quantum_size_ms;
+  rp->p_state_changes += 1;
+
   struct proc **rdy_head, **rdy_tail;
   
   assert(proc_is_runnable(rp));
@@ -1786,12 +1790,9 @@ static void notify_scheduler(struct proc *p)
 
 	assert(!proc_kernel_scheduler(p));
 
-	p->p_state_changes++;
 	/* dequeue the process */
 	RTS_SET(p, RTS_NO_QUANTUM);
 
-	// Update number of context switches
-	p->p_state_changes += 1;
 	/*
 	 * Notify the process's scheduler that it has run out of
 	 * quantum. This is done by sending a message to the scheduler

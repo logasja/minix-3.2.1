@@ -94,8 +94,8 @@ struct pstat *ptable;		/* table with process information */
  */
 #define S_HEADER "  PID TTY  TIME CMD\n"
 #define S_FORMAT "%5s %3s %s %s\n"
-#define M_HEADER "\tPID\tTTY\tTIME\tTRANS\tCMD\n"
-#define M_FORMAT "\t%5s\t%3s\t%s\t%6d\t%s\n"
+#define M_HEADER "\tPID\tTTY\tTIME\tTRANS\tTOTALQ\tAVG\tCMD\n"
+#define M_FORMAT "\t%5s\t%3s\t%s\t%6d\t%6d\t%6d\t%s\n"
 #define L_HEADER "ST UID   PID  PPID  PGRP     SZ         RECV TTY  TIME CMD\n"
 #define L_FORMAT " %c %3d %5s %5d %5d %6d %12s %3s %s %s\n"
 
@@ -122,6 +122,7 @@ struct pstat {			/* structure filled by pstat() */
   char *ps_args;		/* concatenated argument string */
 
   int ps_sttrans;		/* number of state transitions that occured */
+  int ps_tquantum;		/* total number of quantum assined through liftime */
 };
 
 int main(int argc, char *argv []);
@@ -312,12 +313,24 @@ char *argv[];
 			       ps->ps_args != NULL ? ps->ps_args : ps->ps_name
 			       );
 		else
+		{
+			int avg = 0;
+			if(ps->ps_sttrans > 0)
+				avg = ps->ps_tquantum / ps->ps_sttrans;
+			//printf(S_FORMAT,
+			//	pid, tname((dev_t)ps->ps_dev),
+			//	cpu,
+			//	ps->ps_args != NULL ? ps->ps_args : ps->ps_name
+			//);
 			printf(M_FORMAT,
-			       pid, tname((dev_t) ps->ps_dev),
-			       cpu,
-				   ps->ps_sttrans,
-			       ps->ps_args != NULL ? ps->ps_args : ps->ps_name
-			       );
+				pid, tname((dev_t)ps->ps_dev),
+				cpu,
+				ps->ps_sttrans,
+				ps->ps_tquantum,
+				avg,
+				ps->ps_args != NULL ? ps->ps_args : ps->ps_name
+			);
+		}
 	}
   }
   return(0);
@@ -387,10 +400,11 @@ int pstat(struct pstat *ps, pid_t pid)
 	exit(1);
   }
 
-  if (fscanf(fp, " %c %d %255s %c %d %*d %u %u %*u %*u %u",
+  if (fscanf(fp, " %c %d %255s %c %d %*d %u %u %*u %*u %u %u",
 	&type, &ps->ps_endpt, name, &ps->ps_state,
-	&ps->ps_recv, &ps->ps_utime, &ps->ps_stime, &ps->ps_sttrans) != 8) {
-	  printf("First fscan fail.");
+	&ps->ps_recv, &ps->ps_utime, &ps->ps_stime, 
+	&ps->ps_sttrans, &ps->ps_tquantum) != 9) {
+	printf("First fscan fail.");
 	fclose(fp);
 	return -1;
   }

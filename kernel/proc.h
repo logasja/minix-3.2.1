@@ -64,6 +64,7 @@ struct proc {
   u64_t p_kcall_cycles;		/* kernel cycles caused by this proc (kcall) */
   u64_t p_kipc_cycles;		/* cycles caused by this proc (ipc) */
   int p_state_changes;	/* Number of times the process changed states */
+  int p_total_quantum;	/* The total quantum assigned to the process over its lifetime */
 
   struct proc *p_nextready;	/* pointer to next ready process */
   struct proc *p_caller_q;	/* head of list of procs wishing to send */
