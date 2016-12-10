@@ -8,10 +8,6 @@
 
 int main(void)
 {
-	int b = getpid();
-	printf("Starting I/O intensive process on %d...\n", b);
-	clock_t start = clock();
-
 	FILE *fpout;
 	char *line = NULL;
 	size_t len = 0;
@@ -36,7 +32,5 @@ int main(void)
 		printf("%c", cmd);
 	}
 
-	clock_t diff = clock() - start;
-	printf("The I/O computation took %d.\n", diff);
 	_exit(EXIT_SUCCESS);
 }

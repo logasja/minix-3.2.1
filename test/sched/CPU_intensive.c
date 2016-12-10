@@ -8,20 +8,16 @@
 
 int main(void)
 {
-	int b;
-	int parent = getpid();
-	b = fork();
-	if (b != 0)
-	// Child process
-	{
-		getchar();
-	}
-	else
-	{
-		printf("Starting CPU intensive process on %d...\n", parent);
-		clock_t start = clock();
-		clock_t diff;
-
+	//int b;
+	//int parent = getpid();
+	//b = fork();
+	//if (b != 0)
+	//// Child process
+	//{
+	//	getchar();
+	//}
+	//else
+	//{
 		int n = 10000;
 		int i = 3;
 		int count, c;
@@ -40,8 +36,6 @@ int main(void)
 			i++;
 		}
 
-		diff = clock() - start;
-		printf("The CPU computation took %d.\n", diff);
 		_exit(EXIT_SUCCESS);
-	}
+	//}
 }
