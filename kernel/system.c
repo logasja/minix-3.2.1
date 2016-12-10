@@ -633,12 +633,12 @@ int sched_proc(struct proc *p,
 	if (quantum != -1) {
 		p->p_quantum_size_ms = quantum;
 		p->p_cpu_time_left = ms_2_cpu_time(quantum);
-		if (p->p_state_changes == 0)
+		if (p->p_total_quantum < quantum)
 		{
-			// Initialize our state changes counter
-			p->p_state_changes = 1;
+			// Increment when new quantum is greater than last
+			p->p_state_changes++;
 		}
-		// Initialize quantum total
+		// Keep track of max quantum
 		p->p_total_quantum = quantum;
 
 		printf("%d: %d\n",p->p_priority, quantum);
