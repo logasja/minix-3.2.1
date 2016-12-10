@@ -8,6 +8,7 @@
 
 int main(void)
 {
+	int b = getpid();
 	printf("Starting I/O intensive process on %d...\n", b);
 	clock_t start = clock();
 
