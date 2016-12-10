@@ -1790,8 +1790,6 @@ static void notify_scheduler(struct proc *p)
 	/* dequeue the process */
 	RTS_SET(p, RTS_NO_QUANTUM);
 
-	// Track quantums assigned and how often per process
-	p->p_total_quantum += p->p_quantum_size_ms;
 	p->p_state_changes += 1;
 
 	/*
