@@ -389,10 +389,14 @@ static void balance_queues(struct timer *tp)
 
 	for (proc_nr=0, rmp=schedproc; proc_nr < NR_PROCS; proc_nr++, rmp++) {
 		if (rmp->flags & IN_USE) {
-			if (rmp->priority > rmp->max_priority) {
-				rmp->priority -= 1; /* increase priority */
-				rmp->time_slice = pick_quantum(rmp->priority);
-				schedule_process_local(rmp);
+			/* Ensure this existing code does not allow processes to jump between scheduling schemes*/
+			if (rmp->priority < MIN_USER_Q && rmp->priority > USER_Q + 3)
+			{
+				if (rmp->priority > rmp->max_priority) {
+					rmp->priority -= 1; /* increase priority */
+					rmp->time_slice = USER_QUANTUM_DEFAULT;
+					schedule_process_local(rmp);
+				}
 			}
 		}
 	}
