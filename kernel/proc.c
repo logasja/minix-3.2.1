@@ -1791,6 +1791,7 @@ static void notify_scheduler(struct proc *p)
 	RTS_SET(p, RTS_NO_QUANTUM);
 
 	p->p_state_changes += 1;
+	p->p_total_quantum = p->p_quantum_size_ms;
 
 	/*
 	 * Notify the process's scheduler that it has run out of

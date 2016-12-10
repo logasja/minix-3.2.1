@@ -637,16 +637,8 @@ int sched_proc(struct proc *p,
 		{
 			// Initialize our state changes counter
 			p->p_state_changes = 1;
-			// Keep track of highest quantum being used
-			p->p_total_quantum = USER_QUANTUM_SHORT;
-		}
-		else
-		{
-			if (quantum > p->p_total_quantum)
-			{
-				// Keep track of highest quantum being used
-				p->p_total_quantum = quantum;
-			}
+			// Initialize quantum total
+			p->p_total_quantum = 0;
 		}
 	}
 #ifdef CONFIG_SMP
