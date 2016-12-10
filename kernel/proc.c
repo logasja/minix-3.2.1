@@ -1788,6 +1788,9 @@ static void notify_scheduler(struct proc *p)
 
 	/* dequeue the process */
 	RTS_SET(p, RTS_NO_QUANTUM);
+
+	// Update number of context switches
+	p->p_state_changes += 1;
 	/*
 	 * Notify the process's scheduler that it has run out of
 	 * quantum. This is done by sending a message to the scheduler
