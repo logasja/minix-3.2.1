@@ -636,7 +636,8 @@ int sched_proc(struct proc *p,
 		
 		p->p_total_quantum = quantum;
 
-		printf("%d: %d\n",p->p_priority, quantum);
+		// Uncomment to see the priority matched with quantum (scheduling debug purposes)
+		//printf("%d: %d\n",p->p_priority, quantum);
 	}
 #ifdef CONFIG_SMP
 	if (cpu != -1)
